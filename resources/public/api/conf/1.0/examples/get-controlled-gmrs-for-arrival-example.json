@@ -1,0 +1,71 @@
+[
+  {
+    "gmrId": "GMRA0000028D",
+    "isUnaccompanied": false,
+    "vehicleRegNum": "KL58 FEM",
+    "reportToLocations": [
+      {
+        "inspectionTypeId": "1",
+        "locationIds": [
+          "L0029A"
+        ]
+      }
+    ],
+    "actualCrossing": {
+      "routeId": "C000015",
+      "localDateTimeOfArrival": "2021-06-05T09:20"
+    }
+  },
+  {
+    "gmrId": "GMRA00009JR8",
+    "isUnaccompanied": true,
+    "trailerRegistrationNums": ["FB283721"],
+    "reportToLocations": [
+      {
+        "inspectionTypeId": "1",
+        "locationIds": [
+          "L0029A"
+        ]
+      }
+    ],
+    "actualCrossing": {
+      "routeId": "C000017",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    }
+  },
+  {
+    "gmrId": "GMRA00009JR8",
+    "isUnaccompanied": true,
+    "containerReferenceNums": ["GB283721"],
+    "reportToLocations": [
+      {
+        "inspectionTypeId": "1",
+        "locationIds": [
+          "L0029A"
+        ]
+      }
+    ],
+    "actualCrossing": {
+      "routeId": "C000017",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    }
+  },
+  {
+    "gmrId": "GMRA00009JR8",
+    "isUnaccompanied": true,
+    "trailerRegistrationNums": ["FB283721"],
+    "containerReferenceNums":  ["GB283721"],
+    "reportToLocations": [
+      {
+        "inspectionTypeId": "1",
+        "locationIds": [
+          "L0029A"
+        ]
+      }
+    ],
+    "actualCrossing": {
+      "routeId": "C000017",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    }
+  }
+]

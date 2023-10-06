@@ -1,3 +1,8 @@
 # microservice specific routes
 
-GET        /hello-world             uk.gov.hmrc.goodsmovementsystemportapi.controllers.MicroserviceHelloWorldController.hello
+GET     /:portId/arrivals/controlled      uk.gov.hmrc.goodsmovementsystemportapi.controllers.PortsController.getControlledGmrsForArrivals(portId: String)
+
+GET     /:portId/departures/controlled    uk.gov.hmrc.goodsmovementsystemportapi.controllers.PortsController.getControlledGmrsForDepartures(portId: String)
+GET     /:portId/departures               uk.gov.hmrc.goodsmovementsystemportapi.controllers.PortsController.getGmrsForDepartures(portId: String, lastUpdatedFrom: Option[Instant], lastUpdatedTo: Option[Instant])
+
+GET     /reference-data                   uk.gov.hmrc.goodsmovementsystemportapi.controllers.GmsReferenceDataController.getReferenceData

@@ -1,0 +1,46 @@
+@(status: String, endpointsEnabled: Boolean)
+
+{
+  "scopes": [
+    {
+      "key": "read:goods-movement-system-port",
+      "name": "read and write goods vehicle movement service records",
+      "description": "Goods Vehicle Movements API"
+    }
+  ],
+  "api": {
+    "name": "Goods Vehicle Movements Port",
+    "description": "This API provides resources for ports related to the Goods Vehicle Movement Service.",
+    "context": "customs/goods-movement-system-port",
+    "categories": [
+      "CUSTOMS"
+    ],
+    "versions": [
+      {
+        "version": "1.0",
+        "status": "@status",
+        "endpointsEnabled": @endpointsEnabled,
+        "access": {
+          "type": "PRIVATE"
+                  },
+        "fieldDefinitions": [
+          {
+            "name": "portId",
+            "description": "What is your Port ID?",
+            "type": "STRING",
+            "hint": "This is your Port ID.",
+            "shortDescription": "Port ID",
+            "validation" : {
+              "errorMessage" : "Enter your Port ID in the correct format",
+              "rules" : [{
+                "RegexValidationRule" : {
+                  "regex" : "^[0-9]([0-9,]*[0-9])?$"
+                }
+              }]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

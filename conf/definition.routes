@@ -1,2 +1,5 @@
-GET        /api/definition                 uk.gov.hmrc.goodsmovementsystemportapi.controllers.DocumentationController.definition()
-GET        /api/conf/:version/*file        uk.gov.hmrc.goodsmovementsystemportapi.controllers.DocumentationController.specification(version, file)
+GET        /api/definition                                  @uk.gov.hmrc.goodsmovementsystemportapi.platform.controllers.DocumentationController.definition()
+
+GET        /api/documentation/:version/:endpointName        @uk.gov.hmrc.goodsmovementsystemportapi.platform.controllers.DocumentationController.documentation(version:String, endpointName:String)
+
+GET        /api/conf/:version/*file                         @uk.gov.hmrc.goodsmovementsystemportapi.platform.controllers.DocumentationController.yaml(version, file)

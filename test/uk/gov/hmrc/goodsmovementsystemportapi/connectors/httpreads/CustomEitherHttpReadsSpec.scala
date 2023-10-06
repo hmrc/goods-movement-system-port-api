@@ -1,0 +1,73 @@
+/*
+ * Copyright 2023 HM Revenue & Customs
+ *
+ */
+
+package uk.gov.hmrc.goodsmovementsystemportapi.connectors.httpreads
+
+import org.scalatest.EitherValues
+import play.api.libs.json.Json
+import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.PortErrors.{InvalidDateCombinationError, TooManyGmrsError}
+import uk.gov.hmrc.http.{HttpReadsInstances, HttpResponse, UpstreamErrorResponse}
+import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
+
+class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
+
+  trait Setup {
+    val reads = new CustomEitherHttpReads {}
+  }
+
+  "readsEitherOf" when {
+
+    "getDeparturesPartialFunction" should {
+      "read successful 200 response as successful right" in new Setup {
+        val response = HttpResponse(200, "")
+
+        val result = reads.readEitherOf(reads.getDeparturesPartialFunction, HttpReadsInstances.readRaw).read("GET", "http://localhost", response)
+
+        result.right.value shouldBe response
+      }
+
+      "read unsuccessful responses and transform custom errors" in new Setup {
+        Map(
+          HttpResponse(200, Json.obj("code" -> "INVALID_DATE_COMBINATION"), Map.empty[String, Seq[String]]) -> InvalidDateCombinationError,
+          HttpResponse(200, Json.obj("code" -> "TOO_MANY_RESULTS"), Map.empty[String, Seq[String]])         -> TooManyGmrsError
+        ).foreach {
+          case (response, expected) =>
+            val result = reads
+              .readEitherOf(
+                reads.getDeparturesPartialFunction,
+                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw)))
+              .read("GET", "http://localhost", response)
+
+            result.left.value shouldBe expected
+        }
+      }
+
+      //This test only covers a limited amount of 5xx and 4xx cases.
+      "read unsuccessful response and transform to base errors" in new Setup {
+        List(
+          HttpResponse(400, ""),
+          HttpResponse(401, ""),
+          HttpResponse(403, ""),
+          HttpResponse(404, ""),
+          HttpResponse(409, ""),
+          HttpResponse(413, ""),
+          HttpResponse(500, ""),
+          HttpResponse(501, ""),
+          HttpResponse(502, ""),
+          HttpResponse(503, ""),
+          HttpResponse(504, "")
+        ).foreach { response =>
+          intercept[UpstreamErrorResponse](
+            reads
+              .readEitherOf(
+                reads.getDeparturesPartialFunction,
+                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw)))
+              .read("GET", "http://localhost", response))
+        }
+      }
+    }
+
+  }
+}
