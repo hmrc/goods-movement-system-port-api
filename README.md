@@ -1,4 +1,6 @@
-# goods-movement-system-port-api
+goods-movement-system-port-api
+==============================
+
 This API provides resources from the Goods Vehicle Movement Service (GVMS) for ports and border locations.
 
 GVMS is used by hauliers to declare all goods movements crossing certain UK roll-on-roll-off ports.
@@ -10,29 +12,36 @@ This API is used by ports and border locations to:
 * Get a list of checked-in GMR details at a GVMS port or border location
 * Get GVMS reference data
 
-## Running the service locally
+Table of Contents
+=================
+
+* [Running and Testing](#running-and-testing)
+    * [Running](#running)
+    * [Testing](#testing)
+* [Endpoints](#endpoints)
+* [License](#license)
+
+Running and Testing
+===================
 By default, the service runs on 8998 port.
 
-#### Using service manager 2
-
-The following sm2 command starts the service but its also part of `GMS_ALL` profile
-
-`sm2 --start GOODS_MOVEMENT_SYSTEM_PORT_API`
-
-the logs can be viewed by running `sm2 --logs GOODS_MOVEMENT_SYSTEM_PORT_API` in a different terminal window
-
-#### Using sbt
+Running
+-------
 For local development use `sbt run` but if its already running in sm2, we should stop it first before running sbt command
 
+Testing
+-------
+Prior to raising a PR, please ensure that the code compiles and all tests pass by running `sbt fmt clean compile test it:test`
+
+Endpoints
+===================
 The endpoint in this API is application-restricted.
 
 All ports requiring access to this API must be pre-authorized by HMRC.
 
-service logs can be viewed by running `sm --logs GOODS_MOVEMENT_SYSTEM_PORT_API`
-
 ```GET  /:portId/arrivals/controlled```
 
-Port can pull all inspection required GMR's that are arriving at their port.
+Retrieve all GMRs arriving at a specified port which require an inspection.
 
 Response Body Example
 ```
@@ -59,7 +68,7 @@ HTTP status: 200 (OK)
 
 ```GET /:portId/departures/controlled```
 
-Port can pull all inspection required GMR's that are departing from their port.
+Retrieve all GMRs departing from a specified port which require an inspection.
 
 ##### Response codes
 
@@ -87,7 +96,7 @@ HTTP status: 200 (OK)
 
 ```GET /:portId/departures```
 
-Port can pull all GMR's that are departing from their port and view the ready to embark flag. 
+Retrieve all GMRs departing from a specified port, with ready to embark data where present.
 
 ##### Response
 
@@ -130,7 +139,7 @@ HTTP status: 200 (OK)
 ```
 
 ```GET  /reference-data ``` <br/>
-The Carrier can get a reference data at anytime.
+Retrieves reference data on request.
 Response Body Example
 ```
 * **Code:** 200 <br />
@@ -203,5 +212,9 @@ Response Body Example
     }
   ]
 }
-
 ```
+
+License
+=======
+
+This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").

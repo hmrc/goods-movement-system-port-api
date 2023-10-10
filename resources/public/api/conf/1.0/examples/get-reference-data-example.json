@@ -57,7 +57,7 @@
   "ruleFailures": [
     {
       "ruleId": "BR005",
-      "ruleDescription": "A GMR can only be used in one crossing between two customs territiories"
+      "ruleDescription": "A GMR can only be used in one crossing between two customs territories"
     },
     {
       "ruleId": "BR011",
