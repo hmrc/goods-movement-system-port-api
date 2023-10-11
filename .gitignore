@@ -2,7 +2,6 @@
 
 !.gitignore
 !.scalafmt.conf
-!.sbtrc
 bin
 .bloop/
 .cache
