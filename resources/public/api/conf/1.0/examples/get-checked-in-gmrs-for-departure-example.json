@@ -1,0 +1,59 @@
+[
+  {
+    "gmrId": "GMRB00000GKW",
+    "updatedDateTime": "2021-06-05T04:21:23.492Z",
+    "isUnaccompanied": false,
+    "vehicleRegNum": "PJ15 JEF",
+    "checkedInCrossing": {
+      "routeId": "11",
+      "localDateTimeOfArrival": "2021-06-05T09:20"
+    },
+    "inspectionRequired": true,
+    "reportToLocations": [
+    {
+      "inspectionTypeId": "1",
+      "locationIds": [
+        "L0029A", "L0030A", "L0031A"
+      ]
+    },
+    {
+      "inspectionTypeId": "2",
+      "locationIds": [
+        "L0029A", "L0031A"
+      ]
+    }
+  ]
+  },
+  {
+    "gmrId": "GMRB0001IFM5",
+    "updatedDateTime": "2021-06-05T04:20:02.284Z",
+    "isUnaccompanied": false,
+    "vehicleRegNum": "GU62 SJE",
+    "checkedInCrossing": {
+      "routeId": "15",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    },
+    "readyToEmbark": true,
+    "inspectionRequired": false
+  },
+  {
+    "gmrId": "GMRB0001EKG2",
+    "updatedDateTime": "2021-06-05T04:17:48.406Z",
+    "isUnaccompanied": true,
+    "trailerRegistrationNums": ["AB29 3824", "SJ25 9382"],
+    "checkedInCrossing": {
+      "routeId": "15",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    }
+  },
+  {
+    "gmrId": "GMRB0002MD3K",
+    "updatedDateTime": "2021-06-05T04:15:35.009Z",
+    "isUnaccompanied": true,
+    "containerReferenceNums":  ["GB 293824"],
+    "checkedInCrossing": {
+      "routeId": "15",
+      "localDateTimeOfArrival": "2021-06-11T11:03"
+    }
+  }
+]

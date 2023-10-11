@@ -1,0 +1,135 @@
+{
+  "routes": [
+    {
+      "routeId": "4",
+      "routeDirection": "UK_INBOUND",
+      "routeEffectiveFrom": "2022-04-16",
+      "departurePortId": 6,
+      "arrivalPortId": 1,
+      "carrierId": 10
+    },
+    {
+      "routeId": "5",
+      "routeDirection": "GB_TO_NI",
+      "routeEffectiveFrom": "2020-04-16",
+      "departurePortId": 20,
+      "arrivalPortId": 5,
+      "carrierId": 5
+    },
+    {
+      "routeId": "7",
+      "routeDirection": "NI_TO_GB",
+      "routeEffectiveFrom": "2022-04-16",
+      "departurePortId": 12,
+      "arrivalPortId": 14,
+      "carrierId": 1
+    },
+    {
+      "routeId": "6",
+      "routeDirection": "NI_TO_GB",
+      "routeEffectiveFrom": "2020-04-16",
+      "routeEffectiveTo": "2020-04-16",
+      "departurePortId": 12,
+      "arrivalPortId": 14,
+      "carrierId": 1
+    }
+  ],
+  "ports": [
+    {
+      "portId": 1,
+      "portRegion": "SOUTH",
+      "portEffectiveFrom": "2020-04-16",
+      "portDescription": "HOLYHEAD",
+      "chiefPortCode": "567N",
+      "cdsPortCode": "XY891",
+      "officeOfTransitCustomsOfficeCode": "aaaaaaaa",
+      "portCountryCode": "GB"
+    },
+    {
+      "portId": 2,
+      "portRegion": "SOUTH",
+      "portEffectiveFrom": "2022-04-16",
+      "portDescription": "DOVER",
+      "chiefPortCode": "123L",
+      "cdsPortCode": "XY123",
+      "officeOfTransitCustomsOfficeCode": "GB000024",
+      "portCountryCode": "GB"
+    },
+    {
+      "portId": 25,
+      "portRegion": "SOUTH",
+      "portEffectiveFrom": "2020-04-16",
+      "portDescription": "DOVER",
+      "chiefPortCode": "123L",
+      "cdsPortCode": "XY124",
+      "officeOfTransitCustomsOfficeCode": "GB000024",
+      "portCountryCode": "GB"
+    }
+  ],
+  "carriers": [
+    {
+      "carrierId": 1,
+      "carrierName": "P&0"
+    }
+  ],
+  "locations": [
+    {
+      "locationId": "1",
+      "locationDescription": "BELFAST LOCATION 1",
+      "address": {
+        "lines": [
+          "1 Shamrock Lane",
+          "Waldo"
+        ],
+        "town": "Belfast",
+        "postcode": "NI1 6JG"
+      },
+      "locationType": "BCP",
+      "locationEffectiveFrom": "2022-04-16",
+      "supportedDirections": ["UK_INBOUND"],
+      "supportedInspectionTypeIds": [
+        "1"
+      ],
+      "requiredInspectionLocations": [
+        2
+      ]
+    },
+    {
+      "locationId": "2",
+      "locationDescription": "PORTSMOUTH LOCATION 5",
+      "address": {
+        "lines": [
+          "36 Maryrose Avenue",
+          "Hampshire"
+        ],
+        "town": "Portsmouth",
+        "postcode": "PO6 7QU"
+      },
+      "locationType": "BCP",
+      "locationEffectiveFrom": "2022-04-16",
+      "supportedDirections": ["UK_INBOUND"],
+      "supportedInspectionTypeIds": [
+        "1"
+      ],
+      "requiredInspectionLocations": [
+        2
+      ]
+    }
+  ],
+  "inspectionTypes": [
+    {
+      "inspectionTypeId": "1",
+      "description": "CUSTOMS"
+    }
+  ],
+  "ruleFailures": [
+    {
+      "ruleId": "BR005",
+      "ruleDescription": "A GMR can only be used in one crossing between two customs territiories"
+    },
+    {
+      "ruleId": "BR011",
+      "ruleDescription": "This Customs declaration cannot be in more than one GMR"
+    }
+  ]
+}

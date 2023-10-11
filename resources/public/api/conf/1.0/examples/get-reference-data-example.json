@@ -1,0 +1,67 @@
+{
+  "routes": [
+    {
+      "routeId": "102",
+      "routeEffectiveFrom": "2020-01-01",
+      "routeEffectiveTo": "2020-01-02",
+      "departurePortId": 7014,
+      "routeDirection": "UK_OUTBOUND",
+      "arrivalPortId": 6085,
+      "carrierId": 1
+    },
+    {
+      "routeId": "103",
+      "routeEffectiveFrom": "2020-01-01",
+      "departurePortId": 7054,
+      "routeDirection": "UK_OUTBOUND",
+      "arrivalPortId": 1401,
+      "carrierId": 2
+    }
+  ],
+  "ports": [
+    {
+      "portId": 7050,
+      "portRegion": "Scotland",
+      "portEffectiveFrom": "2000-01-01",
+      "portDescription": "Aberdeen",
+      "chiefPortCode": "",
+      "cdsPortCode": "ABDABDABD",
+      "officeOfTransitCustomsOfficeCode": "UNKNOWN?",
+      "timezoneId": "Europe/London",
+      "portCountryCode": "GB"
+    },
+    {
+      "portId": 1401,
+      "portRegion": "",
+      "portEffectiveFrom": "2000-01-01",
+      "portDescription": "Calais",
+      "chiefPortCode": "",
+      "cdsPortCode": "",
+      "officeOfTransitCustomsOfficeCode": "UNKNOWN?",
+      "timezoneId": "Europe/Paris",
+      "portCountryCode": "FR"
+    }
+  ],
+  "carriers": [
+    {
+      "carrierId": 1,
+      "carrierName": "Stena Line",
+      "countryCode": "SE"
+    },
+    {
+      "carrierId": 2,
+      "carrierName": "DFDS Seaways",
+      "countryCode": "DK"
+    }
+  ],
+  "ruleFailures": [
+    {
+      "ruleId": "BR005",
+      "ruleDescription": "A GMR can only be used in one crossing between two customs territories"
+    },
+    {
+      "ruleId": "BR011",
+      "ruleDescription": "This Customs declaration cannot be in more than one GMR"
+    }
+  ]
+}
