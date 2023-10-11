@@ -11,43 +11,10 @@
       ],
       "pattern": "^GMR[A-Z][0-9A-Z]{8}$"
     },
-    "state": {
-      "$id": "#/definitions/state",
-      "type": "string",
-      "description": "The state of the GMR",
-      "examples": [
-        "NOT_FINALISABLE"
-      ],
-      "oneOf": [
-        { "enum": ["NOT_FINALISABLE"], "description": "The GMR is in a non-finalisable state.  This means an update will be required from the haulier prior to finalisation." },
-        { "enum": ["OPEN"], "description": "The GMR is open for updates and is ready for finalisation." },
-        { "enum": ["FINALISED"], "description": "The GMR is finalised, awaiting check-in by the carrier.  No further updates are permitted." },
-        { "enum": ["CHECKED_IN"], "description": "The GMR is checked-in, awaiting embarkation confirmation from the carrier." },
-        { "enum": ["EMBARKED"], "description": "The GMR is embarked, meaning the goods movement has embarked on its crossing but the goods are awaiting clearance to proceed." },
-        { "enum": ["COMPLETED"], "description": "The GMR is completed, meaning the goods movement has embarked on its crossing and the goods are clear to proceed." }
-      ]
-    },
-    "gmrStatusVersion": {
-      "$id": "#/properties/gmrStatusVersion",
-      "type": "integer",
-      "description": "The version number of the latest status notification for this GMR.  Each new notification for a given GMR will have a greater gmrStatusVersion than the last.",
-      "examples": [
-        4
-      ]
-    },
     "inspectionRequired": {
       "$id": "#/definitions/inspectionRequired",
       "type": "boolean",
       "description": "If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made."
-    },
-    "createdDateTime": {
-      "$id": "#/definitions/createdDateTime",
-      "type": "string",
-      "description": "The date and time that this GMR was created.",
-      "examples": [
-        "2021-08-11T10:58:12"
-      ],
-      "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d.\\d{3}Z$"
     },
     "updatedDateTime": {
       "$id": "#/definitions/updatedDateTime",
@@ -111,29 +78,14 @@
       "type": "object",
       "description": "Information from the Goods Vehicle Movement Service about this GMR.",
       "required": [
-        "state",
-        "gmrStatusVersion",
-        "createdDateTime",
         "updatedDateTime"
       ],
       "properties": {
-        "state": { "$ref": "#/definitions/state" },
-        "gmrStatusVersion": { "$ref":  "#/definitions/gmrStatusVersion" },
         "inspectionRequired": { "$ref": "#/definitions/inspectionRequired" },
         "reportToLocations": { "$ref": "#/definitions/reportToLocations" },
-        "createdDateTime": { "$ref": "#/definitions/createdDateTime" },
         "updatedDateTime": { "$ref": "#/definitions/updatedDateTime" },
         "ruleFailures": { "$ref": "#/definitions/ruleFailures" }
       }
-    },
-    "haulierEORI": {
-      "$id": "#/definitions/haulierEORI",
-      "type": "string",
-      "description": "The EORI of the haulier that is responsible for the vehicle making the goods movement",
-      "examples": [
-        "GB123456789012"
-      ],
-      "pattern": "^GB[0-9]{12,15}$"
     },
     "isUnaccompanied": {
       "$id": "#/properties/isUnaccompanied",
@@ -141,36 +93,6 @@
       "description": "Set to true if the vehicle will not be accompanying the trailer(s) during the crossing",
       "examples": [
         false
-      ]
-    },
-    "isOwnVehicle": {
-      "$id": "#/properties/isOwnVehicle",
-      "type": "boolean",
-      "description": "Set to true if the haulier owns the vehicle that is moving the goods, otherwise set to false.",
-      "examples": [
-        false
-      ]
-    },
-    "isTSAD": {
-      "$id": "#/properties/isTSAD",
-      "type": "boolean",
-      "description": "Set to true if the transit declaration is a TSAD, otherwise set to false (for a TAD)",
-      "examples": [
-        false
-      ]
-    },
-    "direction": {
-      "$id": "#/definitions/direction",
-      "type": "string",
-      "examples": [
-        "UK_OUTBOUND"
-      ],
-      "description": "The direction of the movement - into or out of the UK, or between Great Britain and Northern Ireland",
-      "oneOf": [
-        { "enum": ["UK_INBOUND"], "description": "The movement is travelling into the UK" },
-        { "enum": ["UK_OUTBOUND"], "description": "The movement is travelling out of the UK" },
-        { "enum": ["GB_TO_NI"], "description": "The movement is travelling out of Great Britain into Northern Ireland" },
-        { "enum": ["NI_TO_GB"], "description": "The movement is travelling out of Northern Ireland into Great Britain" }
       ]
     },
     "vehicleRegNum": {
@@ -209,18 +131,6 @@
           "CSQU3054383", "CSQU3054392"
         ],
         "pattern": "^[A-Z0-9 -]{1,200}$"
-      }
-    },
-    "plannedCrossing": {
-      "$id": "#/definitions/plannedCrossing",
-      "type": "object",
-      "description": "Details of the planned crossing.",
-      "required": [
-        "routeId"
-      ],
-      "properties": {
-        "routeId": { "$ref": "#/definitions/routeId" },
-        "localDateTimeOfDeparture": { "$ref": "#/definitions/localDateTimeOfDeparture" }
       }
     },
     "checkedInCrossing": {
@@ -310,15 +220,6 @@
       ],
       "pattern": "^[A-Z0-9-]{1,200}$"
     },
-    "localDateTimeOfDeparture": {
-      "$id": "#/definitions/localDateTimeOfDeparture",
-      "type": "string",
-      "description": "The planned date and time of departure, in local time of the departure port. Must not include seconds, time zone or UTC marker",
-      "examples": [
-        "2021-08-11T10:58"
-      ],
-      "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d$"
-    },
     "localDateTimeOfArrival": {
       "$id": "#/definitions/localDateTimeOfArrival",
       "type": "string",
@@ -327,179 +228,6 @@
         "2021-08-11T10:58"
       ],
       "pattern": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d$"
-    },
-    "eidrDeclarations": {
-      "$id": "#/definitions/eidrDeclarations",
-      "type": "array",
-      "description": "Details of one or more EIDR declarations.  Must be provided prior to finalisation for EIDR movements.",
-      "items": {
-        "$id": "#/definitions/tirDeclarations/items",
-        "type": "object",
-        "required": [
-          "traderEORI",
-          "palletReference"
-        ],
-        "properties": {
-          "traderEORI": { "$ref": "#/definitions/traderEORI" },
-          "sAndSMasterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" },
-          "palletReference": { "$ref": "#/definitions/palletReference" }
-        }
-      }
-    },
-    "tirDeclarations": {
-      "$id": "#/definitions/tirDeclarations",
-      "type": "array",
-      "description": "Details of one or more TIR Carnet declarations.  Must be provided prior to finalisation for TIR movements.",
-      "items": {
-        "$id": "#/definitions/tirDeclarations/items",
-        "type": "object",
-        "required": [
-          "tirCarnetId"
-        ],
-        "properties": {
-          "tirCarnetId": { "$ref": "#/definitions/tirCarnetId" }
-        }
-      }
-    },
-    "ataDeclarations": {
-      "$id": "#/definitions/ataDeclarations",
-      "type": "array",
-      "description": "Details of one or more ATA Carnet declarations.  Must be provided prior to finalisation for ATA movements.",
-      "items": {
-        "$id": "#/definitions/ataDeclarations/items",
-        "type": "object",
-        "required": [
-          "ataCarnetId"
-        ],
-        "properties": {
-          "ataCarnetId": { "$ref": "#/definitions/ataCarnetId" },
-          "sAndSMasterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" }
-        }
-      }
-    },
-    "traderEORI": {
-      "$id": "#/definitions/traderEORI",
-      "type": "string",
-      "description": "The trader's GB EORI",
-      "examples": [
-        "GB123456789012"
-      ],
-      "pattern": "^GB[0-9]{12,15}$"
-    },
-    "palletReference": {
-      "$id": "#/definitions/palletReference",
-      "type": "string",
-      "description": "The reference number for the pallet holding the EIDR goods",
-      "examples": [
-        "ABSUE98287ABSUIJHD"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
-    },
-    "emptyVehicle": {
-      "$id": "#/definitions/emptyVehicle",
-      "type": "object",
-      "description": "Declares that this is an empty movement and contains details about the empty movement.  Must be provided prior to finalisation for empty movements.",
-      "required": [
-        "isOwnVehicle"
-      ],
-      "properties": {
-        "isOwnVehicle": { "$ref": "#/definitions/isOwnVehicle" },
-        "sAndSMasterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" }
-      }
-    },
-    "customsDeclarations": {
-      "$id": "#/definitions/customsDeclarations",
-      "type": "array",
-      "description": "Details of the customs declarations within this consignment",
-      "items": {
-        "$id": "#/definitions/customsDeclarations/items",
-        "type": "object",
-        "required": [
-          "customsDeclarationId"
-        ],
-        "properties": {
-          "customsDeclarationId": { "$ref": "#/definitions/customsDeclarationId" },
-          "sAndSMasterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" }
-        }
-      }
-    },
-    "sAndSDeclarations": {
-      "$id": "#/definitions/sAndSDeclarations",
-      "type": "array",
-      "description": "Details of the safety and security (S&S) declarations within this consignment",
-      "items": {
-        "$id": "#/definitions/sAndSDeclarations/items",
-        "type": "object",
-        "required": [
-          "masterRefNum"
-        ],
-        "properties": {
-          "masterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" }
-        }
-      }
-    },
-    "transitDeclarations": {
-      "$id": "#/definitions/transitDeclarations",
-      "type": "array",
-      "description": "Details of the transit declarations within this consignment",
-      "items": {
-        "$id": "#/definitions/transitDeclarations/items",
-        "type": "object",
-        "required": [
-          "transitDeclarationId",
-          "isTSAD"
-        ],
-        "properties": {
-          "transitDeclarationId": { "$ref": "#/definitions/transitDeclarationId" },
-          "isTSAD":  { "$ref": "#/definitions/isTSAD" },
-          "sAndSMasterRefNum": { "$ref": "#/definitions/sAndSMasterRefNum" }
-        }
-      }
-    },
-    "customsDeclarationId": {
-      "$id": "#/definitions/customsDeclarationId",
-      "type": "string",
-      "description": "The identifier for a customs declaration from Customs Declaration Service or CHIEF",
-      "examples": [
-        "123456789"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
-    },
-    "tirCarnetId": {
-      "$id": "#/definitions/tirCarnetId",
-      "type": "string",
-      "description": "The TIR Carnet ID for the carnet within a TIR goods movement",
-      "examples": [
-        "123456789"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
-    },
-    "ataCarnetId": {
-      "$id": "#/definitions/ataCarnetId",
-      "type": "string",
-      "description": "The ATA Carnet ID for the carnet within an ATA goods movement",
-      "examples": [
-        "123456789"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
-    },
-    "sAndSMasterRefNum": {
-      "$id": "#/definitions/sAndSMasterRefNum",
-      "type": "string",
-      "description": "The master reference number (MRN) for a Safety & Security declaration, where applicable.",
-      "examples": [
-        "123456789"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
-    },
-    "transitDeclarationId": {
-      "$id": "#/definitions/transitDeclarationId",
-      "type": "string",
-      "description": "The ID of the transit declaration.  Either this or localReferenceNum must be provided.",
-      "examples": [
-        "123456789"
-      ],
-      "pattern": "^[A-Z0-9-]{1,200}$"
     },
     "readyToEmbark": {
       "$id": "#/definitions/readyToEmbark",
