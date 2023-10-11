@@ -136,11 +136,12 @@ HTTP status: 200 (OK)
 } ]
 ```
 
-```GET  /reference-data ``` <br/>
+```GET  /reference-data ```
+
 Retrieves reference data on request.
 Response Body Example
 ```
-* **Code:** 200 <br />
+* **Code:** 200
 * **Success**
 
 {
