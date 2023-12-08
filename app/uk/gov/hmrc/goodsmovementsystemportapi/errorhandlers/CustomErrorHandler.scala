@@ -17,7 +17,6 @@
 package uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers
 
 import cats.implicits.catsSyntaxEq
-import javax.inject.{Inject, Singleton}
 import play.api.http.Status.{BAD_REQUEST, NOT_FOUND}
 import play.api.libs.json.Json.toJson
 import play.api.mvc.{RequestHeader, Result, Results}
@@ -30,6 +29,7 @@ import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.bootstrap.backend.http.JsonErrorHandler
 import uk.gov.hmrc.play.bootstrap.config.DefaultHttpAuditEvent
 
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -124,7 +124,6 @@ class CustomErrorHandler @Inject()(
       )
     )
 
-    logger.info(message)
     Future(logAndResult(errorResponse, includeMessage = false))
   }
 
