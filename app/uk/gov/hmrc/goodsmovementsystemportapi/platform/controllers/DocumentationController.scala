@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.platform.controllers
 
-import akka.stream.Materializer
 import cats.implicits.catsSyntaxEq
 import controllers.{Assets, AssetsBuilder, AssetsMetadata}
+import org.apache.pekko.stream.Materializer
+
 import javax.inject.{Inject, Named, Singleton}
-import play.api.Configuration
+import play.api.{Configuration, Environment}
 import play.api.http.HttpErrorHandler
 import play.api.mvc.{Action, AnyContent, ControllerComponents, DefaultActionBuilder}
 import play.filters.cors.CORSActionBuilder
@@ -37,8 +38,8 @@ class DocumentationController @Inject()(
   cc:                            ControllerComponents,
   configuration:                 Configuration,
   @Named("apiStatus") apiStatus: String
-)(implicit materializer:         Materializer, executionContext: ExecutionContext)
-    extends AssetsBuilder(httpErrorHandler, meta) {
+)(implicit materializer: Materializer, executionContext: ExecutionContext, env: Environment)
+    extends AssetsBuilder(httpErrorHandler, meta, env) {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] =
     super.at(s"/public/api/documentation/$version", s"${endpointName.replaceAll(" ", "-")}.xml")

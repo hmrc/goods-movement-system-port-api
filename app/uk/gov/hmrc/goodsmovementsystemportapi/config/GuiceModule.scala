@@ -18,13 +18,12 @@ package uk.gov.hmrc.goodsmovementsystemportapi.config
 
 import com.google.inject.name.Named
 import com.google.inject.{AbstractModule, Provides}
-import play.api.libs.concurrent.AkkaGuiceSupport
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import javax.inject.Singleton
 
-class GuiceModule(environment: Environment, configuration: Configuration) extends AbstractModule with AkkaGuiceSupport {
+class GuiceModule(environment: Environment, configuration: Configuration) extends AbstractModule {
 
   override def configure(): Unit = {}
 

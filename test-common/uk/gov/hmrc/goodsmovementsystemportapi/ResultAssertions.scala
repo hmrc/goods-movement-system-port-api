@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers

@@ -24,10 +24,9 @@ import play.api.libs.json.{JsString, Json}
 import uk.gov.hmrc.goodsmovementsystemportapi.ResultAssertions
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.{ErrorResponse, GetControlledArrivalErrors, GetControlledDepartureErrors, GetDepartureErrors, PortErrors}
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.ControllerBaseSpec
-import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledArrivalsGmrResponse, GetControlledDeparturesGmrReducedResponse, GetControlledDeparturesGmrResponse, GetPortDepartureExpandedGmrResponse}
+import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledDeparturesGmrReducedResponse, GetPortDepartureExpandedGmrResponse}
 import uk.gov.hmrc.http.HttpResponse
 
-import java.time.Instant
 import scala.concurrent.Future
 
 class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
@@ -159,7 +158,6 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
   "getDeparturesGmr" when {
     "get departures gmr is successful" should {
       "return 200 OK" in new Setup {
-        val updatedDateTime = Instant.parse("2021-07-03T16:33:51.000z")
         when(mockPortService.getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any()))
           .thenReturn(EitherT.rightT[Future, GetDepartureErrors](departuresExtendedGmrResponse))
 
@@ -168,7 +166,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         status(result) shouldBe OK
         val actual = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
         actual shouldBe departuresExtendedGmrResponse
-        actual.map(x => (Json.toJson(x) \\ "updatedDateTime")(0) shouldBe JsString("2021-07-03T16:33:51.000Z"))
+        actual.map(x => (Json.toJson(x) \\ "updatedDateTime").headOption shouldBe Some(JsString("2021-07-03T16:33:51.000Z")))
 
         verify(mockPortService).getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any())
       }
@@ -184,7 +182,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         status(result) shouldBe OK
         val actual = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
         actual shouldBe departuresExtendedGmrResponse
-        actual.map(x => (Json.toJson(x) \\ "updatedDateTime")(0) shouldBe JsString("2021-07-03T16:33:51.000Z"))
+        actual.map(x => (Json.toJson(x) \\ "updatedDateTime").headOption shouldBe Some(JsString("2021-07-03T16:33:51.000Z")))
         verify(mockPortService).getDepartures(mEq("clientId"), mEq(portId), mEq(true), mEq(None), mEq(None))(any())
       }
     }

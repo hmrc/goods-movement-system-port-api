@@ -24,8 +24,7 @@ import play.api.mvc.Result
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.NestedError
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.{BaseISpec, SchemaFileSearcher}
 import uk.gov.hmrc.goodsmovementsystemportapi.schemas.ApiVersion
-
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.concurrent.Future
 
 trait SchemaContractBehaviours {

@@ -43,7 +43,7 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
         Map(
           HttpResponse(200, Json.obj("code" -> "INVALID_DATE_COMBINATION"), Map.empty[String, Seq[String]]) -> InvalidDateCombinationError,
           HttpResponse(200, Json.obj("code" -> "TOO_MANY_RESULTS"), Map.empty[String, Seq[String]])         -> TooManyGmrsError
-        ).foreach {
+        ).foreachEntry {
           case (response, expected) =>
             val result = reads
               .readEitherOf(

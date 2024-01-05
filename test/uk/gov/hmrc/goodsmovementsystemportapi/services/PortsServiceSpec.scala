@@ -53,7 +53,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         val result = await(service.getDepartures("clientId", portId, false, None, None).value)
 
-        result.right.value shouldBe departuresExtendedGmrResponse
+        result.value shouldBe departuresExtendedGmrResponse
 
         verify(mockGoodsMovementSystemConnector).getDeparturesGmr(portId, None, None)(hc)
       }
@@ -93,7 +93,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         val result = await(service.getDepartures("clientId", portId, false, None, None).value)
 
-        result.right.value shouldBe multiple
+        result.value shouldBe multiple
 
         verify(mockGoodsMovementSystemConnector).getDeparturesGmr(portId, None, None)(hc)
       }
@@ -111,7 +111,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         val result = await(service.getDepartures("clientId", portId, false, None, None).value)
 
-        result.right.value shouldBe departuresExtendedGmrResponse
+        result.value shouldBe departuresExtendedGmrResponse
 
         verify(mockGoodsMovementSystemConnector).getDeparturesGmr(portIdTrimed, None, None)(hc)
       }
@@ -165,7 +165,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
             .thenReturn(OptionT.some[Future](portId))
 
           val result = await(service.getArrivals("clientId", portId, false).value)
-          result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
         }
@@ -203,7 +203,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getArrivals("clientId", portId, false).value)
 
-          result.right.value shouldBe withPending.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe withPending.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
         }
@@ -221,7 +221,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getArrivals("clientId", portId, false).value)
 
-          result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portIdTrimed)(hc)
         }
@@ -271,7 +271,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
           .thenReturn(OptionT.some[Future](portId))
 
         val result = await(service.getArrivals("clientId", portId, false).value)
-        result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+        result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
         verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
       }
@@ -287,7 +287,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
           .thenReturn(OptionT.some[Future](portId))
 
         val result = await(service.getArrivals("clientId", portId, true).value)
-        result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+        result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
         verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
       }
@@ -307,7 +307,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portId)(hc)
         }
@@ -343,7 +343,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe withPending.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe withPending.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portId)(hc)
         }
@@ -361,7 +361,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portIdTrimed)(hc)
         }
@@ -418,7 +418,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getArrivals("clientId", portId, false).value)
 
-          result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
         }
@@ -445,7 +445,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getArrivals("clientId", portId, false).value)
 
-          result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portId)(hc)
         }
@@ -463,7 +463,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getArrivals("clientId", portId, false).value)
 
-          result.right.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
+          result.value shouldBe arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledArrivalsGmr(portIdTrimed)(hc)
         }
@@ -518,7 +518,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portId)(hc)
         }
@@ -546,7 +546,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portId)(hc)
         }
@@ -564,7 +564,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
           val result = await(service.getControlledDepartures("clientId", portId, false).value)
 
-          result.right.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
+          result.value shouldBe departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)
 
           verify(mockGoodsMovementSystemConnector).getControlledDeparturesGmr(portIdTrimed)(hc)
         }
