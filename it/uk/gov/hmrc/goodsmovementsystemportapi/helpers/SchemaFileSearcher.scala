@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils
 import org.scalatest.exceptions.TestFailedException
 import uk.gov.hmrc.goodsmovementsystemportapi.schemas.ApiVersion
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object SchemaFileSearcher {
 

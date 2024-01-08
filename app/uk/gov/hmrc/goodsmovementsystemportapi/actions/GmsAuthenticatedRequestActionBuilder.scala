@@ -24,7 +24,6 @@ import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.goodsmovementsystemportapi.actions.requests.{GmsAuthRequest, VersionedRequest}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendHeaderCarrierProvider
-import uk.gov.hmrc.play.bootstrap.config.AuthRedirects
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,7 +35,6 @@ class GmsAuthenticatedRequestActionBuilder @Inject()(
 )(implicit val executionContext: ExecutionContext)
     extends ActionFunction[VersionedRequest, GmsAuthRequest]
     with Results
-    with AuthRedirects
     with AuthorisedFunctions
     with BackendHeaderCarrierProvider {
 

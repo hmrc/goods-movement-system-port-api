@@ -16,12 +16,12 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.platform
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.{aResponse, post, stubFor, urlMatching}
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration._
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -54,7 +54,6 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
 
   override def newAppForTest(testData: TestData): Application =
     GuiceApplicationBuilder()
-      .disable[com.kenshoo.play.metrics.PlayModule]
       .configure("run.mode" -> "Stub")
       .configure(Map[String, Any](
         "appName"                                        -> "application-name",
@@ -67,7 +66,7 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
       .in(Mode.Test)
       .build()
 
-  override def beforeEach() {
+  override def beforeEach(): Unit = {
     wireMockServer.start()
     WireMock.configureFor(stubHost, stubPort)
     stubFor(post(urlMatching("/registration")).willReturn(aResponse().withStatus(204)))
@@ -84,12 +83,11 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
   "microservice" should {
     "provide definition endpoint and documentation endpoint for each api" in new Setup {
 
-      def verifyDocumentationPresent(version: String, endpointName: String) {
+      def verifyDocumentationPresent(version: String, endpointName: String): Unit =
         withClue(s"Getting documentation version '$version' of endpoint '$endpointName'") {
           val documentationResult = documentationController.documentation(version, endpointName)(request)
           status(documentationResult) shouldBe 200
         }
-      }
 
       val result: Future[Result] = documentationController.definition()(request)
       status(result) shouldBe 200

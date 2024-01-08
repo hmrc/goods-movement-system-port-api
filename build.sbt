@@ -1,9 +1,7 @@
 import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
-import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 import wartremover.Wart._
 import sbt.Keys.evictionErrorLevel
 
@@ -13,7 +11,7 @@ lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     majorVersion := 0,
-    scalaVersion := "2.13.10",
+    scalaVersion := "2.13.12",
     scalacOptions ++= Seq(
       "-Wconf:src=routes/.*:s", //Silence all warnings in generated routes
       "-Ymacro-annotations",
@@ -22,17 +20,10 @@ lazy val microservice = Project(appName, file("."))
   .settings( //fix scaladoc generation in jenkins
     Compile / scalacOptions -= "utf8",
     scalacOptions += "-language:postfixOps")
+  .settings(CodeCoverageSettings.settings)
   .settings(
-    ScoverageKeys.coverageExcludedFiles :=
-      "<empty>;com.kenshoo.play.metrics.*;.*definition.*;prod.*;testOnlyDoNotUseInAppConf.*;" +
-        "app.*;.*BuildInfo.*;.*Routes.*;.*repositories.*;.*controllers.test.*;.*services.test.*;.*metrics.*",
-    ScoverageKeys.coverageMinimumStmtTotal := 80,
-    ScoverageKeys.coverageFailOnMinimum := true,
-    ScoverageKeys.coverageHighlighting := true,
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
-    playDefaultPort := 8988
-  )
-  .settings(
+    playDefaultPort := 8988,
     routesImport ++= Seq(
       "java.time.Instant",
       "uk.gov.hmrc.goodsmovementsystemportapi.utils.query.InstantBindableUtil._"
