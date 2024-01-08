@@ -83,12 +83,11 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
   "microservice" should {
     "provide definition endpoint and documentation endpoint for each api" in new Setup {
 
-      def verifyDocumentationPresent(version: String, endpointName: String): Unit = {
+      def verifyDocumentationPresent(version: String, endpointName: String): Unit =
         withClue(s"Getting documentation version '$version' of endpoint '$endpointName'") {
           val documentationResult = documentationController.documentation(version, endpointName)(request)
           status(documentationResult) shouldBe 200
         }
-      }
 
       val result: Future[Result] = documentationController.definition()(request)
       status(result) shouldBe 200

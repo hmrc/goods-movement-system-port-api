@@ -38,7 +38,7 @@ class DocumentationController @Inject()(
   cc:                            ControllerComponents,
   configuration:                 Configuration,
   @Named("apiStatus") apiStatus: String
-)(implicit materializer: Materializer, executionContext: ExecutionContext, env: Environment)
+)(implicit materializer:         Materializer, executionContext: ExecutionContext, env: Environment)
     extends AssetsBuilder(httpErrorHandler, meta, env) {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] =
