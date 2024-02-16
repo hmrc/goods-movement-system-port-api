@@ -1,13 +1,7 @@
 @(status: String, endpointsEnabled: Boolean)
 
 {
-  "scopes": [
-    {
-      "key": "read:goods-movement-system-port",
-      "name": "read and write goods vehicle movement service records",
-      "description": "Goods Vehicle Movements API"
-    }
-  ],
+  "scopes": [],
   "api": {
     "name": "Goods Vehicle Movements Port",
     "description": "This API provides resources for ports related to the Goods Vehicle Movement Service.",
