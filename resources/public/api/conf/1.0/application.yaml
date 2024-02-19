@@ -627,8 +627,7 @@ components:
       flows:
         clientCredentials:
           tokenUrl: https://api.service.hmrc.gov.uk/oauth/token
-          scopes:
-            read:goods-movement-system-port: Goods Vehicle Movements API
+          scopes: {}
   schemas:
     errorResponse:
       title: errorResponse
