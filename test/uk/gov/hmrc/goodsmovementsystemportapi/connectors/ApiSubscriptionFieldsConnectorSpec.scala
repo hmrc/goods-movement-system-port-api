@@ -49,7 +49,9 @@ class ApiSubscriptionFieldsConnectorSpec extends BaseSpec with FutureAwaits {
             .GET[SubscriptionFieldsResponse](mEq(s"$baseUrl/field/application/$clientId/context/$apiContext/version/$apiVersion"), any(), any())(
               any(),
               any(),
-              any()))
+              any()
+            )
+        )
           .thenReturn(Future.successful(expectedSuccessResponse))
 
         val result = await(connector.getSubscriptionFields(clientId)(hc))

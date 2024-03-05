@@ -38,5 +38,6 @@ object ApiSubscriptionFieldsStubs {
                  |  }
                  |}
                  |""".stripMargin)
-        ))
+        )
+    )
 }

@@ -34,39 +34,39 @@ import java.time.{Instant, LocalDate}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class PortsService @Inject()(
+class PortsService @Inject() (
   goodsMovementSystemConnector:          GoodsMovementSystemConnector,
   apiSubscriptionFieldsService:          ApiSubscriptionFieldsService,
   gmsReferenceDataService:               GmsReferenceDataService,
   appConfig:                             AppConfig,
   @Named("showPendingGmrs") showPending: Boolean
-)(implicit executionContext:             ExecutionContext) {
+)(implicit executionContext: ExecutionContext) {
 
-  def getArrivals(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(
-    implicit hc:            HeaderCarrier): EitherT[Future, GetControlledArrivalErrors, List[GetControlledArrivalsGmrReducedResponse]] =
+  def getArrivals(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(implicit
+    hc: HeaderCarrier
+  ): EitherT[Future, GetControlledArrivalErrors, List[GetControlledArrivalsGmrReducedResponse]] =
     for {
       portIdVal <- validate(clientId, portId, ignoreEffectiveDateHeader)
       response  <- EitherT.liftF(goodsMovementSystemConnector.getControlledArrivalsGmr(portIdVal))
-    } yield {
+    } yield
       if (showPending) {
         response.map(GetControlledArrivalsGmrReducedResponse.apply)
       } else {
         response.filter(_.inspectionRequired.exists(identity)).map(GetControlledArrivalsGmrReducedResponse.apply)
       }
-    }
 
-  def getControlledDepartures(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(
-    implicit hc:                        HeaderCarrier): EitherT[Future, GetControlledDepartureErrors, List[GetControlledDeparturesGmrReducedResponse]] =
+  def getControlledDepartures(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(implicit
+    hc: HeaderCarrier
+  ): EitherT[Future, GetControlledDepartureErrors, List[GetControlledDeparturesGmrReducedResponse]] =
     for {
       portIdVal <- validate(clientId, portId, ignoreEffectiveDateHeader)
       response  <- EitherT.liftF(goodsMovementSystemConnector.getControlledDeparturesGmr(portIdVal))
-    } yield {
+    } yield
       if (showPending) {
         response.map(GetControlledDeparturesGmrReducedResponse.apply)
       } else {
         response.filter(_.inspectionRequired.exists(identity)).map(GetControlledDeparturesGmrReducedResponse.apply)
       }
-    }
 
   def getDepartures(
     clientId:                  String,
@@ -74,11 +74,10 @@ class PortsService @Inject()(
     ignoreEffectiveDateHeader: Boolean,
     lastUpdatedFrom:           Option[Instant],
     lastUpdatedTo:             Option[Instant]
-  )(implicit hc:               HeaderCarrier): EitherT[Future, GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]] = {
+  )(implicit hc: HeaderCarrier): EitherT[Future, GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]] = {
     val isValidDateCombination: Boolean = Apply[Option]
-      .map2(lastUpdatedFrom, lastUpdatedTo) {
-        case (from, to) =>
-          from.isBefore(to)
+      .map2(lastUpdatedFrom, lastUpdatedTo) { case (from, to) =>
+        from.isBefore(to)
       }
       .getOrElse(true)
 
@@ -89,21 +88,24 @@ class PortsService @Inject()(
     } yield response
   }
 
-  private def validate(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(
-    implicit hc:                 HeaderCarrier): EitherT[Future, SubscriptionValidationErrors, String] = {
+  private def validate(clientId: String, portId: String, ignoreEffectiveDateHeader: Boolean)(implicit
+    hc: HeaderCarrier
+  ): EitherT[Future, SubscriptionValidationErrors, String] = {
     val portIdVal = portId.replaceAll("\\s", "")
 
     for {
       authorisedPortIds <- apiSubscriptionFieldsService
-                            .getField(clientId, SubscriptionFieldsResponse.portIdKey)
-                            .toRight(PortErrors.subscriptionPortIdNotFoundError)
+                             .getField(clientId, SubscriptionFieldsResponse.portIdKey)
+                             .toRight(PortErrors.subscriptionPortIdNotFoundError)
       _ <- EitherT.cond[Future](
-            authorisedPortIds.split(",").map(_.replaceAll("\\s", "")).contains(portIdVal) && portIdVal.length > 0,
-            (),
-            PortErrors.portIdMismatchError)
+             authorisedPortIds.split(",").map(_.replaceAll("\\s", "")).contains(portIdVal) && portIdVal.length > 0,
+             (),
+             PortErrors.portIdMismatchError
+           )
       authorisedPort <- EitherT.fromOptionF(
-                         gmsReferenceDataService.getReferenceData.map(_.ports.find(port => port.portId === portIdVal.toInt)),
-                         PortErrors.portIdMismatchError)
+                          gmsReferenceDataService.getReferenceData.map(_.ports.find(port => port.portId === portIdVal.toInt)),
+                          PortErrors.portIdMismatchError
+                        )
       _ <- EitherT.fromEither[Future](validateRoute(authorisedPort, ignoreEffectiveDateHeader))
     } yield portIdVal
   }
@@ -111,14 +113,14 @@ class PortsService @Inject()(
   private def validateRoute(authorisedPort: Port, ignoreEffectiveDateHeader: Boolean): Either[SubscriptionValidationErrors, Port] =
     for {
       _ <- if (isEffectiveDateCheckRequired(ignoreEffectiveDateHeader)) {
-            Either.cond(
-              authorisedPort.portEffectiveTo.forall(LocalDate.now().isBefore) && LocalDate.now().isAfter(authorisedPort.portEffectiveFrom),
-              authorisedPort,
-              portIdMismatchError
-            )
-          } else {
-            authorisedPort.asRight[SubscriptionValidationErrors]
-          }
+             Either.cond(
+               authorisedPort.portEffectiveTo.forall(LocalDate.now().isBefore) && LocalDate.now().isAfter(authorisedPort.portEffectiveFrom),
+               authorisedPort,
+               portIdMismatchError
+             )
+           } else {
+             authorisedPort.asRight[SubscriptionValidationErrors]
+           }
 
     } yield authorisedPort
 

@@ -26,7 +26,8 @@ case class GetControlledDeparturesGmrResponse(
   vehicleRegNum:           Option[String],
   trailerRegistrationNums: Option[List[String]],
   containerReferenceNums:  Option[List[String]],
-  checkedInCrossing:       Crossing)
+  checkedInCrossing:       Crossing
+)
 
 object GetControlledDeparturesGmrResponse {
 

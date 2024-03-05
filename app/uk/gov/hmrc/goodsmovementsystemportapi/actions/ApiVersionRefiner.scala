@@ -32,10 +32,10 @@ import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
 @Singleton
-class ApiVersionRefiner @Inject()()(implicit val executionContext: ExecutionContext) extends ActionRefiner[Request, VersionedRequest] {
+class ApiVersionRefiner @Inject() ()(implicit val executionContext: ExecutionContext) extends ActionRefiner[Request, VersionedRequest] {
 
-  val matchHeader
-    : String => Option[Match] = new Regex("""^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$""", "version", "contenttype") findFirstMatchIn _
+  val matchHeader: String => Option[Match] =
+    new Regex("""^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$""", "version", "contenttype") findFirstMatchIn _
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, VersionedRequest[A]]] =
     Future {
@@ -45,11 +45,14 @@ class ApiVersionRefiner @Inject()()(implicit val executionContext: ExecutionCont
         apiVersion <- ApiVersion.of(version).toRight(UnsupportedVersion).right
       } yield apiVersion
 
-      eitherResultApiVersion.fold({
-        case MissingAcceptHeader       => errorResponse
-        case InvalidAcceptHeaderFormat => errorResponse
-        case UnsupportedVersion        => errorResponse
-      }, requestWithVersion(request))
+      eitherResultApiVersion.fold(
+        {
+          case MissingAcceptHeader       => errorResponse
+          case InvalidAcceptHeaderFormat => errorResponse
+          case UnsupportedVersion        => errorResponse
+        },
+        requestWithVersion(request)
+      )
     }
 
   def errorResponse[A]: Either[Result, VersionedRequest[A]] =

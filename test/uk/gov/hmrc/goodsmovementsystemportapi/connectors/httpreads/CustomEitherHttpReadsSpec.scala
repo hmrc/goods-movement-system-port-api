@@ -43,19 +43,19 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
         Map(
           HttpResponse(200, Json.obj("code" -> "INVALID_DATE_COMBINATION"), Map.empty[String, Seq[String]]) -> InvalidDateCombinationError,
           HttpResponse(200, Json.obj("code" -> "TOO_MANY_RESULTS"), Map.empty[String, Seq[String]])         -> TooManyGmrsError
-        ).foreachEntry {
-          case (response, expected) =>
-            val result = reads
-              .readEitherOf(
-                reads.getDeparturesPartialFunction,
-                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw)))
-              .read("GET", "http://localhost", response)
+        ).foreachEntry { case (response, expected) =>
+          val result = reads
+            .readEitherOf(
+              reads.getDeparturesPartialFunction,
+              HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw))
+            )
+            .read("GET", "http://localhost", response)
 
-            result.left.value shouldBe expected
+          result.left.value shouldBe expected
         }
       }
 
-      //This test only covers a limited amount of 5xx and 4xx cases.
+      // This test only covers a limited amount of 5xx and 4xx cases.
       "read unsuccessful response and transform to base errors" in new Setup {
         List(
           HttpResponse(400, ""),
@@ -74,8 +74,10 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
             reads
               .readEitherOf(
                 reads.getDeparturesPartialFunction,
-                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw)))
-              .read("GET", "http://localhost", response))
+                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw))
+              )
+              .read("GET", "http://localhost", response)
+          )
         }
       }
     }

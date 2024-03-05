@@ -33,10 +33,10 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CustomErrorHandler @Inject()(
-  auditConnector:            AuditConnector,
-  defaultHttpAuditEvent:     DefaultHttpAuditEvent,
-  configuration:             Configuration
+class CustomErrorHandler @Inject() (
+  auditConnector:        AuditConnector,
+  defaultHttpAuditEvent: DefaultHttpAuditEvent,
+  configuration:         Configuration
 )(implicit executionContext: ExecutionContext)
     extends JsonErrorHandler(auditConnector, defaultHttpAuditEvent, configuration)
     with Results {
@@ -51,20 +51,20 @@ class CustomErrorHandler @Inject()(
         case NOT_FOUND =>
           auditConnector.sendEvent(
             dataEvent(
-              eventType       = "ResourceNotFound",
+              eventType = "ResourceNotFound",
               transactionName = "Resource Endpoint Not Found",
-              request         = request,
-              detail          = Map.empty[String, String]
+              request = request,
+              detail = Map.empty[String, String]
             )
           )
           NotFound(toJson(ErrorResponse(NOT_FOUND, "URI not found", request.path)))
         case BAD_REQUEST =>
           auditConnector.sendEvent(
             dataEvent(
-              eventType       = "ServerValidationError",
+              eventType = "ServerValidationError",
               transactionName = "Request bad format exception",
-              request         = request,
-              detail          = Map.empty[String, String]
+              request = request,
+              detail = Map.empty[String, String]
             )
           )
           if (request.method === "GET")
@@ -74,10 +74,10 @@ class CustomErrorHandler @Inject()(
         case _ =>
           auditConnector.sendEvent(
             dataEvent(
-              eventType       = "ClientError",
+              eventType = "ClientError",
               transactionName = s"A client error occurred, status: ${statusCode.toString}",
-              request         = request,
-              detail          = Map.empty[String, String]
+              request = request,
+              detail = Map.empty[String, String]
             )
           )
           Status(statusCode)(toJson(ErrorResponse(statusCode, "OTHER_ERROR", message)))
@@ -96,7 +96,7 @@ class CustomErrorHandler @Inject()(
       case _ => "ServerInternalError"
     }
 
-    //TODO reconfirm all these errors.
+    // TODO reconfirm all these errors.
     val errorResponse = ex match {
       case e: GatewayTimeoutException =>
         logger.warn(message, e)
@@ -117,10 +117,10 @@ class CustomErrorHandler @Inject()(
 
     auditConnector.sendEvent(
       dataEvent(
-        eventType       = eventType,
+        eventType = eventType,
         transactionName = "Unexpected error",
-        request         = request,
-        detail          = Map("transactionFailureReason" -> ex.getMessage)
+        request = request,
+        detail = Map("transactionFailureReason" -> ex.getMessage)
       )
     )
 

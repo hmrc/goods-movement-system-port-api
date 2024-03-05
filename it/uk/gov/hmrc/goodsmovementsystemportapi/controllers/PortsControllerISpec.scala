@@ -60,7 +60,8 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
       status(result) shouldBe OK
       contentAsJson(result).as[List[GetControlledArrivalsGmrReducedResponse]] shouldBe arrivalsGmrResponse.map(
-        GetControlledArrivalsGmrReducedResponse.apply)
+        GetControlledArrivalsGmrReducedResponse.apply
+      )
 
       validateAgainstSchema(result, "get-controlled-gmrs-for-arrival-schema.json", Version_1_0)
       verify(getRequestedFor(urlEqualTo("/goods-movement-system/1/arrivals/controlled")))
@@ -124,7 +125,8 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
       status(result) shouldBe OK
       contentAsJson(result).as[List[GetControlledDeparturesGmrReducedResponse]] shouldBe departuresGmrResponse.map(
-        GetControlledDeparturesGmrReducedResponse.apply)
+        GetControlledDeparturesGmrReducedResponse.apply
+      )
 
       validateAgainstSchema(result, "get-controlled-gmrs-for-departure-schema.json", Version_1_0)
       verify(getRequestedFor(urlEqualTo("/goods-movement-system/1/departures/controlled")))
@@ -252,7 +254,8 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
           result,
           "TOO_MANY_RESULTS",
           "Too many goods movement records were found. Please filter down your query.",
-          nestedErrorCount = 0)
+          nestedErrorCount = 0
+        )
 
         verify(getRequestedFor(urlEqualTo("/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0")))
       }

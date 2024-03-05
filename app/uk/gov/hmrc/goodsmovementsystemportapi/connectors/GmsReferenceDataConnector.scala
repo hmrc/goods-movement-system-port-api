@@ -23,10 +23,10 @@ import uk.gov.hmrc.http.HttpReads.Implicits.readFromJson
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GmsReferenceDataConnector @Inject()(
+class GmsReferenceDataConnector @Inject() (
   httpClient:                         HttpClient,
   @Named("referenceDataUrl") baseUrl: String
-)(implicit executionContext:          ExecutionContext) {
+)(implicit executionContext: ExecutionContext) {
 
   private def url(path: String) = s"$baseUrl$path"
 

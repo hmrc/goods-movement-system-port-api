@@ -19,7 +19,7 @@ package uk.gov.hmrc.goodsmovementsystemportapi.helpers
 import com.typesafe.config.ConfigFactory
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.goodsmovementsystemportapi.config.AppConfig
-import uk.gov.hmrc.play.bootstrap.config.{ServicesConfig}
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 trait Configs {
 

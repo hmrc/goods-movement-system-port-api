@@ -30,7 +30,7 @@ import uk.gov.hmrc.goodsmovementsystemportapi.platform.views.txt
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class DocumentationController @Inject()(
+class DocumentationController @Inject() (
   defaultActionBuilder:          DefaultActionBuilder,
   httpErrorHandler:              HttpErrorHandler,
   meta:                          AssetsMetadata,
@@ -38,7 +38,7 @@ class DocumentationController @Inject()(
   cc:                            ControllerComponents,
   configuration:                 Configuration,
   @Named("apiStatus") apiStatus: String
-)(implicit materializer:         Materializer, executionContext: ExecutionContext, env: Environment)
+)(implicit materializer: Materializer, executionContext: ExecutionContext, env: Environment)
     extends AssetsBuilder(httpErrorHandler, meta, env) {
 
   def documentation(version: String, endpointName: String): Action[AnyContent] =
@@ -47,7 +47,8 @@ class DocumentationController @Inject()(
   def definition(): Action[AnyContent] = defaultActionBuilder.async {
     Future.successful(
       Ok(txt.definition(apiStatus, apiStatus =!= "ALPHA"))
-        .withHeaders("Content-Type" -> "application/json"))
+        .withHeaders("Content-Type" -> "application/json")
+    )
   }
 
   def yaml(version: String, file: String): Action[AnyContent] =

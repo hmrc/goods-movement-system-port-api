@@ -34,9 +34,9 @@ trait CustomEitherHttpReads {
     for {
       response <- HttpReads[HttpResponse]
       result <- customErrors
-                 .andThen(_.asLeft[P])
-                 .andThen(HttpReads.pure _)
-                 .applyOrElse[HttpResponse, HttpReads[Either[E, P]]](response, _ => rds.map(_.asRight[E]))
+                  .andThen(_.asLeft[P])
+                  .andThen(HttpReads.pure _)
+                  .applyOrElse[HttpResponse, HttpReads[Either[E, P]]](response, _ => rds.map(_.asRight[E]))
     } yield result
 
   implicit def getDeparturesPartialFunction[P]: PartialFunction[HttpResponse, GetDepartureErrors] = {

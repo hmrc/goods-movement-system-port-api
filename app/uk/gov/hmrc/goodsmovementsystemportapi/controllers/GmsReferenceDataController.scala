@@ -25,10 +25,10 @@ import uk.gov.hmrc.goodsmovementsystemportapi.services.GmsReferenceDataService
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class GmsReferenceDataController @Inject()(
-  gmsActionBuilders:         GmsActionBuilders,
-  gmsReferenceDataService:   GmsReferenceDataService,
-  cc:                        ControllerComponents
+class GmsReferenceDataController @Inject() (
+  gmsActionBuilders:       GmsActionBuilders,
+  gmsReferenceDataService: GmsReferenceDataService,
+  cc:                      ControllerComponents
 )(implicit executionContext: ExecutionContext)
     extends BaseGmrController(cc) {
 

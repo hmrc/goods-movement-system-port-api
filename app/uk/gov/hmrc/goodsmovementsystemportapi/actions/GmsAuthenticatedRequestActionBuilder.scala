@@ -28,10 +28,10 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendHeaderCarrierProvide
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GmsAuthenticatedRequestActionBuilder @Inject()(
-  val config:                    Configuration,
-  val env:                       Environment,
-  val authConnector:             AuthConnector
+class GmsAuthenticatedRequestActionBuilder @Inject() (
+  val config:        Configuration,
+  val env:           Environment,
+  val authConnector: AuthConnector
 )(implicit val executionContext: ExecutionContext)
     extends ActionFunction[VersionedRequest, GmsAuthRequest]
     with Results
@@ -45,7 +45,7 @@ class GmsAuthenticatedRequestActionBuilder @Inject()(
       }(hc(request), executionContext)
       .recover(handleFailure)
 
-  def handleFailure: PartialFunction[Throwable, Result] = {
-    case _: NoActiveSession => Unauthorized
+  def handleFailure: PartialFunction[Throwable, Result] = { case _: NoActiveSession =>
+    Unauthorized
   }
 }

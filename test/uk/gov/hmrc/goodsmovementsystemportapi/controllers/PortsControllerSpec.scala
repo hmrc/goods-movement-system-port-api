@@ -51,7 +51,8 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledArrivalsGmrReducedResponse]] shouldBe arrivalsGmrResponse.map(
-          GetControlledArrivalsGmrReducedResponse.apply)
+          GetControlledArrivalsGmrReducedResponse.apply
+        )
 
         verify(mockPortService).getArrivals(mEq("clientId"), mEq(portId), mEq(false))(any())
       }
@@ -66,7 +67,8 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledArrivalsGmrReducedResponse]] shouldBe arrivalsGmrResponse.map(
-          GetControlledArrivalsGmrReducedResponse.apply)
+          GetControlledArrivalsGmrReducedResponse.apply
+        )
 
         verify(mockPortService).getArrivals(mEq("clientId"), mEq(portId), mEq(true))(any())
       }
@@ -78,18 +80,21 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
           PortErrors.subscriptionPortIdNotFoundError -> ErrorResponse(
             403,
             "PORT_ID_NOT_FOUND",
-            "No valid port in your subscription fields, please contact SDST."),
+            "No valid port in your subscription fields, please contact SDST."
+          ),
           PortErrors.portIdMismatchError -> ErrorResponse(403, "PORT_ID_NOT_FOUND", "The port supplied was not a valid port for you.")
-        ).foreach {
-          case (error, response) =>
-            when(mockPortService.getArrivals(mEq("clientId"), mEq(portId), mEq(false))(any()))
-              .thenReturn(EitherT[Future, GetControlledArrivalErrors, List[GetControlledArrivalsGmrReducedResponse]](
-                Future(error.asLeft[List[GetControlledArrivalsGmrReducedResponse]])))
+        ).foreach { case (error, response) =>
+          when(mockPortService.getArrivals(mEq("clientId"), mEq(portId), mEq(false))(any()))
+            .thenReturn(
+              EitherT[Future, GetControlledArrivalErrors, List[GetControlledArrivalsGmrReducedResponse]](
+                Future(error.asLeft[List[GetControlledArrivalsGmrReducedResponse]])
+              )
+            )
 
-            val result = controller.getControlledGmrsForArrivals(portId)(fakeRequest)
+          val result = controller.getControlledGmrsForArrivals(portId)(fakeRequest)
 
-            status(result) shouldBe response.httpStatusCode
-            assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
+          status(result) shouldBe response.httpStatusCode
+          assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
         }
 
         verify(mockPortService, times(2)).getArrivals(mEq("clientId"), mEq(portId), mEq(false))(any())
@@ -103,13 +108,15 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
 
         when(mockPortService.getControlledDepartures(mEq("clientId"), mEq(portId), mEq(false))(any()))
           .thenReturn(
-            EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)))
+            EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply))
+          )
 
         val result = controller.getControlledGmrsForDepartures(portId)(fakeRequest)
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledDeparturesGmrReducedResponse]] shouldBe departuresGmrResponse.map(
-          GetControlledDeparturesGmrReducedResponse.apply)
+          GetControlledDeparturesGmrReducedResponse.apply
+        )
 
         verify(mockPortService).getControlledDepartures(mEq("clientId"), mEq(portId), mEq(false))(any())
       }
@@ -117,14 +124,16 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
 
         when(mockPortService.getControlledDepartures(mEq("clientId"), mEq(portId), mEq(true))(any()))
           .thenReturn(
-            EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply)))
+            EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply))
+          )
 
         val result =
           controller.getControlledGmrsForDepartures(portId)(fakeRequest.withHeaders(fakeRequest.headers.add("IGNORE-Effective-DatES" -> "true")))
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledDeparturesGmrReducedResponse]] shouldBe departuresGmrResponse.map(
-          GetControlledDeparturesGmrReducedResponse.apply)
+          GetControlledDeparturesGmrReducedResponse.apply
+        )
 
         verify(mockPortService).getControlledDepartures(mEq("clientId"), mEq(portId), mEq(true))(any())
       }
@@ -136,18 +145,21 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
           PortErrors.subscriptionPortIdNotFoundError -> ErrorResponse(
             403,
             "PORT_ID_NOT_FOUND",
-            "No valid port in your subscription fields, please contact SDST."),
+            "No valid port in your subscription fields, please contact SDST."
+          ),
           PortErrors.portIdMismatchError -> ErrorResponse(403, "PORT_ID_NOT_FOUND", "The port supplied was not a valid port for you.")
-        ).foreach {
-          case (error, response) =>
-            when(mockPortService.getControlledDepartures(mEq("clientId"), mEq(portId), mEq(false))(any()))
-              .thenReturn(EitherT[Future, GetControlledDepartureErrors, List[GetControlledDeparturesGmrReducedResponse]](
-                Future(error.asLeft[List[GetControlledDeparturesGmrReducedResponse]])))
+        ).foreach { case (error, response) =>
+          when(mockPortService.getControlledDepartures(mEq("clientId"), mEq(portId), mEq(false))(any()))
+            .thenReturn(
+              EitherT[Future, GetControlledDepartureErrors, List[GetControlledDeparturesGmrReducedResponse]](
+                Future(error.asLeft[List[GetControlledDeparturesGmrReducedResponse]])
+              )
+            )
 
-            val result = controller.getControlledGmrsForDepartures(portId)(fakeRequest)
+          val result = controller.getControlledGmrsForDepartures(portId)(fakeRequest)
 
-            status(result) shouldBe response.httpStatusCode
-            assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
+          status(result) shouldBe response.httpStatusCode
+          assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
         }
 
         verify(mockPortService, times(2)).getControlledDepartures(mEq("clientId"), mEq(portId), mEq(false))(any())
@@ -193,23 +205,27 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
           PortErrors.subscriptionPortIdNotFoundError -> ErrorResponse(
             403,
             "PORT_ID_NOT_FOUND",
-            "No valid port in your subscription fields, please contact SDST."),
+            "No valid port in your subscription fields, please contact SDST."
+          ),
           PortErrors.portIdMismatchError -> ErrorResponse(403, "PORT_ID_NOT_FOUND", "The port supplied was not a valid port for you."),
           PortErrors.tooManyGmrsError -> ErrorResponse(
             400,
             "TOO_MANY_RESULTS",
-            "Too many goods movement records were found. Please filter down your query."),
+            "Too many goods movement records were found. Please filter down your query."
+          ),
           PortErrors.invalidDateCombinationError -> ErrorResponse(400, "INVALID_DATE_COMBINATION", "lastUpdatedFrom should be before lastUpdatedTo.")
-        ).foreach {
-          case (error, response) =>
-            when(mockPortService.getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any()))
-              .thenReturn(EitherT[Future, GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]](
-                Future(error.asLeft[List[GetPortDepartureExpandedGmrResponse]])))
+        ).foreach { case (error, response) =>
+          when(mockPortService.getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any()))
+            .thenReturn(
+              EitherT[Future, GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]](
+                Future(error.asLeft[List[GetPortDepartureExpandedGmrResponse]])
+              )
+            )
 
-            val result = controller.getGmrsForDepartures(portId, None, None)(fakeRequest)
+          val result = controller.getGmrsForDepartures(portId, None, None)(fakeRequest)
 
-            status(result) shouldBe response.httpStatusCode
-            assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
+          status(result) shouldBe response.httpStatusCode
+          assertErrorResponse(result, response.errorCode, response.message, nestedErrorCount = 0)
         }
 
         verify(mockPortService, times(4)).getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any())
