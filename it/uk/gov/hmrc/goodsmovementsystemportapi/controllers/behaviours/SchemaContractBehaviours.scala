@@ -56,8 +56,9 @@ trait SchemaContractBehaviours {
       NestedError(
         code = retrieveNullSafeValue(e.get("keyword")).toUpperCase,
         message = retrieveNullSafeValue(e.get("message")).capitalize,
-        path = if (e.get("instance").isNull) ""
-        else retrieveNullSafeValue(e.get("instance").get("pointer"))
+        path =
+          if (e.get("instance").isNull) ""
+          else retrieveNullSafeValue(e.get("instance").get("pointer"))
       )
     }.toList
   }
