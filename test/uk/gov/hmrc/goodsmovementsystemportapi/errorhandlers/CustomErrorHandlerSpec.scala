@@ -119,14 +119,13 @@ class CustomErrorHandlerSpec extends ControllerBaseSpec {
         List(
           UpstreamErrorResponse("upstream 4xx", 410, 500) -> INTERNAL_SERVER_ERROR,
           UpstreamErrorResponse("upstream 5xx", 500, 502) -> BAD_GATEWAY
-        ).foreach {
-          case (exception, expected) =>
-            val result = customHttpErrorHandler
-              .onServerError(FakeRequest(), exception)
+        ).foreach { case (exception, expected) =>
+          val result = customHttpErrorHandler
+            .onServerError(FakeRequest(), exception)
 
-            status(result) shouldBe expected
+          status(result) shouldBe expected
 
-            assertErrorResponse(result, "INTERNAL_SERVER_ERROR", "Something went wrong, try again later.", 0)
+          assertErrorResponse(result, "INTERNAL_SERVER_ERROR", "Something went wrong, try again later.", 0)
         }
       }
     }
@@ -150,7 +149,7 @@ class CustomErrorHandlerSpec extends ControllerBaseSpec {
         val result = customHttpErrorHandler.onClientError(FakeRequest("GET", "/abc?key=value"), BAD_REQUEST)
 
         status(result)                              shouldBe BAD_REQUEST
-        (contentAsJson(result) \ "code").as[String] shouldBe ("INVALID_QUERY_PARAMS")
+        (contentAsJson(result) \ "code").as[String] shouldBe "INVALID_QUERY_PARAMS"
       }
     }
 

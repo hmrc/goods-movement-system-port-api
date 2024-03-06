@@ -13,13 +13,15 @@ lazy val microservice = Project(appName, file("."))
     majorVersion := 0,
     scalaVersion := "2.13.12",
     scalacOptions ++= Seq(
-      "-Wconf:src=routes/.*:s", //Silence all warnings in generated routes
-      "-Ymacro-annotations",
+      "-Wconf:src=routes/.*:s", // Silence all warnings in generated routes
+      "-Ymacro-annotations"
     )
   )
-  .settings( //fix scaladoc generation in jenkins
-    Compile / scalacOptions -= "utf8",
-    scalacOptions += "-language:postfixOps")
+  .settings(
+    scalafmtOnCompile := true,
+    Compile / scalacOptions -= "utf8", // fix scaladoc generation in jenkins
+    scalacOptions += "-language:postfixOps"
+  )
   .settings(CodeCoverageSettings.settings)
   .settings(
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
@@ -60,7 +62,7 @@ lazy val microservice = Project(appName, file("."))
         Nothing,
         PlatformDefault,
         ListAppend,
-        ListUnapply,
+        ListUnapply
       ): _*
     ),
     Test / compile / wartremoverErrors --= Seq(DefaultArguments, Serializable, Product, Any, OptionPartial, GlobalExecutionContext),

@@ -24,8 +24,9 @@ object AuthStubs {
   def userIsAuthenticated: StubMapping =
     stubFor(
       post(urlEqualTo("/auth/authorise"))
-        .withRequestBody(equalToJson(
-          s"""
+        .withRequestBody(
+          equalToJson(
+            s"""
                |{
                |  "authorise": [
                |    {
@@ -37,20 +38,23 @@ object AuthStubs {
                |  ]
                |}
                |""".stripMargin,
-          true,
-          true
-        ))
+            true,
+            true
+          )
+        )
         .willReturn(
           aResponse()
             .withStatus(200)
             .withBody(s"""{ "clientId": "clientId-abc" }""".stripMargin)
-        ))
+        )
+    )
 
   def missingBearerToken(): StubMapping =
     stubFor(
       post(urlPathEqualTo("/auth/authorise"))
-        .withRequestBody(equalToJson(
-          s"""
+        .withRequestBody(
+          equalToJson(
+            s"""
              |{
              |  "authorise": [
              |    {
@@ -62,18 +66,23 @@ object AuthStubs {
              |  ]
              |}
              |           """.stripMargin,
-          true,
-          true
-        ))
-        .willReturn(aResponse()
-          .withStatus(401)
-          .withHeader("WWW-Authenticate", """MDTP detail="MissingBearerToken"""")))
+            true,
+            true
+          )
+        )
+        .willReturn(
+          aResponse()
+            .withStatus(401)
+            .withHeader("WWW-Authenticate", """MDTP detail="MissingBearerToken"""")
+        )
+    )
 
   def invalidBearerToken(): StubMapping =
     stubFor(
       post(urlPathEqualTo("/auth/authorise"))
-        .withRequestBody(equalToJson(
-          s"""
+        .withRequestBody(
+          equalToJson(
+            s"""
              |{
              |  "authorise": [
              |    {
@@ -85,18 +94,23 @@ object AuthStubs {
              |  ]
              |}
              |           """.stripMargin,
-          true,
-          true
-        ))
-        .willReturn(aResponse()
-          .withStatus(401)
-          .withHeader("WWW-Authenticate", """MDTP detail="InvalidBearerToken"""")))
+            true,
+            true
+          )
+        )
+        .willReturn(
+          aResponse()
+            .withStatus(401)
+            .withHeader("WWW-Authenticate", """MDTP detail="InvalidBearerToken"""")
+        )
+    )
 
   def sessionHasExpired(): StubMapping =
     stubFor(
       post(urlPathEqualTo("/auth/authorise"))
-        .withRequestBody(equalToJson(
-          s"""
+        .withRequestBody(
+          equalToJson(
+            s"""
              |{
              |  "authorise": [
              |    {
@@ -108,11 +122,15 @@ object AuthStubs {
              |  ]
              |}
              |           """.stripMargin,
-          true,
-          true
-        ))
-        .willReturn(aResponse()
-          .withStatus(401)
-          .withHeader("WWW-Authenticate", """MDTP detail="BearerTokenExpired"""")))
+            true,
+            true
+          )
+        )
+        .willReturn(
+          aResponse()
+            .withStatus(401)
+            .withHeader("WWW-Authenticate", """MDTP detail="BearerTokenExpired"""")
+        )
+    )
 
 }

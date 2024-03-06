@@ -28,9 +28,9 @@ import java.time.Instant
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GoodsMovementSystemConnector @Inject()(
-  httpClient:                HttpClient,
-  @Named("gmsUrl") baseUrl:  String
+class GoodsMovementSystemConnector @Inject() (
+  httpClient:               HttpClient,
+  @Named("gmsUrl") baseUrl: String
 )(implicit executionContext: ExecutionContext)
     extends CustomEitherHttpReads {
 
@@ -46,12 +46,12 @@ class GoodsMovementSystemConnector @Inject()(
     portId:          String,
     lastUpdatedFrom: Option[Instant],
     lastUpdatedTo:   Option[Instant]
-  )(implicit hc:     HeaderCarrier): Future[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]] =
+  )(implicit hc: HeaderCarrier): Future[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]] =
     httpClient.GET[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]](
       url(s"/goods-movement-system/$portId/departures"),
       Seq[List[(String, String)]](
         lastUpdatedFrom.map(from => "lastUpdatedFrom" -> from.toString).toList,
-        lastUpdatedTo.map(to => "lastUpdatedTo"       -> to.toString).toList
+        lastUpdatedTo.map(to => "lastUpdatedTo" -> to.toString).toList
       ).flatten[(String, String)]
     )
 

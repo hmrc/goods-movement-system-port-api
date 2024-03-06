@@ -24,8 +24,8 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.Future
 
 @Singleton
-class GmsReferenceDataService @Inject()(
-  referenceDataConnector: GmsReferenceDataConnector,
+class GmsReferenceDataService @Inject() (
+  referenceDataConnector: GmsReferenceDataConnector
 ) {
 
   def getReferenceData(implicit hc: HeaderCarrier): Future[GvmsReferenceData] =

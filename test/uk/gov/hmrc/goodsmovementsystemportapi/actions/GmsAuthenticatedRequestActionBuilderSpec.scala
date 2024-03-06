@@ -37,8 +37,13 @@ class GmsAuthenticatedRequestActionBuilderSpec extends ActionFunctionBaseSpec {
   "invokeBlock" when {
     "the user has a valid bearer token" should {
       "execute the block successfully if auth returns successfully" in {
-        when(mockAuthConnector
-          .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(any(), any()))
+        when(
+          mockAuthConnector
+            .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(
+              any(),
+              any()
+            )
+        )
           .thenReturn(Future.successful(Some("clientId")))
 
         val request: VersionedRequest[AnyContent] = VersionedRequest(Version_1_0, fakeRequest)
@@ -51,8 +56,13 @@ class GmsAuthenticatedRequestActionBuilderSpec extends ActionFunctionBaseSpec {
         contentAsString(result) shouldBe "COMPLETED"
       }
       "return FORBIDDEN if the auth returns exception" in {
-        when(mockAuthConnector
-          .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(any(), any()))
+        when(
+          mockAuthConnector
+            .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(
+              any(),
+              any()
+            )
+        )
           .thenReturn(Future.successful(None))
 
         val request: VersionedRequest[AnyContent] = VersionedRequest(Version_1_0, fakeRequest)
@@ -72,8 +82,13 @@ class GmsAuthenticatedRequestActionBuilderSpec extends ActionFunctionBaseSpec {
         InvalidBearerToken(),
         SessionRecordNotFound()
       ).foreach { exception =>
-        when(mockAuthConnector
-          .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(any(), any()))
+        when(
+          mockAuthConnector
+            .authorise[Option[String]](ArgumentMatchers.eq(AuthProviders(StandardApplication)), ArgumentMatchers.eq(Retrievals.clientId))(
+              any(),
+              any()
+            )
+        )
           .thenReturn(Future.failed(exception))
 
         val request: VersionedRequest[AnyContent] = VersionedRequest(Version_1_0, fakeRequest)

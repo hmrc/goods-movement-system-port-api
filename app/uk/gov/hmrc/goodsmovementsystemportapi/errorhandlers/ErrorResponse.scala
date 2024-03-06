@@ -39,16 +39,17 @@ object ErrorResponse {
   case object InvalidAcceptHeader
       extends ErrorResponse(
         httpStatusCode = 406,
-        errorCode      = "ACCEPT_HEADER_INVALID",
-        message        = "The accept header is missing or invalid",
-        errors         = None)
+        errorCode = "ACCEPT_HEADER_INVALID",
+        message = "The accept header is missing or invalid",
+        errors = None
+      )
 
   case class InvalidRequestBody(nestedErrors: List[NestedError])
       extends ErrorResponse(
         httpStatusCode = 400,
-        errorCode      = "JSON_SCHEMA_ERROR",
-        message        = "The JSON payload is not conformant with the JSON schema",
-        errors         = Some(nestedErrors)
+        errorCode = "JSON_SCHEMA_ERROR",
+        message = "The JSON payload is not conformant with the JSON schema",
+        errors = Some(nestedErrors)
       )
 
   implicit val writes: Writes[ErrorResponse] = (o: ErrorResponse) => {
@@ -63,7 +64,8 @@ object ErrorResponse {
     case PortErrors.tooManyGmrsError =>
       logAndResult(
         ErrorResponse(400, "TOO_MANY_RESULTS", "Too many goods movement records were found. Please filter down your query."),
-        includeMessage = true)
+        includeMessage = true
+      )
     case PortErrors.invalidDateCombinationError =>
       logAndResult(ErrorResponse(400, "INVALID_DATE_COMBINATION", "lastUpdatedFrom should be before lastUpdatedTo."), includeMessage = true)
     case PortErrors.subscriptionPortIdNotFoundError =>
@@ -89,25 +91,25 @@ object ErrorResponse {
   case object Internal_Server_Error
       extends ErrorResponse(
         httpStatusCode = INTERNAL_SERVER_ERROR,
-        errorCode      = "INTERNAL_SERVER_ERROR",
-        message        = "Something went wrong, try again later.",
-        errors         = None
+        errorCode = "INTERNAL_SERVER_ERROR",
+        message = "Something went wrong, try again later.",
+        errors = None
       )
 
   case object MissingCorrelationIdErrorResponse
       extends ErrorResponse(
         httpStatusCode = INTERNAL_SERVER_ERROR,
-        errorCode      = "INTERNAL_SERVER_ERROR",
-        message        = "Something went wrong, try again later.",
-        errors         = None
+        errorCode = "INTERNAL_SERVER_ERROR",
+        message = "Something went wrong, try again later.",
+        errors = None
       )
 
   case object Gateway_Timeout_Exception
       extends ErrorResponse(
         httpStatusCode = GATEWAY_TIMEOUT,
-        errorCode      = "GATEWAY_TIMEOUT",
-        message        = "Gateway timeout, try again later.",
-        errors         = None
+        errorCode = "GATEWAY_TIMEOUT",
+        message = "Gateway timeout, try again later.",
+        errors = None
       )
 
 }

@@ -21,7 +21,7 @@ import play.api.mvc.{ActionBuilder, AnyContent, DefaultActionBuilder}
 import uk.gov.hmrc.goodsmovementsystemportapi.actions.requests.{GmsAuthRequest, VersionedRequest}
 
 @Singleton
-class GmsActionBuilders @Inject()(
+class GmsActionBuilders @Inject() (
   defaultActionBuilder:                 DefaultActionBuilder,
   validatedAction:                      AcceptHeaderFilter,
   apiVersionTransformer:                ApiVersionRefiner,

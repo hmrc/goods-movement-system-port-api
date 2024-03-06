@@ -29,9 +29,9 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton()
-class PortsController @Inject()(portService: PortsService, gmsActionBuilders: GmsActionBuilders, cc: ControllerComponents)(
-  implicit ec:                               ExecutionContext)
-    extends BaseGmrController(cc) {
+class PortsController @Inject() (portService: PortsService, gmsActionBuilders: GmsActionBuilders, cc: ControllerComponents)(implicit
+  ec: ExecutionContext
+) extends BaseGmrController(cc) {
 
   import gmsActionBuilders._
 

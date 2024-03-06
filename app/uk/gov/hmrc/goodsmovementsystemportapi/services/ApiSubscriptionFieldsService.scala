@@ -24,9 +24,9 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiSubscriptionFieldsService @Inject()(
+class ApiSubscriptionFieldsService @Inject() (
   apiSubscriptionFieldsConnector: ApiSubscriptionFieldsConnector
-)(implicit executionContext:      ExecutionContext) {
+)(implicit executionContext: ExecutionContext) {
 
   def getField(clientId: String, fieldKey: String)(implicit hc: HeaderCarrier): OptionT[Future, String] =
     OptionT(apiSubscriptionFieldsConnector.getSubscriptionFields(clientId).map(_.fields.get(fieldKey)))

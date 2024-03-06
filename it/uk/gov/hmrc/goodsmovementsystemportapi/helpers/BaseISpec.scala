@@ -86,8 +86,8 @@ abstract class BaseISpec
     route(app, req) match {
       case None => fail("Route does not exist")
       case Some(fResult) =>
-        fResult.recoverWith {
-          case t: Throwable => errorHandler.onServerError(req, t)
+        fResult.recoverWith { case t: Throwable =>
+          errorHandler.onServerError(req, t)
         }
     }
   }

@@ -40,7 +40,7 @@ trait ResultAssertions { me: Matchers with ScalaFutures with Inside =>
 
   def assertErrorResponse(result: Future[Result], code: String, message: String, nestedErrorCount: Int)(implicit mat: Materializer): Assertion =
     assertJsonBodyOf[JsonApiErrorResponse](result) { error =>
-      error.code                  shouldBe code
+      error.code                shouldBe code
       error.message               should fullyMatch regex s"$message".r
       error.errors.toList.flatten should have size nestedErrorCount
     }

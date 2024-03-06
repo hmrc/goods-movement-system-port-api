@@ -54,12 +54,11 @@ trait SchemaContractBehaviours {
       else jsonNode.asText
     errors.map { e =>
       NestedError(
-        code    = retrieveNullSafeValue(e.get("keyword")).toUpperCase,
+        code = retrieveNullSafeValue(e.get("keyword")).toUpperCase,
         message = retrieveNullSafeValue(e.get("message")).capitalize,
-        path = {
+        path =
           if (e.get("instance").isNull) ""
           else retrieveNullSafeValue(e.get("instance").get("pointer"))
-        }
       )
     }.toList
   }

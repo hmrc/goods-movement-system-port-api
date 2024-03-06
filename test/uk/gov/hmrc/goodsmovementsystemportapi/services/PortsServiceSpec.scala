@@ -60,27 +60,27 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
       "return all gmr" in new Setup(true) {
         val multiple = GetPortDepartureExpandedGmrResponse(
-          gmrId                   = "gmrId",
-          isUnaccompanied         = true,
-          updatedDateTime         = Instant.now,
-          inspectionRequired      = None,
-          reportToLocations       = None,
-          vehicleRegNum           = None,
+          gmrId = "gmrId",
+          isUnaccompanied = true,
+          updatedDateTime = Instant.now,
+          inspectionRequired = None,
+          reportToLocations = None,
+          vehicleRegNum = None,
           trailerRegistrationNums = Some(List("ABC")),
-          containerReferenceNums  = None,
-          checkedInCrossing       = crossing,
-          readyToEmbark           = None
+          containerReferenceNums = None,
+          checkedInCrossing = crossing,
+          readyToEmbark = None
         ) :: GetPortDepartureExpandedGmrResponse(
-          gmrId                   = "gmrId",
-          isUnaccompanied         = true,
-          updatedDateTime         = Instant.now,
-          inspectionRequired      = Some(true),
-          reportToLocations       = None,
-          vehicleRegNum           = None,
+          gmrId = "gmrId",
+          isUnaccompanied = true,
+          updatedDateTime = Instant.now,
+          inspectionRequired = Some(true),
+          reportToLocations = None,
+          vehicleRegNum = None,
           trailerRegistrationNums = Some(List("ABC")),
-          containerReferenceNums  = None,
-          checkedInCrossing       = crossing,
-          readyToEmbark           = None
+          containerReferenceNums = None,
+          checkedInCrossing = crossing,
+          readyToEmbark = None
         ) :: departuresExtendedGmrResponse
 
         val portId = "1"
@@ -172,23 +172,23 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         "return all gmr" in new Setup(showPending) {
           val withPending = GetControlledArrivalsGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = None,
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = None,
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            actualCrossing          = crossing
+            containerReferenceNums = None,
+            actualCrossing = crossing
           ) :: GetControlledArrivalsGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = Some(true),
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = Some(true),
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            actualCrossing          = crossing
+            containerReferenceNums = None,
+            actualCrossing = crossing
           ) :: arrivalsGmrResponse
 
           val portId = "1"
@@ -314,23 +314,23 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         "return all gmr" in new Setup(showPending) {
           val withPending = GetControlledDeparturesGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = None,
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = None,
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            checkedInCrossing       = crossing
+            containerReferenceNums = None,
+            checkedInCrossing = crossing
           ) :: GetControlledDeparturesGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = Some(true),
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = Some(true),
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            checkedInCrossing       = crossing
+            containerReferenceNums = None,
+            checkedInCrossing = crossing
           ) :: departuresGmrResponse
 
           val portId = "1"
@@ -425,14 +425,14 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         "return only controlled gmrs" in new Setup(showPending) {
           val withPending = GetControlledArrivalsGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = None,
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = None,
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            actualCrossing          = crossing
+            containerReferenceNums = None,
+            actualCrossing = crossing
           ) :: arrivalsGmrResponse
 
           val portId = "1"
@@ -525,14 +525,14 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
 
         "return only controlled gmrs" in new Setup(showPending) {
           val withPending = GetControlledDeparturesGmrResponse(
-            gmrId                   = "gmrId",
-            isUnaccompanied         = true,
-            inspectionRequired      = None,
-            reportToLocations       = None,
-            vehicleRegNum           = None,
+            gmrId = "gmrId",
+            isUnaccompanied = true,
+            inspectionRequired = None,
+            reportToLocations = None,
+            vehicleRegNum = None,
             trailerRegistrationNums = Some(List("ABC")),
-            containerReferenceNums  = None,
-            checkedInCrossing       = crossing
+            containerReferenceNums = None,
+            checkedInCrossing = crossing
           ) :: departuresGmrResponse
 
           val portId = "1"

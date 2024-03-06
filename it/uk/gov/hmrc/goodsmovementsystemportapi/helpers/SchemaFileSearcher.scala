@@ -37,8 +37,10 @@ object SchemaFileSearcher {
       .map(_.getPath.replace("resources", ""))
       .getOrElse(
         throw new TestFailedException(
-          message              = s"$schemaName not found in resources/public/api/conf",
-          cause                = new FileNotFoundException(schemaName),
-          failedCodeStackDepth = 12))
+          message = s"$schemaName not found in resources/public/api/conf",
+          cause = new FileNotFoundException(schemaName),
+          failedCodeStackDepth = 12
+        )
+      )
 
 }

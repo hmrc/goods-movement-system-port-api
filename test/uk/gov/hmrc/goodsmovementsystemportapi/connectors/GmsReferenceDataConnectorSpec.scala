@@ -38,7 +38,9 @@ class GmsReferenceDataConnectorSpec extends BaseSpec with FutureAwaits {
             .GET[GvmsReferenceData](mEq("http://localhost:0000/goods-movement-system-reference-data/reference-data"), any(), any())(
               any(),
               any(),
-              any()))
+              any()
+            )
+        )
           .thenReturn(Future.successful(gmsReferenceDataSummary))
 
         val result: GvmsReferenceData = await(connector.getReferenceData(hc))

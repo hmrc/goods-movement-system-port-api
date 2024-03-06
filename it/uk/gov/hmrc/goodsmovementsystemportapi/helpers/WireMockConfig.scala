@@ -28,8 +28,7 @@ trait WireMockConfig {
     )
 
   private def setWireMockPort(services: String*): Map[String, Int] =
-    services.foldLeft[Map[String, Int]](Map.empty[String, Int]) {
-      case (map, service) =>
-        map + (s"microservice.services.$service.port" -> mockServerPort)
+    services.foldLeft[Map[String, Int]](Map.empty[String, Int]) { case (map, service) =>
+      map + (s"microservice.services.$service.port" -> mockServerPort)
     }
 }

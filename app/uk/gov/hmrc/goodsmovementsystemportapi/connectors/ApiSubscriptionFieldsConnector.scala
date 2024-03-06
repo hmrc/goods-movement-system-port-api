@@ -25,11 +25,11 @@ import uk.gov.hmrc.http.HttpReads.Implicits._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApiSubscriptionFieldsConnector @Inject()(
+class ApiSubscriptionFieldsConnector @Inject() (
   httpClient:                                 HttpClient,
   apiConfig:                                  AppConfig,
   @Named("apiSubscriptionFieldsUrl") baseUrl: String
-)(implicit executionContext:                  ExecutionContext) {
+)(implicit executionContext: ExecutionContext) {
 
   private def url(path: String) = s"$baseUrl$path"
 
