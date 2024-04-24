@@ -18,7 +18,7 @@ package uk.gov.hmrc.goodsmovementsystemportapi.schemas
 
 import cats.{Order, Show}
 
-trait ApiVersion {
+sealed trait ApiVersion {
   def ordinal: Int
 }
 

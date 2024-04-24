@@ -40,9 +40,9 @@ class ApiVersionRefiner @Inject() ()(implicit val executionContext: ExecutionCon
   override protected def refine[A](request: Request[A]): Future[Either[Result, VersionedRequest[A]]] =
     Future {
       val eitherResultApiVersion = for {
-        accept     <- request.headers.get("Accept").toRight(MissingAcceptHeader).right
-        version    <- matchHeader(accept).map(_.group("version")).toRight(InvalidAcceptHeaderFormat).right
-        apiVersion <- ApiVersion.of(version).toRight(UnsupportedVersion).right
+        accept     <- request.headers.get("Accept").toRight(MissingAcceptHeader)
+        version    <- matchHeader(accept).map(_.group("version")).toRight(InvalidAcceptHeaderFormat)
+        apiVersion <- ApiVersion.of(version).toRight(UnsupportedVersion)
       } yield apiVersion
 
       eitherResultApiVersion.fold(
