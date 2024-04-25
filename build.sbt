@@ -44,32 +44,7 @@ lazy val microservice = Project(appName, file("."))
     Test / unmanagedResourceDirectories := Seq(baseDirectory.value / "test-resources"),
     IntegrationTest / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-it-report")
   )
-  .settings(
-    wartremover.WartRemover.autoImport.wartremoverExcluded ++= (Compile / routes).value,
-    Compile / compile / wartremoverErrors ++= Warts.allBut(
-      Seq(
-        Wart.Throw,
-        Wart.ToString,
-        Wart.ImplicitParameter,
-        Wart.PublicInference,
-        Wart.Equals,
-        Wart.Overloading,
-        Wart.FinalCaseClass,
-        Wart.Nothing,
-        Wart.NonUnitStatements,
-        Any,
-        StringPlusAny,
-        Nothing,
-        PlatformDefault,
-        ListAppend,
-        ListUnapply
-      ): _*
-    ),
-    Test / compile / wartremoverErrors --= Seq(DefaultArguments, Serializable, Product, Any, OptionPartial, GlobalExecutionContext),
-    Compile / compile / wartremoverWarnings ++= Seq(Wart.Nothing, Wart.Throw, Wart.Equals),
-    Test / compile / wartremoverWarnings --= Seq(Nothing, Throw, Equals),
-    IntegrationTest / compile / wartremoverWarnings --= Seq(Nothing, Throw, Equals)
-  )
+  .settings(WartRemoverSettings.settings)
   .disablePlugins(JUnitXmlReportPlugin)
 
 evictionErrorLevel := Level.Warn

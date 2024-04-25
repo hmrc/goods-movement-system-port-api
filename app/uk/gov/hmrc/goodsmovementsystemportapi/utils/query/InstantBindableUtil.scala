@@ -24,7 +24,7 @@ import scala.util.Try
 
 object InstantBindableUtil {
 
-  implicit val instantBindable = new QueryStringBindable[Instant] {
+  implicit val instantBindable: QueryStringBindable[Instant] = new QueryStringBindable[Instant] {
     override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, Instant]] =
       params
         .get(key)
