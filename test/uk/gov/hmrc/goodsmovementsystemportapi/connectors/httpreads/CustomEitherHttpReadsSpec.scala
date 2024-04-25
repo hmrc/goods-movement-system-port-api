@@ -36,7 +36,7 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
 
         val result = reads.readEitherOf(reads.getDeparturesPartialFunction, HttpReadsInstances.readRaw).read("GET", "http://localhost", response)
 
-        result.right.value shouldBe response
+        result.value shouldBe response
       }
 
       "read unsuccessful responses and transform custom errors" in new Setup {

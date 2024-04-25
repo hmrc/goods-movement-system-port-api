@@ -39,7 +39,7 @@ trait AllMocks extends MockitoSugar { me: BeforeAndAfterEach =>
   val mockAppConfig:                      AppConfig                      = mock[AppConfig]
 
   override protected def beforeEach(): Unit =
-    Seq(
+    Seq[Any](
       mockAuditConnector,
       mockAuthConnector,
       mockHttpClient,
