@@ -16,21 +16,23 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.connectors
 
-import javax.inject.{Inject, Named, Singleton}
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import uk.gov.hmrc.http.HttpReads.Implicits.readFromJson
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
+
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class GmsReferenceDataConnector @Inject() (
-  httpClient:                         HttpClient,
+  httpClient:                         HttpClientV2,
   @Named("referenceDataUrl") baseUrl: String
 )(implicit executionContext: ExecutionContext) {
 
-  private def url(path: String) = s"$baseUrl$path"
-
   def getReferenceData(implicit hc: HeaderCarrier): Future[GvmsReferenceData] =
-    httpClient.GET[GvmsReferenceData](url(s"/goods-movement-system-reference-data/reference-data"))
+    httpClient
+      .get(url"$baseUrl/goods-movement-system-reference-data/reference-data")
+      .execute[GvmsReferenceData]
 
 }

@@ -25,8 +25,6 @@ import javax.inject.Singleton
 
 class GuiceModule(environment: Environment, configuration: Configuration) extends AbstractModule {
 
-  override def configure(): Unit = {}
-
   @Provides
   @Named("gmsUrl")
   @Singleton

@@ -27,7 +27,7 @@ import uk.gov.hmrc.goodsmovementsystemportapi.TestClasses.JsonApiErrorResponse
 
 import scala.concurrent.Future
 
-trait ResultAssertions { me: Matchers with ScalaFutures with Inside =>
+trait ResultAssertions { me: Matchers & ScalaFutures & Inside =>
 
   def assertJsonBodyOf[T](result: Future[Result])(block: T => Assertion)(implicit reads: Reads[T], mat: Materializer): Assertion =
     inside(contentAsJson(result).validate[T]) {

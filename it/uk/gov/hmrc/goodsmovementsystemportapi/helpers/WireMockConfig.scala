@@ -17,7 +17,7 @@
 package uk.gov.hmrc.goodsmovementsystemportapi.helpers
 
 trait WireMockConfig {
-  me: BaseISpec with WireMockSupport =>
+  me: BaseISpec & WireMockSupport =>
 
   additionalAppConfig ++=
     setWireMockPort(

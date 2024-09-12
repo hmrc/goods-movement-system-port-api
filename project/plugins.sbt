@@ -6,16 +6,16 @@ resolvers += Resolver.url("HMRC-open-artefacts-ivy", url("https://open.artefacts
 
 resolvers += Resolver.typesafeRepo("releases")
 
-addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "3.21.0")
+addSbtPlugin("uk.gov.hmrc" % "sbt-auto-build" % "3.22.0")
 
 addSbtPlugin("uk.gov.hmrc" % "sbt-distributables" % "2.5.0")
 
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.1")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.5")
 
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.2")
 
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.0.9")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.2.0")
 
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.1.3")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.2.0")
 
 evictionErrorLevel := Level.Warn

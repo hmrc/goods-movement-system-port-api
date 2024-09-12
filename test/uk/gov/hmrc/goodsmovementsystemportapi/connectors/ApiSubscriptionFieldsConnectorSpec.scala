@@ -16,22 +16,21 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.connectors
 
-import org.mockito.ArgumentMatchers.{any, eq => mEq}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.{any, eq as mEq}
+import org.mockito.Mockito.*
 import play.api.test.FutureAwaits
-import uk.gov.hmrc.goodsmovementsystemportapi.config.AppConfig
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.SubscriptionFieldsResponse
+import uk.gov.hmrc.http.StringContextOps
 
 import scala.concurrent.Future
 
 class ApiSubscriptionFieldsConnectorSpec extends BaseSpec with FutureAwaits {
 
   trait setup {
-    val baseUrl       = "http://localhost:0000"
-    val mockAppConfig = mock[AppConfig]
-    val apiContext    = "apiContext"
-    val apiVersion    = "1.0"
+    val baseUrl    = "http://localhost:0000"
+    val apiContext = "apiContext"
+    val apiVersion = "1.0"
     when(mockAppConfig.apiVersion).thenReturn(apiVersion)
     when(mockAppConfig.apiContext).thenReturn(apiContext)
 
@@ -44,19 +43,15 @@ class ApiSubscriptionFieldsConnectorSpec extends BaseSpec with FutureAwaits {
         val connector               = new ApiSubscriptionFieldsConnector(mockHttpClient, mockAppConfig, baseUrl)
         val expectedSuccessResponse = subscriptionFieldsResponse
 
-        when(
-          mockHttpClient
-            .GET[SubscriptionFieldsResponse](mEq(s"$baseUrl/field/application/$clientId/context/$apiContext/version/$apiVersion"), any(), any())(
-              any(),
-              any(),
-              any()
-            )
-        )
+        when(mockHttpClient.get(mEq(url"$baseUrl/field/application/$clientId/context/$apiContext/version/$apiVersion"))(any()))
+          .thenReturn(mockRequestBuilder)
+        when(mockRequestBuilder.execute(using any(), any()))
           .thenReturn(Future.successful(expectedSuccessResponse))
 
         val result = await(connector.getSubscriptionFields(clientId)(hc))
 
         result shouldBe expectedSuccessResponse
+        verify(mockRequestBuilder).execute(using any(), any())
       }
     }
   }
