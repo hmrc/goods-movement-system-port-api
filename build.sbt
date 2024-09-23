@@ -2,7 +2,7 @@ import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
-import wartremover.Wart._
+import wartremover.Wart.*
 import sbt.Keys.evictionErrorLevel
 
 val appName = "goods-movement-system-port-api"
@@ -11,16 +11,13 @@ lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     majorVersion := 0,
-    scalaVersion := "2.13.12",
-    scalacOptions ++= Seq(
-      "-Wconf:src=routes/.*:s", // Silence all warnings in generated routes
-      "-Ymacro-annotations"
-    )
-  )
-  .settings(
+    scalaVersion := "3.5.0",
     scalafmtOnCompile := true,
     Compile / scalacOptions -= "utf8", // fix scaladoc generation in jenkins
-    scalacOptions += "-language:postfixOps"
+    scalacOptions ++= Seq(
+      "-language:postfixOps",
+      "-Wconf:src=routes/.*:s" // Silence all warnings in generated routes
+    )
   )
   .settings(CodeCoverageSettings.settings)
   .settings(

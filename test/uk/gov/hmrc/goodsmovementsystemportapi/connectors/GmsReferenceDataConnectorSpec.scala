@@ -16,11 +16,12 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.connectors
 
-import org.mockito.ArgumentMatchers.{any, eq => mEq}
-import org.mockito.Mockito._
+import org.mockito.ArgumentMatchers.{any, eq as mEq}
+import org.mockito.Mockito.*
 import play.api.test.FutureAwaits
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
+import uk.gov.hmrc.http.StringContextOps
 
 import scala.concurrent.Future
 
@@ -33,25 +34,18 @@ class GmsReferenceDataConnectorSpec extends BaseSpec with FutureAwaits {
     "the GET was successful" should {
       "return the http response" in new Setup {
 
-        when(
-          mockHttpClient
-            .GET[GvmsReferenceData](mEq("http://localhost:0000/goods-movement-system-reference-data/reference-data"), any(), any())(
-              any(),
-              any(),
-              any()
-            )
-        )
+        when(mockHttpClient.get(mEq(url"http://localhost:0000/goods-movement-system-reference-data/reference-data"))(any()))
+          .thenReturn(mockRequestBuilder)
+        when(mockRequestBuilder.execute(using any(), any()))
           .thenReturn(Future.successful(gmsReferenceDataSummary))
 
         val result: GvmsReferenceData = await(connector.getReferenceData(hc))
 
         result shouldBe gmsReferenceDataSummary
 
-        verify(mockHttpClient)
-          .GET[GvmsReferenceData](mEq("http://localhost:0000/goods-movement-system-reference-data/reference-data"), any(), any())(any(), any(), any())
+        verify(mockHttpClient).get(mEq(url"http://localhost:0000/goods-movement-system-reference-data/reference-data"))(any())
+        verify(mockRequestBuilder).execute(using any(), any())
       }
     }
-
   }
-
 }

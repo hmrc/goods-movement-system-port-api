@@ -19,8 +19,8 @@ package uk.gov.hmrc.goodsmovementsystemportapi.connectors.httpreads
 import org.scalatest.EitherValues
 import play.api.libs.json.Json
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.PortErrors.{InvalidDateCombinationError, TooManyGmrsError}
-import uk.gov.hmrc.http.{HttpReadsInstances, HttpResponse, UpstreamErrorResponse}
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
+import uk.gov.hmrc.http.*
 
 class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
 
@@ -47,7 +47,7 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
           val result = reads
             .readEitherOf(
               reads.getDeparturesPartialFunction,
-              HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw))
+              HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(using HttpReadsInstances.readRaw))
             )
             .read("GET", "http://localhost", response)
 
@@ -74,7 +74,7 @@ class CustomEitherHttpReadsSpec extends BaseSpec with EitherValues {
             reads
               .readEitherOf(
                 reads.getDeparturesPartialFunction,
-                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(HttpReadsInstances.readRaw))
+                HttpReadsInstances.throwOnFailure(HttpReadsInstances.readEitherOf(using HttpReadsInstances.readRaw))
               )
               .read("GET", "http://localhost", response)
           )

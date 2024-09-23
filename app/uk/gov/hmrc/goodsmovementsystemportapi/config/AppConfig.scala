@@ -16,11 +16,10 @@
 
 package uk.gov.hmrc.goodsmovementsystemportapi.config
 
-import java.net.URLEncoder
-
-import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig) {
@@ -30,7 +29,7 @@ class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig
   val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
   val graphiteHost:    String  = config.get[String]("microservice.metrics.graphite.host")
 
-  val apiContext = URLEncoder.encode(config.get[String]("apiContext"), "UTF-8")
+  val apiContext = config.get[String]("apiContext")
   val apiVersion = config.get[String]("apiVersion")
 
   val effectiveDatesCheck: Boolean = config.get[Boolean]("features.effectiveDatesCheck")

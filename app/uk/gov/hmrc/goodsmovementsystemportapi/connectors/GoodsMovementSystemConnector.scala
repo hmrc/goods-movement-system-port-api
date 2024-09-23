@@ -18,41 +18,36 @@ package uk.gov.hmrc.goodsmovementsystemportapi.connectors
 
 import uk.gov.hmrc.goodsmovementsystemportapi.connectors.httpreads.CustomEitherHttpReads
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.GetDepartureErrors
-
-import javax.inject.{Inject, Named, Singleton}
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrResponse, GetControlledDeparturesGmrResponse, GetPortDepartureExpandedGmrResponse}
 import uk.gov.hmrc.http.HttpReadsInstances.readFromJson
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 
 import java.time.Instant
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class GoodsMovementSystemConnector @Inject() (
-  httpClient:               HttpClient,
+  httpClient:               HttpClientV2,
   @Named("gmsUrl") baseUrl: String
 )(implicit executionContext: ExecutionContext)
     extends CustomEitherHttpReads {
 
-  private def url(path: String) = s"$baseUrl$path"
-
   def getControlledArrivalsGmr(portId: String)(implicit hc: HeaderCarrier): Future[List[GetControlledArrivalsGmrResponse]] =
-    httpClient.GET[List[GetControlledArrivalsGmrResponse]](url(s"/goods-movement-system/$portId/arrivals/controlled"))
+    httpClient.get(url"$baseUrl/goods-movement-system/$portId/arrivals/controlled").execute[List[GetControlledArrivalsGmrResponse]]
 
   def getControlledDeparturesGmr(portId: String)(implicit hc: HeaderCarrier): Future[List[GetControlledDeparturesGmrResponse]] =
-    httpClient.GET[List[GetControlledDeparturesGmrResponse]](url(s"/goods-movement-system/$portId/departures/controlled"))
+    httpClient.get(url"$baseUrl/goods-movement-system/$portId/departures/controlled").execute[List[GetControlledDeparturesGmrResponse]]
 
   def getDeparturesGmr(
     portId:          String,
     lastUpdatedFrom: Option[Instant],
     lastUpdatedTo:   Option[Instant]
   )(implicit hc: HeaderCarrier): Future[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]] =
-    httpClient.GET[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]](
-      url(s"/goods-movement-system/$portId/departures"),
-      Seq[List[(String, String)]](
-        lastUpdatedFrom.map(from => "lastUpdatedFrom" -> from.toString).toList,
-        lastUpdatedTo.map(to => "lastUpdatedTo" -> to.toString).toList
-      ).flatten[(String, String)]
-    )
-
+    httpClient
+      .get(
+        url"$baseUrl/goods-movement-system/$portId/departures?lastUpdatedFrom=$lastUpdatedFrom&lastUpdatedTo=$lastUpdatedTo"
+      )
+      .execute[Either[GetDepartureErrors, List[GetPortDepartureExpandedGmrResponse]]]
 }

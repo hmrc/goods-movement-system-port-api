@@ -19,14 +19,13 @@ package uk.gov.hmrc.goodsmovementsystemportapi.platform.controllers
 import cats.implicits.catsSyntaxEq
 import controllers.{Assets, AssetsBuilder, AssetsMetadata}
 import org.apache.pekko.stream.Materializer
-
-import javax.inject.{Inject, Named, Singleton}
-import play.api.{Configuration, Environment}
 import play.api.http.HttpErrorHandler
-import play.api.mvc.{Action, AnyContent, ControllerComponents, DefaultActionBuilder}
+import play.api.mvc.{Action, AnyContent, DefaultActionBuilder}
+import play.api.{Configuration, Environment}
 import play.filters.cors.CORSActionBuilder
 import uk.gov.hmrc.goodsmovementsystemportapi.platform.views.txt
 
+import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -35,7 +34,6 @@ class DocumentationController @Inject() (
   httpErrorHandler:              HttpErrorHandler,
   meta:                          AssetsMetadata,
   assets:                        Assets,
-  cc:                            ControllerComponents,
   configuration:                 Configuration,
   @Named("apiStatus") apiStatus: String
 )(implicit materializer: Materializer, executionContext: ExecutionContext, env: Environment)

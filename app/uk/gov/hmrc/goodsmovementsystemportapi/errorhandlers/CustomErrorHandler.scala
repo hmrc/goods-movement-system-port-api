@@ -22,9 +22,9 @@ import play.api.libs.json.Json.toJson
 import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.{Configuration, Logger}
 import uk.gov.hmrc.auth.core.AuthorisationException
-import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.ErrorResponse._
+import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.ErrorResponse.*
 import uk.gov.hmrc.goodsmovementsystemportapi.utils.LogUtils.logAndResult
-import uk.gov.hmrc.http._
+import uk.gov.hmrc.http.*
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.bootstrap.backend.http.JsonErrorHandler
 import uk.gov.hmrc.play.bootstrap.config.DefaultHttpAuditEvent

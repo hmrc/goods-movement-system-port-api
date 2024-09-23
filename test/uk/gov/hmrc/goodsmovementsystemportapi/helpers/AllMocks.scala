@@ -23,26 +23,33 @@ import uk.gov.hmrc.auth.core.AuthConnector
 import uk.gov.hmrc.goodsmovementsystemportapi.config.AppConfig
 import uk.gov.hmrc.goodsmovementsystemportapi.connectors.{ApiSubscriptionFieldsConnector, GmsReferenceDataConnector}
 import uk.gov.hmrc.goodsmovementsystemportapi.services.{ApiSubscriptionFieldsService, GmsReferenceDataService, PortsService}
-import uk.gov.hmrc.http.HttpClient
+import uk.gov.hmrc.http.client.{HttpClientV2, RequestBuilder}
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 trait AllMocks extends MockitoSugar { me: BeforeAndAfterEach =>
 
   val mockApiSubscriptionFieldsConnector: ApiSubscriptionFieldsConnector = mock[ApiSubscriptionFieldsConnector]
   val mockApiSubscriptionFieldsService:   ApiSubscriptionFieldsService   = mock[ApiSubscriptionFieldsService]
+  val mockAppConfig:                      AppConfig                      = mock[AppConfig]
   val mockAuditConnector:                 AuditConnector                 = mock[AuditConnector]
   val mockAuthConnector:                  AuthConnector                  = mock[AuthConnector]
-  val mockHttpClient:                     HttpClient                     = mock[HttpClient]
-  val mockPortService:                    PortsService                   = mock[PortsService]
   val mockGmsReferenceDataConnector:      GmsReferenceDataConnector      = mock[GmsReferenceDataConnector]
   val mockGmsReferenceDataService:        GmsReferenceDataService        = mock[GmsReferenceDataService]
-  val mockAppConfig:                      AppConfig                      = mock[AppConfig]
+  val mockHttpClient:                     HttpClientV2                   = mock[HttpClientV2]
+  val mockPortService:                    PortsService                   = mock[PortsService]
+  val mockRequestBuilder:                 RequestBuilder                 = mock[RequestBuilder]
 
   override protected def beforeEach(): Unit =
     Seq[Any](
+      mockApiSubscriptionFieldsConnector,
+      mockApiSubscriptionFieldsService,
+      mockAppConfig,
       mockAuditConnector,
       mockAuthConnector,
+      mockGmsReferenceDataConnector,
+      mockGmsReferenceDataService,
       mockHttpClient,
-      mockPortService
+      mockPortService,
+      mockRequestBuilder
     ).foreach(Mockito.reset(_))
 }

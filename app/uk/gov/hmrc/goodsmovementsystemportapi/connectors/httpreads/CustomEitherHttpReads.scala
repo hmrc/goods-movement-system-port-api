@@ -20,10 +20,10 @@ import cats.implicits._
 import play.api.libs.json.JsValue
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.GetDepartureErrors
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.PortErrors.{InvalidDateCombinationError, TooManyGmrsError}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.{HttpReads, HttpResponse}
 
 import scala.util.Try
-import uk.gov.hmrc.http.HttpReads.Implicits._
 
 trait CustomEitherHttpReads {
 
@@ -35,7 +35,7 @@ trait CustomEitherHttpReads {
       response <- HttpReads[HttpResponse]
       result <- customErrors
                   .andThen(_.asLeft[P])
-                  .andThen(HttpReads.pure _)
+                  .andThen(HttpReads.pure)
                   .applyOrElse[HttpResponse, HttpReads[Either[E, P]]](response, _ => rds.map(_.asRight[E]))
     } yield result
 
