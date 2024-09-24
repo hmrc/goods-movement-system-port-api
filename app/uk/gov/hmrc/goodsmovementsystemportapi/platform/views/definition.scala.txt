@@ -1,7 +1,6 @@
 @(status: String, endpointsEnabled: Boolean)
 
 {
-  "scopes": [],
   "api": {
     "name": "Goods Vehicle Movements Port",
     "description": "This API provides resources for ports related to the Goods Vehicle Movement Service.",
