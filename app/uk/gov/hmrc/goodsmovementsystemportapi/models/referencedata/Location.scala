@@ -36,7 +36,6 @@ object SupportedDirection {
       case NI_TO_GB    => JsString("NI_TO_GB")
     }
 
-    @SuppressWarnings(Array("org.wartremover.warts.Nothing"))
     override def reads(json: JsValue): JsResult[SupportedDirection] = json.as[String] match {
       case "UK_INBOUND"  => JsSuccess(UK_INBOUND)
       case "UK_OUTBOUND" => JsSuccess(UK_OUTBOUND)

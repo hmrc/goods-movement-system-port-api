@@ -73,7 +73,6 @@ abstract class BaseISpec
     "auditing.enabled" -> false
   )
 
-  @SuppressWarnings(Array("org.wartremover.warts.Any"))
   override def fakeApplication(): Application =
     GuiceApplicationBuilder()
       .configure(additionalAppConfig.toMap[String, Any])

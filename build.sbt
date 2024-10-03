@@ -2,7 +2,6 @@ import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
-import wartremover.Wart.*
 import sbt.Keys.evictionErrorLevel
 
 val appName = "goods-movement-system-port-api"
@@ -13,7 +12,6 @@ lazy val microservice = Project(appName, file("."))
     majorVersion := 0,
     scalaVersion := "3.5.0",
     scalafmtOnCompile := true,
-    Compile / scalacOptions -= "utf8", // fix scaladoc generation in jenkins
     scalacOptions ++= Seq(
       "-language:postfixOps",
       "-Wconf:src=routes/.*:s" // Silence all warnings in generated routes
@@ -41,7 +39,6 @@ lazy val microservice = Project(appName, file("."))
     Test / unmanagedResourceDirectories := Seq(baseDirectory.value / "test-resources"),
     IntegrationTest / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-it-report")
   )
-  .settings(WartRemoverSettings.settings)
   .disablePlugins(JUnitXmlReportPlugin)
 
 evictionErrorLevel := Level.Warn
