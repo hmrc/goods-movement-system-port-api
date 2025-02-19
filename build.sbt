@@ -14,7 +14,8 @@ lazy val microservice = Project(appName, file("."))
     scalafmtOnCompile := true,
     scalacOptions ++= Seq(
       "-language:postfixOps",
-      "-Wconf:src=routes/.*:s" // Silence all warnings in generated routes
+      "-Wconf:src=routes/.*:s", // Silence all warnings in generated routes
+      "-no-indent"
     )
   )
   .settings(CodeCoverageSettings.settings)
