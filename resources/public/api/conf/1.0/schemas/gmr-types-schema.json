@@ -28,7 +28,7 @@
     "ruleFailures": {
       "$id": "#/definitions/ruleFailures",
       "type": "array",
-      "description": "If the GMR is non-finalisable, the reasons why are listed here.  These must be rectified in subsequent calls to the PUT API prior to Complete.",
+      "description": "If the GMR is not finalisable, the reasons why are listed here.  These must be rectified in subsequent calls to the PUT API prior to Complete.",
       "items": {
         "$id": "#/properties/ruleFailures/items",
         "type": "object",
