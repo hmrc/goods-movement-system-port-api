@@ -753,7 +753,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -761,14 +761,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         actualCrossing:
           allOf:
             - $ref: '#/components/schemas/actualCrossing'
@@ -798,7 +798,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -806,14 +806,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         actualCrossing:
           allOf:
             - $ref: '#/components/schemas/actualCrossing'
@@ -843,7 +843,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -851,14 +851,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         actualCrossing:
           allOf:
             - $ref: '#/components/schemas/actualCrossing'
@@ -887,7 +887,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -895,14 +895,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         actualCrossing:
           allOf:
             - $ref: '#/components/schemas/actualCrossing'
@@ -932,7 +932,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -940,14 +940,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -977,7 +977,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -985,14 +985,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1022,7 +1022,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1030,14 +1030,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1066,7 +1066,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1074,14 +1074,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1116,7 +1116,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1124,14 +1124,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1172,7 +1172,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1180,14 +1180,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1228,7 +1228,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1236,14 +1236,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'
@@ -1283,7 +1283,7 @@ components:
         vehicleRegNum:
           pattern: ^[A-Z0-9 -]{1,30}$
           type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.
+          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
         trailerRegistrationNums:
           maxItems: 2
           minItems: 1
@@ -1291,14 +1291,14 @@ components:
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         containerReferenceNums:
           minItems: 1
           type: array
           pattern: ^[A-Z0-9 -]{1,200}$
           items:
             type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.
+          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
         checkedInCrossing:
           allOf:
             - $ref: '#/components/schemas/checkedInCrossing'

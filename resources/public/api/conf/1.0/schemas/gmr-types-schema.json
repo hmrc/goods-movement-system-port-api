@@ -28,7 +28,7 @@
     "ruleFailures": {
       "$id": "#/definitions/ruleFailures",
       "type": "array",
-      "description": "If the GMR is not finalisable, the reasons why are listed here.  These must be rectified in subsequent calls to the PUT API prior to finalisation.",
+      "description": "If the GMR is not finalisable, the reasons why are listed here.  These must be rectified in subsequent calls to the PUT API prior to Complete.",
       "items": {
         "$id": "#/properties/ruleFailures/items",
         "type": "object",
@@ -98,7 +98,7 @@
     "vehicleRegNum": {
       "$id": "#/definitions/vehicleRegNum",
       "type": "string",
-      "description": "Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided to finalisation.",
+      "description": "Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.",
       "examples": [
         "AB19 DEF"
       ],
@@ -109,7 +109,7 @@
       "type": "array",
       "minItems": 1,
       "maxItems": 2,
-      "description": "For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.",
+      "description": "For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.",
       "items": {
         "$id": "#/properties/trailerRegistrationNums/items",
         "type": "string",
@@ -122,7 +122,7 @@
     "containerReferenceNums": {
       "$id": "#/definitions/containerReferenceNums",
       "type": "array",
-      "description": "For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided before finalisation.",
+      "description": "For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.",
       "minItems": 1,
       "items": {
         "$id": "#/properties/containerReferenceNums/items",
