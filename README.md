@@ -50,7 +50,7 @@ HTTP status: 200 (OK)
   "isUnaccompanied" : false,
   "vehicleRegNum" : "AB12 CDE",
   "actualCrossing" : {
-    "routeId" : "15",
+    "routeId" : "19",
     "localDateTimeOfArrival" : "2021-08-11T10:58"
   },
   "reportToLocations": [
@@ -78,7 +78,7 @@ HTTP status: 200 (OK)
   "isUnaccompanied" : false,
   "vehicleRegNum" : "AB12 CDE",
   "actualCrossing" : {
-    "routeId" : "15",
+    "routeId" : "103",
     "localDateTimeOfArrival" : "2021-08-11T10:58"
   },
   "reportToLocations": [
@@ -102,7 +102,7 @@ Retrieve all GMRs departing from a specified port, with ready to embark data whe
 HTTP status: 200 (OK)
 
 [ {
-  "gmrId" : "GMRD00003I3M",
+  "gmrId" : "GMRA00003I3M",
   "isUnaccompanied" : true,
   "updatedDateTime" : "2021-08-31T08:52:04.791Z",
   "inspectionRequired" : true,
@@ -117,12 +117,12 @@ HTTP status: 200 (OK)
   "trailerRegistrationNums" : [ "AB12 CFR", "GB18 WRD" ],
   "containerReferenceNums" : [ "ABXY2", "GB456" ],
   "checkedInCrossing" : {
-    "routeId" : "9",
+    "routeId" : "103",
     "localDateTimeOfArrival" : "2021-08-11T10:58"
   }
 },
   {
-  "gmrId" : "GMRD00003I4M",
+  "gmrId" : "GMRA00003I4M",
   "isUnaccompanied" : true,
   "updatedDateTime" : "2021-08-31T08:52:04.791Z",
   "inspectionRequired" : false,
@@ -130,7 +130,7 @@ HTTP status: 200 (OK)
   "containerReferenceNums" : [ "ABXY2", "GB456" ],
   "readyToEmbark": true,
   "checkedInCrossing" : {
-    "routeId" : "9",
+    "routeId" : "103",
     "localDateTimeOfArrival" : "2021-08-11T10:58"
   }
 } ]

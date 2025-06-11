@@ -4,7 +4,7 @@
     "isUnaccompanied": false,
     "vehicleRegNum": "PJ15 JEF",
     "checkedInCrossing": {
-      "routeId": "11",
+      "routeId": "103",
       "localDateTimeOfArrival": "2021-06-05T09:20"
     }
   },
@@ -14,7 +14,7 @@
     "vehicleRegNum": "GU62 SJE",
     "trailerRegistrationNums": ["AB29 3824"],
     "checkedInCrossing": {
-      "routeId": "15",
+      "routeId": "103",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   },
@@ -24,7 +24,7 @@
     "vehicleRegNum": "GU62 SJE",
     "containerReferenceNums": ["GB2 93824"],
     "checkedInCrossing": {
-      "routeId": "15",
+      "routeId": "104",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   },
@@ -35,7 +35,7 @@
     "trailerRegistrationNums": ["AB 293824"],
     "containerReferenceNums":  ["GB 293824"],
     "checkedInCrossing": {
-      "routeId": "15",
+      "routeId": "105",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   }

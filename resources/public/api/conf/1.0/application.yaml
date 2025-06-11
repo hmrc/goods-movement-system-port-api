@@ -62,7 +62,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: C000015
+                      routeId: 107
                       localDateTimeOfArrival: 2021-06-05T09:20
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -73,7 +73,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: C000017
+                      routeId: 107
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -84,7 +84,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: C000017
+                      routeId: 107
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -97,7 +97,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: C000017
+                      routeId: 19
                       localDateTimeOfArrival: 2021-06-11T11:03
               examples:
                 example-1:
@@ -111,7 +111,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: C000015
+                        routeId: 107
                         localDateTimeOfArrival: 2021-06-05T09:20
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -122,7 +122,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: C000017
+                        routeId: 107
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -133,7 +133,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: C000017
+                        routeId: 107
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -146,7 +146,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: C000017
+                        routeId: 19
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
@@ -223,7 +223,7 @@ paths:
                     isUnaccompanied: false
                     vehicleRegNum: PJ15 JEF
                     checkedInCrossing:
-                      routeId: '11'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-05T09:20
                   - gmrId: GMRB0001IFM5
                     isUnaccompanied: true
@@ -231,7 +231,7 @@ paths:
                     trailerRegistrationNums:
                       - AB29 3824
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRB0001IFM5
                     isUnaccompanied: true
@@ -239,7 +239,7 @@ paths:
                     containerReferenceNums:
                       - GB2 93824
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRB0001IFM5
                     isUnaccompanied: true
@@ -249,7 +249,7 @@ paths:
                     containerReferenceNums:
                       - GB 293824
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '104'
                       localDateTimeOfArrival: 2021-06-11T11:03
               examples:
                 example-1:
@@ -259,7 +259,7 @@ paths:
                       isUnaccompanied: false
                       vehicleRegNum: PJ15 JEF
                       checkedInCrossing:
-                        routeId: '11'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-05T09:20
                     - gmrId: GMRB0001IFM5
                       isUnaccompanied: true
@@ -267,7 +267,7 @@ paths:
                       trailerRegistrationNums:
                         - AB29 3824
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRB0001IFM5
                       isUnaccompanied: true
@@ -275,7 +275,7 @@ paths:
                       containerReferenceNums:
                         - GB2 93824
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRB0001IFM5
                       isUnaccompanied: true
@@ -285,7 +285,7 @@ paths:
                       containerReferenceNums:
                         - GB 293824
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '104'
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
@@ -379,7 +379,7 @@ paths:
                     isUnaccompanied: false
                     vehicleRegNum: PJ15 JEF
                     checkedInCrossing:
-                      routeId: '11'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-05T09:20
                     inspectionRequired: true
                     reportToLocations:
@@ -397,7 +397,7 @@ paths:
                     isUnaccompanied: false
                     vehicleRegNum: GU62 SJE
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-11T11:03
                     readyToEmbark: true
                     inspectionRequired: false
@@ -408,7 +408,7 @@ paths:
                       - AB29 3824
                       - SJ25 9382
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '103'
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRB0002MD3K
                     updatedDateTime: 2021-06-05T04:15:35.009Z
@@ -416,7 +416,7 @@ paths:
                     containerReferenceNums:
                       - GB 293824
                     checkedInCrossing:
-                      routeId: '15'
+                      routeId: '104'
                       localDateTimeOfArrival: 2021-06-11T11:03
               examples:
                 example-1:
@@ -427,7 +427,7 @@ paths:
                       isUnaccompanied: false
                       vehicleRegNum: PJ15 JEF
                       checkedInCrossing:
-                        routeId: '11'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-05T09:20
                       inspectionRequired: true
                       reportToLocations:
@@ -445,7 +445,7 @@ paths:
                       isUnaccompanied: false
                       vehicleRegNum: GU62 SJE
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-11T11:03
                       readyToEmbark: true
                       inspectionRequired: false
@@ -456,7 +456,7 @@ paths:
                         - AB29 3824
                         - SJ25 9382
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '103'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRB0002MD3K
                       updatedDateTime: 2021-06-05T04:15:35.009Z
@@ -464,7 +464,7 @@ paths:
                       containerReferenceNums:
                         - GB 293824
                       checkedInCrossing:
-                        routeId: '15'
+                        routeId: '104'
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
@@ -564,10 +564,10 @@ paths:
                           carrierName: DFDS Seaways
                           countryCode: DK
                       ruleFailures:
-                        - ruleId: BR005
-                          ruleDescription: A GMR can only be used in one crossing between two customs territiories
-                        - ruleId: BR011
-                          ruleDescription: This Customs declaration cannot be in more than one GMR
+                        - ruleId: 001_1
+                          ruleDescription: This type of declaration cannot be used for this direction of travel
+                        - ruleId: 001_3
+                          ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
               examples:
                 example-1:
                   value:
@@ -612,10 +612,10 @@ paths:
                         carrierName: DFDS Seaways
                         countryCode: DK
                     ruleFailures:
-                      - ruleId: BR005
-                        ruleDescription: A GMR can only be used in one crossing between two customs territiories
-                      - ruleId: BR011
-                        ruleDescription: This Customs declaration cannot be in more than one GMR
+                      - ruleId: 001_1
+                          ruleDescription: This type of declaration cannot be used for this direction of travel
+                            - ruleId: 001_3
+                              ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again
       deprecated: false
 components:
   securitySchemes:

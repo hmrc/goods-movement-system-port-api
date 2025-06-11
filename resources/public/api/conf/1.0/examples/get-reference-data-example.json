@@ -56,12 +56,12 @@
   ],
   "ruleFailures": [
     {
-      "ruleId": "BR005",
-      "ruleDescription": "A GMR can only be used in one crossing between two customs territories"
+      "ruleId": "001_1",
+      "ruleDescription": "This type of declaration cannot be used for this direction of travel."
     },
     {
-      "ruleId": "BR011",
-      "ruleDescription": "This Customs declaration cannot be in more than one GMR"
+      "ruleId": "001_3",
+      "ruleDescription": "This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again."
     }
   ]
 }

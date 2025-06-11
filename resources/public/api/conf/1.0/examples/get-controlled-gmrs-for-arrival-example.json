@@ -12,7 +12,7 @@
       }
     ],
     "actualCrossing": {
-      "routeId": "C000015",
+      "routeId": "107",
       "localDateTimeOfArrival": "2021-06-05T09:20"
     }
   },
@@ -29,7 +29,7 @@
       }
     ],
     "actualCrossing": {
-      "routeId": "C000017",
+      "routeId": "107",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   },
@@ -46,7 +46,7 @@
       }
     ],
     "actualCrossing": {
-      "routeId": "C000017",
+      "routeId": "107",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   },
@@ -64,7 +64,7 @@
       }
     ],
     "actualCrossing": {
-      "routeId": "C000017",
+      "routeId": "19",
       "localDateTimeOfArrival": "2021-06-11T11:03"
     }
   }
