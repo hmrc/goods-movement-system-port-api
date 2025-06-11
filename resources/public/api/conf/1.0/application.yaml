@@ -20,7 +20,7 @@ paths:
           style: simple
           schema:
             type: string
-            example: '14'
+            example: '1401'
         - name: Accept
           in: header
           description: Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
@@ -177,7 +177,7 @@ paths:
           style: simple
           schema:
             type: string
-            example: '14'
+            example: '1401'
         - name: Content-Type
           in: header
           description: Specifies the format of the request body, which must be JSON.
@@ -316,7 +316,7 @@ paths:
           style: simple
           schema:
             type: string
-            example: '14'
+            example: '1401'
         - name: lastUpdatedFrom
           in: query
           description: 'Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or after this date/time.  Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T04:20:02.284Z'
