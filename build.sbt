@@ -29,8 +29,6 @@ lazy val microservice = Project(appName, file("."))
   )
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
-  .settings(resolvers += Resolver.jcenterRepo)
-  .settings(resolvers += "emueller-bintray" at "https://dl.bintray.com/emueller/maven")
   .settings(
     Compile / unmanagedResourceDirectories += baseDirectory.value / "resources",
     IntegrationTest / unmanagedSourceDirectories :=
