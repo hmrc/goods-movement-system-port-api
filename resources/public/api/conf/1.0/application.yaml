@@ -564,9 +564,9 @@ paths:
                           carrierName: DFDS Seaways
                           countryCode: DK
                       ruleFailures:
-                        - ruleId: 001_1
+                        - ruleId: '001_1'
                           ruleDescription: This type of declaration cannot be used for this direction of travel
-                        - ruleId: 001_3
+                        - ruleId: '001_3'
                           ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
               examples:
                 example-1:
@@ -612,9 +612,9 @@ paths:
                         carrierName: DFDS Seaways
                         countryCode: DK
                     ruleFailures:
-                      - ruleId: 001_1
+                      - ruleId: '001_1'
                         ruleDescription: This type of declaration cannot be used for this direction of travel
-                      - ruleId: 001_3
+                      - ruleId: '001_3'
                         ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again
       deprecated: false
 components:
