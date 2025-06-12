@@ -62,7 +62,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: 107
+                      routeId: '107'
                       localDateTimeOfArrival: 2021-06-05T09:20
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -73,7 +73,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: 107
+                      routeId: '107'
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -84,7 +84,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: 107
+                      routeId: '107'
                       localDateTimeOfArrival: 2021-06-11T11:03
                   - gmrId: GMRA00009JR8
                     isUnaccompanied: true
@@ -97,7 +97,7 @@ paths:
                         locationIds:
                           - L0029A
                     actualCrossing:
-                      routeId: 19
+                      routeId: '19'
                       localDateTimeOfArrival: 2021-06-11T11:03
               examples:
                 example-1:
@@ -111,7 +111,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: 107
+                        routeId: '107'
                         localDateTimeOfArrival: 2021-06-05T09:20
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -122,7 +122,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: 107
+                        routeId: '107'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -133,7 +133,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: 107
+                        routeId: '107'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRA00009JR8
                       isUnaccompanied: true
@@ -146,7 +146,7 @@ paths:
                           locationIds:
                             - L0029A
                       actualCrossing:
-                        routeId: 19
+                        routeId: '19'
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
