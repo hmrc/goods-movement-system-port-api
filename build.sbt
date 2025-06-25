@@ -10,7 +10,7 @@ lazy val microservice = Project(appName, file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     majorVersion := 0,
-    scalaVersion := "3.5.0",
+    scalaVersion := "3.6.4",
     scalafmtOnCompile := true,
     scalacOptions ++= Seq(
       "-language:postfixOps",
