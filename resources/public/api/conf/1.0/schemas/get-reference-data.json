@@ -76,7 +76,7 @@
             "format": "date"
           },
           "portDescription": {
-            "description": "Description of the port eg: the ports name",
+            "description": "Description of the port eg: the port's name",
             "type": "string",
             "minLength": 3,
             "maxLength": 255

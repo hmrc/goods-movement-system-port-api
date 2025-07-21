@@ -1,0 +1,31 @@
+components:
+  parameters:
+    portId:
+      name: portId
+      in: path
+      required: true
+      example: 1401
+      schema:
+        type: string
+        description: |
+          The ID of a port or border location, from the GVMS reference data
+    lastUpdatedFrom:
+      name: lastUpdatedFrom
+      in: query
+      description: |
+        Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or after this date/time.  Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T04:20:02.284Z
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time
+    lastUpdatedTo:
+      name: lastUpdatedTo
+      in: query
+      description: |
+        Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or before this date/time. Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T05:20:02.284Z
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time

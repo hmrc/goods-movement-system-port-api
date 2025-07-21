@@ -63,7 +63,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
         GetControlledArrivalsGmrReducedResponse.apply
       )
 
-      validateAgainstSchema(result, "get-controlled-gmrs-for-arrival-schema.json", Version_1_0)
+      validateAgainstSchema(result, "get-controlled-gmrs-for-arrival.json", Version_1_0)
       verify(getRequestedFor(urlEqualTo("/goods-movement-system/1/arrivals/controlled")))
     }
 
@@ -128,7 +128,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
         GetControlledDeparturesGmrReducedResponse.apply
       )
 
-      validateAgainstSchema(result, "get-controlled-gmrs-for-departure-schema.json", Version_1_0)
+      validateAgainstSchema(result, "get-controlled-gmrs-for-departure.json", Version_1_0)
       verify(getRequestedFor(urlEqualTo("/goods-movement-system/1/departures/controlled")))
     }
 
@@ -191,7 +191,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
       status(result)                                                      shouldBe OK
       contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]] shouldBe departuresExtendedGmrResponse
 
-      validateAgainstSchema(result, "get-checked-in-gmrs-for-departure-schema.json", Version_1_0)
+      validateAgainstSchema(result, "get-checked-in-gmrs-for-departure.json", Version_1_0)
       verify(getRequestedFor(urlEqualTo("/goods-movement-system/1/departures")))
     }
 
