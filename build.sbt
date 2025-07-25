@@ -1,8 +1,10 @@
 import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
-import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 import sbt.Keys.evictionErrorLevel
+import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
+
+import java.nio.file.Files
 
 val appName = "goods-movement-system-port-api"
 
@@ -46,33 +48,37 @@ enablePlugins(SbtWeb)
 // Task to create a ZIP file containing all json schemas for each version, under the version directory
 lazy val zipSchemas = taskKey[Pipeline.Stage]("Zips up all JSON schemas")
 zipSchemas := { mappings: Seq[PathMapping] =>
-  println("🔥🔥🔥 zipSchemas task is executing!")
 
   val targetDir = WebKeys.webTarget.value / "zip"
   val resDir = baseDirectory.value / "resources" / "public" / "api" / "conf"
-  val propertiesFile = (resDir / "common" / "schemas" / "properties.json")
+
   val zipFiles = resDir
     .listFiles()
     .filter(_.isDirectory)
     .map { dir =>
       val schemaPaths  = Path.allSubpaths(dir / "schemas")
       val examplePaths = Path.allSubpaths(dir / "examples")
-
+      val propertiesFile = (dir / "common" / "schemas" / "properties.json")
       val commonFile =
         if (propertiesFile.exists())
-          Seq((propertiesFile, "schemas/common/gmr-types-schema.json"))
+          Seq((propertiesFile, "gmr-types-schema.json"))
         else Seq.empty
 
       val schemaFiles = schemaPaths.collect {
         case (file, _) =>
+          val content = IO.read(file)
+          val updatedContent = content.replace("../common/schemas/properties.json", "./gmr-types-schema.json")
+          val tempFile = Files.createTempFile("schema-", ".json").toFile
+          IO.write(tempFile, updatedContent)
+
           val name = file.getName.stripSuffix(".json") + "_schema.json"
-          (file, s"schemas/$name")
+          (tempFile, name)
       }.toSeq
 
       val exampleFiles = examplePaths.collect {
         case (file, _) =>
           val name = file.getName.stripSuffix(".json") + "_example.json"
-          (file, s"examples/$name")
+          (file, name)
       }.toSeq
 
       val zipFile = targetDir / "api" / "conf" / dir.getName / "gmvs-port-schemas.zip"
