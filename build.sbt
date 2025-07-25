@@ -42,21 +42,49 @@ lazy val microservice = Project(appName, file("."))
 
 evictionErrorLevel := Level.Warn
 
+enablePlugins(SbtWeb)
 // Task to create a ZIP file containing all json schemas for each version, under the version directory
-val zipSchemas = taskKey[Pipeline.Stage]("Zips up all JSON schemas")
+lazy val zipSchemas = taskKey[Pipeline.Stage]("Zips up all JSON schemas")
 zipSchemas := { mappings: Seq[PathMapping] =>
-  val targetDir = WebKeys.webTarget.value / "zip"
-  val zipFiles: Iterable[java.io.File] =
-    (baseDirectory.value / "resources" / "public" / "api" / "conf").listFiles
-      .filter(_.isDirectory)
-      .map { dir =>
-        val schemaPaths  = Path.allSubpaths(dir / "schemas")
-        val examplePaths = Path.allSubpaths(dir / "examples")
-        val zipFile      = targetDir / "api" / "conf" / dir.getName / "gmvs-port-schemas.zip"
-        IO.zip(schemaPaths ++ examplePaths, zipFile)
+  println("🔥🔥🔥 zipSchemas task is executing!")
 
-        zipFile
-      }
-  zipFiles.pair(Path.relativeTo(targetDir)) ++ mappings
+  val targetDir = WebKeys.webTarget.value / "zip"
+  val resDir = baseDirectory.value / "resources" / "public" / "api" / "conf"
+  val propertiesFile = (resDir / "common" / "schemas" / "properties.json")
+  val zipFiles = resDir
+    .listFiles()
+    .filter(_.isDirectory)
+    .map { dir =>
+      val schemaPaths  = Path.allSubpaths(dir / "schemas")
+      val examplePaths = Path.allSubpaths(dir / "examples")
+
+      val commonFile =
+        if (propertiesFile.exists())
+          Seq((propertiesFile, "schemas/common/gmr-types-schema.json"))
+        else Seq.empty
+
+      val schemaFiles = schemaPaths.collect {
+        case (file, _) =>
+          val name = file.getName.stripSuffix(".json") + "_schema.json"
+          (file, s"schemas/$name")
+      }.toSeq
+
+      val exampleFiles = examplePaths.collect {
+        case (file, _) =>
+          val name = file.getName.stripSuffix(".json") + "_example.json"
+          (file, s"examples/$name")
+      }.toSeq
+
+      val zipFile = targetDir / "api" / "conf" / dir.getName / "gmvs-port-schemas.zip"
+      IO.zip(schemaFiles ++ exampleFiles ++ commonFile, zipFile, Some(0L))
+      zipFile
+    }
+
+  val zipMappings = zipFiles.map { file =>
+    (file, s"public/api/conf/${file.getParentFile.getName}/${file.getName}")
+  }
+
+  zipMappings.toSeq ++ mappings
+
 }
 pipelineStages := Seq(zipSchemas)
