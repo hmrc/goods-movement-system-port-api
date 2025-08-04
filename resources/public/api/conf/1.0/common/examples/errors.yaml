@@ -12,5 +12,3 @@ components:
         Your application does not have permission to access this endpoint. This may be because your application is not subscribed with the portId provided.
       value:
         code: NOT_AUTHORISED
-
-  #404
