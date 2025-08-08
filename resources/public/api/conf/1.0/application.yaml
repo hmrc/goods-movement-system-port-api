@@ -20,4 +20,3 @@ components:
   securitySchemes:
     applicationRestricted:
       $ref: './common/schemas/security-components.yaml#/applicationRestricted'
-    None:  []
