@@ -17,10 +17,9 @@ get:
     
     GVMS reference data is updated periodically. If you are a GVMS API subscriber, you will receive notifications about upcoming updates. If you receive a notification about an update, your application software must refresh the reference data by calling the GET reference-data endpoint.
 
-  security:
-     - {}
-
   operationId: get-reference-data
+  security:
+    - {}
   responses:
     '200':
        description: |

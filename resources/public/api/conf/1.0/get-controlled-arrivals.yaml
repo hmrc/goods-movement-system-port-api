@@ -12,6 +12,7 @@ get:
     We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
     
     The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+
   operationId: get-controlled-gmrs-at-arrival-port
   security:
     - applicationRestricted: []
