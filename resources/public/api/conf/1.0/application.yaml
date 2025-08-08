@@ -4,8 +4,10 @@ info:
   contact: {}
   version: '1.0'
 servers:
-  - url: https://api.service.hmrc.gov.uk/
-    variables: {}
+  - url: https://test-api.service.hmrc.gov.uk
+    description: Sandbox
+  - url: https://api.service.hmrc.gov.uk
+    description: Production
 paths:
   /customs/goods-movement-system-port/{portId}/arrivals/controlled:
     $ref: './get-controlled-arrivals.yaml'
