@@ -115,7 +115,7 @@ trait FakeObjects {
     )
   )
 
-  def gmsReferenceDataSummay: GvmsReferenceData =
+  def gmsReferenceDataSummaryFromJson: GvmsReferenceData =
     Json.parse(getClass.getResourceAsStream(s"/referencedata/test-gvms-reference-data.json")).as[GvmsReferenceData]
 
 }

@@ -36,7 +36,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
     val mockGoodsMovementSystemConnector: GoodsMovementSystemConnector = mock[GoodsMovementSystemConnector]
     val service =
       new PortsService(mockGoodsMovementSystemConnector, mockApiSubscriptionFieldsService, mockGmsReferenceDataService, mockAppConfig, showPending)
-    val record = gmsReferenceDataSummay
+    val record = gmsReferenceDataSummaryFromJson
   }
 
   "getDepartures" when {
