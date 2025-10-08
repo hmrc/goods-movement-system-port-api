@@ -16,12 +16,13 @@ object CodeCoverageSettings {
     ".*definition.*",
     ".*repositories.*",
     ".*controllers.test.*",
-    ".*services.test.*"
+    ".*services.test.*",
+    ".*models.*"
   )
 
   val settings: Seq[Setting[_]] = Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
-    ScoverageKeys.coverageMinimumStmtTotal := 80,
+    ScoverageKeys.coverageMinimumStmtTotal := 90,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )
