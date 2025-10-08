@@ -31,7 +31,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
   val controller: PortsController = app.injector.instanceOf[PortsController]
 
-  "GET /:portId/arrivals/controlled" should {
+  "getControlledGmrsForArrivals" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getControlledGmrsForArrivals("portId"))
     "return 200 OK" in {
@@ -97,7 +97,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
   }
 
-  "GET /:portId/departures/controlled" should {
+  "getControlledGmrsForDepartures" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getControlledGmrsForDepartures("portId"))
 
@@ -162,7 +162,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
     }
   }
 
-  "GET /:portId/departures" should {
+  "getGmrsForDepartures" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getGmrsForDepartures("portId", None, None))
 
