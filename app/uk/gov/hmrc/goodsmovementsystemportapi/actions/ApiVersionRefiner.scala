@@ -58,6 +58,6 @@ class ApiVersionRefiner @Inject() ()(implicit val executionContext: ExecutionCon
   def errorResponse[A]: Either[Result, VersionedRequest[A]] =
     Status(InvalidAcceptHeader.httpStatusCode)(Json.toJson[ErrorResponse](InvalidAcceptHeader)).asLeft[VersionedRequest[A]]
 
-  def requestWithVersion[A](request: Request[A])(version: ApiVersion): Either[Result, VersionedRequest[A]] =
+  private def requestWithVersion[A](request: Request[A])(version: ApiVersion): Either[Result, VersionedRequest[A]] =
     VersionedRequest(version, request).asRight[Result]
 }

@@ -17,8 +17,8 @@
 package uk.gov.hmrc.goodsmovementsystemportapi.services
 
 import cats.data.OptionT
-import cats.implicits._
-import org.mockito.Mockito._
+import cats.implicits.*
+import org.mockito.Mockito.*
 import org.scalatest.EitherValues
 import play.api.test.Helpers.await
 import uk.gov.hmrc.goodsmovementsystemportapi.connectors.GoodsMovementSystemConnector
@@ -26,6 +26,7 @@ import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.PortErrors.{PortIdMi
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.SubscriptionFieldsResponse
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledArrivalsGmrResponse, GetControlledDeparturesGmrReducedResponse, GetControlledDeparturesGmrResponse, GetPortDepartureExpandedGmrResponse}
+import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
 
 import java.time.Instant
 import scala.concurrent.Future
@@ -36,7 +37,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
     val mockGoodsMovementSystemConnector: GoodsMovementSystemConnector = mock[GoodsMovementSystemConnector]
     val service =
       new PortsService(mockGoodsMovementSystemConnector, mockApiSubscriptionFieldsService, mockGmsReferenceDataService, mockAppConfig, showPending)
-    val record = gmsReferenceDataSummaryFromJson
+    val record: GvmsReferenceData = gmsReferenceDataSummaryFromJson
   }
 
   "getDepartures" when {
@@ -59,7 +60,7 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
       }
 
       "return all gmr" in new Setup(true) {
-        val multiple = GetPortDepartureExpandedGmrResponse(
+        val multiple: Seq[GetPortDepartureExpandedGmrResponse] = GetPortDepartureExpandedGmrResponse(
           gmrId = "gmrId",
           isUnaccompanied = true,
           updatedDateTime = Instant.now,

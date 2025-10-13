@@ -31,14 +31,14 @@ import scala.util.matching.Regex.Match
 @Singleton
 class AcceptHeaderFilter @Inject() ()(implicit val executionContext: ExecutionContext) extends ActionFilter[Request] {
 
-  val validateVersion: String => Boolean = _ === "1.0"
+  private val validateVersion: String => Boolean = _ === "1.0"
 
-  val validateContentType: String => Boolean = _ === "json"
+  private val validateContentType: String => Boolean = _ === "json"
 
   val matchHeader: String => Option[Match] =
     new Regex("""^application/vnd[.]{1}hmrc[.]{1}(.*?)[+]{1}(.*)$""", "version", "contenttype") findFirstMatchIn _
 
-  val acceptHeaderValidationRules: Option[String] => Boolean =
+  private val acceptHeaderValidationRules: Option[String] => Boolean =
     _ flatMap (a =>
       matchHeader(a) map (res => validateContentType(res.group("contenttype")) && validateVersion(res.group("version")))
     ) getOrElse false

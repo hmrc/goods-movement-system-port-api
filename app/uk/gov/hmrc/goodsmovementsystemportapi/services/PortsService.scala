@@ -98,7 +98,7 @@ class PortsService @Inject() (
                              .getField(clientId, SubscriptionFieldsResponse.portIdKey)
                              .toRight(PortErrors.subscriptionPortIdNotFoundError)
       _ <- EitherT.cond[Future](
-             authorisedPortIds.split(",").map(_.replaceAll("\\s", "")).contains(portIdVal) && portIdVal.length > 0,
+             authorisedPortIds.split(",").map(_.replaceAll("\\s", "")).contains(portIdVal) && portIdVal.nonEmpty,
              (),
              PortErrors.portIdMismatchError
            )
