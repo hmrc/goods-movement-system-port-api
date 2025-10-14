@@ -2,6 +2,7 @@ import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
 import sbt.Keys.evictionErrorLevel
+import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 
 val appName = "goods-movement-system-port-api"
@@ -18,7 +19,7 @@ lazy val microservice = Project(appName, file("."))
       "-no-indent"
     )
   )
-  .settings(CodeCoverageSettings.settings)
+  .settings(CodeCoverageSettings.settings, ScoverageKeys.coverageMinimumStmtTotal := 90)
   .settings(
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     playDefaultPort := 8988,

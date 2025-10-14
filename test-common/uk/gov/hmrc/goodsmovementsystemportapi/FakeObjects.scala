@@ -28,6 +28,8 @@ import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata._
 trait FakeObjects {
 
   val portId = "abc"
+  val fakeLastUpdatedFromDate: Instant = Instant.parse("2027-01-01T00:00:00Z")
+  val fakeLastUpdatedToDate:   Instant = Instant.parse("2028-01-01T00:00:00Z")
 
   val crossing: Crossing = Crossing(
     "C00011",
