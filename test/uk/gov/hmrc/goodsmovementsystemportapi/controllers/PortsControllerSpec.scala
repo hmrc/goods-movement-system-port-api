@@ -17,10 +17,11 @@
 package uk.gov.hmrc.goodsmovementsystemportapi.controllers
 
 import cats.data.EitherT
-import cats.implicits._
-import org.mockito.ArgumentMatchers.{any, eq => mEq}
-import org.mockito.Mockito._
+import cats.implicits.*
+import org.mockito.ArgumentMatchers.{any, eq as mEq}
+import org.mockito.Mockito.*
 import play.api.libs.json.{JsString, Json}
+import play.api.mvc.Result
 import uk.gov.hmrc.goodsmovementsystemportapi.ResultAssertions
 import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.{ErrorResponse, GetControlledArrivalErrors, GetControlledDepartureErrors, GetDepartureErrors, PortErrors}
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.ControllerBaseSpec
@@ -47,7 +48,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         when(mockPortService.getArrivals(mEq("clientId"), mEq(portId), mEq(false))(any()))
           .thenReturn(EitherT.rightT[Future, GetControlledArrivalErrors](arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)))
 
-        val result = controller.getControlledGmrsForArrivals(portId)(fakeRequest)
+        val result: Future[Result] = controller.getControlledGmrsForArrivals(portId)(fakeRequest)
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledArrivalsGmrReducedResponse]] shouldBe arrivalsGmrResponse.map(
@@ -62,7 +63,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         when(mockPortService.getArrivals(mEq("clientId"), mEq(portId), mEq(true))(any()))
           .thenReturn(EitherT.rightT[Future, GetControlledArrivalErrors](arrivalsGmrResponse.map(GetControlledArrivalsGmrReducedResponse.apply)))
 
-        val result =
+        val result: Future[Result] =
           controller.getControlledGmrsForArrivals(portId)(fakeRequest.withHeaders(fakeRequest.headers.add("IGNORE-Effective-DatES" -> "true")))
 
         status(result) shouldBe OK
@@ -111,7 +112,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
             EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply))
           )
 
-        val result = controller.getControlledGmrsForDepartures(portId)(fakeRequest)
+        val result: Future[Result] = controller.getControlledGmrsForDepartures(portId)(fakeRequest)
 
         status(result) shouldBe OK
         contentAsJson(result).as[List[GetControlledDeparturesGmrReducedResponse]] shouldBe departuresGmrResponse.map(
@@ -127,7 +128,7 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
             EitherT.rightT[Future, GetControlledDepartureErrors](departuresGmrResponse.map(GetControlledDeparturesGmrReducedResponse.apply))
           )
 
-        val result =
+        val result: Future[Result] =
           controller.getControlledGmrsForDepartures(portId)(fakeRequest.withHeaders(fakeRequest.headers.add("IGNORE-Effective-DatES" -> "true")))
 
         status(result) shouldBe OK
@@ -173,10 +174,10 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         when(mockPortService.getDepartures(mEq("clientId"), mEq(portId), mEq(false), mEq(None), mEq(None))(any()))
           .thenReturn(EitherT.rightT[Future, GetDepartureErrors](departuresExtendedGmrResponse))
 
-        val result = controller.getGmrsForDepartures(portId, None, None)(fakeRequest)
+        val result: Future[Result] = controller.getGmrsForDepartures(portId, None, None)(fakeRequest)
 
         status(result) shouldBe OK
-        val actual = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
+        val actual: Seq[GetPortDepartureExpandedGmrResponse] = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
         actual shouldBe departuresExtendedGmrResponse
         actual.map(x => (Json.toJson(x) \\ "updatedDateTime").headOption shouldBe Some(JsString("2021-07-03T16:33:51.000Z")))
 
@@ -188,11 +189,11 @@ class PortsControllerSpec extends ControllerBaseSpec with ResultAssertions {
         when(mockPortService.getDepartures(mEq("clientId"), mEq(portId), mEq(true), mEq(None), mEq(None))(any()))
           .thenReturn(EitherT.rightT[Future, GetDepartureErrors](departuresExtendedGmrResponse))
 
-        val result =
+        val result: Future[Result] =
           controller.getGmrsForDepartures(portId, None, None)(fakeRequest.withHeaders(fakeRequest.headers.add("IGNORE-Effective-DatES" -> "true")))
 
         status(result) shouldBe OK
-        val actual = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
+        val actual: List[GetPortDepartureExpandedGmrResponse] = contentAsJson(result).as[List[GetPortDepartureExpandedGmrResponse]]
         actual shouldBe departuresExtendedGmrResponse
         actual.map(x => (Json.toJson(x) \\ "updatedDateTime").headOption shouldBe Some(JsString("2021-07-03T16:33:51.000Z")))
         verify(mockPortService).getDepartures(mEq("clientId"), mEq(portId), mEq(true), mEq(None), mEq(None))(any())

@@ -45,7 +45,7 @@ class GmsAuthenticatedRequestActionBuilder @Inject() (
       }(hc(request), executionContext)
       .recover(handleFailure)
 
-  def handleFailure: PartialFunction[Throwable, Result] = { case _: NoActiveSession =>
+  private def handleFailure: PartialFunction[Throwable, Result] = { case _: NoActiveSession =>
     Unauthorized
   }
 }

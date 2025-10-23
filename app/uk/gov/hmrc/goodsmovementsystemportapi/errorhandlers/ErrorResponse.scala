@@ -17,11 +17,12 @@
 package uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers
 
 import play.api.Logger
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.Result
 import play.api.mvc.Results.Status
+import uk.gov.hmrc.goodsmovementsystemportapi.models.errorhandlers.NestedError
 import uk.gov.hmrc.goodsmovementsystemportapi.utils.LogUtils.logAndResult
 
 class ErrorResponse(

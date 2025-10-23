@@ -17,7 +17,7 @@
 package uk.gov.hmrc.goodsmovementsystemportapi
 
 import play.api.libs.json.{Json, OFormat}
-import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.NestedError
+import uk.gov.hmrc.goodsmovementsystemportapi.models.errorhandlers.NestedError
 
 object TestClasses {
 
