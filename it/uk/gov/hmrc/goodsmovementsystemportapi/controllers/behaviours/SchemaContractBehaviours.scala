@@ -45,7 +45,7 @@ trait SchemaContractBehaviours extends Logging {
     val results: ProcessingReport = schema
       .validate(JsonLoader.fromString(contentAsString(result)), true)
 
-    handleErrors(results.iterator().asScala.map(_.asJson())).foreach(_ => logger.info(_))
+    logger.info(handleErrors(results.iterator().asScala.map(_.asJson())).toString)
     results.isSuccess shouldBe true
   }
 
