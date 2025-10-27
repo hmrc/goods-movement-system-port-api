@@ -45,11 +45,11 @@ trait SchemaContractBehaviours extends Logging {
     val results: ProcessingReport = schema
       .validate(JsonLoader.fromString(contentAsString(result)), true)
 
-    logger.info(handleErrors(results.iterator().asScala.map(_.asJson())).toString)
+    logger.info(handleErrors(results.asScala.map(_.asJson())).mkString(",\n"))
     results.isSuccess shouldBe true
   }
 
-  private def handleErrors(errors: Iterator[JsonNode]): List[NestedError] = {
+  private def handleErrors(errors: Iterable[JsonNode]): List[NestedError] = {
     def retrieveNullSafeValue(jsonNode: JsonNode) =
       if (jsonNode.isNull) ""
       else jsonNode.asText
