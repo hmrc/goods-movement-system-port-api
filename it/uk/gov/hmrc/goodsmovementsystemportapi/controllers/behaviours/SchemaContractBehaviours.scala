@@ -26,8 +26,9 @@ import uk.gov.hmrc.goodsmovementsystemportapi.models.errorhandlers.NestedError
 import uk.gov.hmrc.goodsmovementsystemportapi.schemas.ApiVersion
 import scala.jdk.CollectionConverters._
 import scala.concurrent.Future
+import play.api.Logging
 
-trait SchemaContractBehaviours {
+trait SchemaContractBehaviours extends Logging {
   this: BaseISpec =>
 
   private val factory = JsonSchemaFactory
@@ -44,7 +45,7 @@ trait SchemaContractBehaviours {
     val results: ProcessingReport = schema
       .validate(JsonLoader.fromString(contentAsString(result)), true)
 
-    println(handleErrors(results.iterator().asScala.map(_.asJson())))
+    handleErrors(results.iterator().asScala.map(_.asJson())).foreach(_ => logger.info(_))
     results.isSuccess shouldBe true
   }
 
