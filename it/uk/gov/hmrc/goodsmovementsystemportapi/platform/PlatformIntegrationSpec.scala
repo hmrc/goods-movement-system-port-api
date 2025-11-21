@@ -95,8 +95,8 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
 
       val jsonResponse: JsValue = contentAsJson(result)
 
-      val versions = (jsonResponse \\ "version") map (_.as[String])
-      val endpointNames =
+      val versions: collection.Seq[String] = (jsonResponse \\ "version") map (_.as[String])
+      val endpointNames: collection.Seq[collection.Seq[String]] =
         (jsonResponse \\ "endpoints").map(_ \\ "endpointName").map(_.map(_.as[String]))
 
       versions

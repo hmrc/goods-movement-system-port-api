@@ -18,16 +18,19 @@ package uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers
 
 import org.mockito.Mockito.when
 import play.api.Configuration
+import play.api.mvc.Result
 import play.api.test.FakeRequest
-import uk.gov.hmrc.auth.core._
+import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.ControllerBaseSpec
-import uk.gov.hmrc.http._
+import uk.gov.hmrc.http.*
 import uk.gov.hmrc.play.bootstrap.config.DefaultHttpAuditEvent
+
+import scala.concurrent.Future
 
 class CustomErrorHandlerSpec extends ControllerBaseSpec {
 
   trait Setup {
-    val mockConfig = {
+    val mockConfig: Configuration = {
       val c = mock[Configuration]
       when(c.get[Seq[Int]]("bootstrap.errorHandler.warnOnly.statusCodes")).thenReturn(Seq(400))
       c
@@ -105,7 +108,7 @@ class CustomErrorHandlerSpec extends ControllerBaseSpec {
       }
       "return the GatewayTimeout status code of the exception with the message" in new Setup {
         val exception = new GatewayTimeoutException("gateway timeout")
-        val result = customHttpErrorHandler
+        val result: Future[Result] = customHttpErrorHandler
           .onServerError(FakeRequest(), exception)
 
         status(result) shouldBe GATEWAY_TIMEOUT
@@ -136,7 +139,7 @@ class CustomErrorHandlerSpec extends ControllerBaseSpec {
     "if the json is invalid" should {
       "return bad request exception" in new Setup {
 
-        val result = customHttpErrorHandler.onClientError(FakeRequest("POST", "/"), BAD_REQUEST)
+        val result: Future[Result] = customHttpErrorHandler.onClientError(FakeRequest("POST", "/"), BAD_REQUEST)
 
         status(result) shouldBe BAD_REQUEST
         assertErrorResponse(result, "INVALID_JSON", "Invalid JSON - the payload could not be parsed", 0)
@@ -146,7 +149,7 @@ class CustomErrorHandlerSpec extends ControllerBaseSpec {
     "if the query parameter is invalid" should {
       "return bad request exception" in new Setup {
 
-        val result = customHttpErrorHandler.onClientError(FakeRequest("GET", "/abc?key=value"), BAD_REQUEST)
+        val result: Future[Result] = customHttpErrorHandler.onClientError(FakeRequest("GET", "/abc?key=value"), BAD_REQUEST)
 
         status(result)                              shouldBe BAD_REQUEST
         (contentAsJson(result) \ "code").as[String] shouldBe "INVALID_QUERY_PARAMS"

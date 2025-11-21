@@ -45,7 +45,7 @@ class GoodsMovementSystemConnectorSpec extends BaseSpec with FutureAwaits {
         when(mockRequestBuilder.execute(using any(), any()))
           .thenReturn(Future(arrivalsGmrResponse))
 
-        val result = await(connector.getControlledArrivalsGmr(portId)(hc))
+        val result: Seq[GetControlledArrivalsGmrResponse] = await(connector.getControlledArrivalsGmr(portId)(hc))
 
         result shouldBe arrivalsGmrResponse
 

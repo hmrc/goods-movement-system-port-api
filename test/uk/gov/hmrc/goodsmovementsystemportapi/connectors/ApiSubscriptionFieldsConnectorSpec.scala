@@ -40,15 +40,15 @@ class ApiSubscriptionFieldsConnectorSpec extends BaseSpec with FutureAwaits {
   "getField" when {
     "call api subscription field microservice" should {
       "return carrierId successfully" in new setup {
-        val connector               = new ApiSubscriptionFieldsConnector(mockHttpClient, mockAppConfig, baseUrl)
-        val expectedSuccessResponse = subscriptionFieldsResponse
+        val connector = new ApiSubscriptionFieldsConnector(mockHttpClient, mockAppConfig, baseUrl)
+        val expectedSuccessResponse: SubscriptionFieldsResponse = subscriptionFieldsResponse
 
         when(mockHttpClient.get(mEq(url"$baseUrl/field/application/$clientId/context/$apiContext/version/$apiVersion"))(any()))
           .thenReturn(mockRequestBuilder)
         when(mockRequestBuilder.execute(using any(), any()))
           .thenReturn(Future.successful(expectedSuccessResponse))
 
-        val result = await(connector.getSubscriptionFields(clientId)(hc))
+        val result: SubscriptionFieldsResponse = await(connector.getSubscriptionFields(clientId)(hc))
 
         result shouldBe expectedSuccessResponse
         verify(mockRequestBuilder).execute(using any(), any())

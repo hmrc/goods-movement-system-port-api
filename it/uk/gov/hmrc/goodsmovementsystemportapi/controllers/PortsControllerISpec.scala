@@ -31,7 +31,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
   val controller: PortsController = app.injector.instanceOf[PortsController]
 
-  "GET /:portId/arrivals/controlled" should {
+  "getControlledGmrsForArrivals" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getControlledGmrsForArrivals("portId"))
     "return 200 OK" in {
@@ -39,7 +39,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
       stubGet(s"/goods-movement-system/$portId/arrivals/controlled", Json.stringify(Json.toJson(arrivalsGmrResponse)))
 
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummay)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
 
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
@@ -97,7 +97,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
   }
 
-  "GET /:portId/departures/controlled" should {
+  "getControlledGmrsForDepartures" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getControlledGmrsForDepartures("portId"))
 
@@ -105,7 +105,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
       AuthStubs.userIsAuthenticated
 
       stubGet(s"/goods-movement-system/$portId/departures/controlled", Json.stringify(Json.toJson(departuresGmrResponse)))
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummay)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
         s"""
@@ -162,7 +162,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
     }
   }
 
-  "GET /:portId/departures" should {
+  "getGmrsForDepartures" should {
     val portId = "1"
     behave like authorisedEndpoint(routes.PortsController.getGmrsForDepartures("portId", None, None))
 
@@ -170,7 +170,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
       AuthStubs.userIsAuthenticated
 
       stubGet(s"/goods-movement-system/$portId/departures", Json.stringify(Json.toJson(departuresExtendedGmrResponse)))
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummay)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
         s"""
@@ -231,7 +231,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
         stubGet(s"/goods-movement-system/$portId/departures", Json.stringify(Json.obj("code" -> "TOO_MANY_RESULTS")))
 
-        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummay)))
+        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
         stubGet(
           s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
           s"""

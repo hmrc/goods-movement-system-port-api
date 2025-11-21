@@ -29,8 +29,8 @@ class AppConfig @Inject() (config: Configuration, servicesConfig: ServicesConfig
   val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
   val graphiteHost:    String  = config.get[String]("microservice.metrics.graphite.host")
 
-  val apiContext = config.get[String]("apiContext")
-  val apiVersion = config.get[String]("apiVersion")
+  val apiContext: String = config.get[String]("apiContext")
+  val apiVersion: String = config.get[String]("apiVersion")
 
   val effectiveDatesCheck: Boolean = config.get[Boolean]("features.effectiveDatesCheck")
 

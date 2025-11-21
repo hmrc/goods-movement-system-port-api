@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers
+package uk.gov.hmrc.goodsmovementsystemportapi.models.errorhandlers
 
 import play.api.libs.json.{Json, OFormat}
 
