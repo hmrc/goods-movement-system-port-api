@@ -41,51 +41,7 @@ paths:
                   description: |
                     List of controlled GMRs for arrival port
                   value:
-                    - gmrId: GMRA0000028D
-                      isUnaccompanied: false
-                      vehicleRegNum: KL58 FEM
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                      actualCrossing:
-                        routeId: '107'
-                        localDateTimeOfArrival: 2021-06-05T09:20
-                    - gmrId: GMRA00009JR8
-                      isUnaccompanied: true
-                      trailerRegistrationNums:
-                        - FB283721
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                      actualCrossing:
-                        routeId: '107'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRA00009JR8
-                      isUnaccompanied: true
-                      containerReferenceNums:
-                        - GB283721
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                      actualCrossing:
-                        routeId: '107'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRA00009JR8
-                      isUnaccompanied: true
-                      trailerRegistrationNums:
-                        - FB283721
-                      containerReferenceNums:
-                        - GB283721
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                      actualCrossing:
-                        routeId: '19'
-                        localDateTimeOfArrival: 2021-06-11T11:03
+                    $ref: ./examples/get-controlled-gmrs-for-arrival.json
         '403':
           description: ''
           content:
@@ -130,50 +86,7 @@ paths:
                   description: |
                     List of checked-in GMRs at departure port
                   value:
-                    - gmrId: GMRB00000GKW
-                      updatedDateTime: '2021-06-05T04:21:23.492Z'
-                      isUnaccompanied: false
-                      vehicleRegNum: PJ15 JEF
-                      checkedInCrossing:
-                        routeId: '103'
-                        localDateTimeOfArrival: 2021-06-05T09:20
-                      inspectionRequired: true
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                            - L0030A
-                            - L0031A
-                        - inspectionTypeId: '2'
-                          locationIds:
-                            - L0029A
-                            - L0031A
-                    - gmrId: GMRB0001IFM5
-                      updatedDateTime: '2021-06-05T04:20:02.284Z'
-                      isUnaccompanied: false
-                      vehicleRegNum: GU62 SJE
-                      checkedInCrossing:
-                        routeId: '104'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                      readyToEmbark: true
-                      inspectionRequired: false
-                    - gmrId: GMRB0001EKG2
-                      updatedDateTime: '2021-06-05T04:17:48.406Z'
-                      isUnaccompanied: true
-                      trailerRegistrationNums:
-                        - AB29 3824
-                        - SJ25 9382
-                      checkedInCrossing:
-                        routeId: '104'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRB0002MD3K
-                      updatedDateTime: '2021-06-05T04:15:35.009Z'
-                      isUnaccompanied: true
-                      containerReferenceNums:
-                        - GB 293824
-                      checkedInCrossing:
-                        routeId: '105'
-                        localDateTimeOfArrival: 2021-06-11T11:03
+                    $ref: ./examples/get-checked-in-gmrs-for-departure.json
         '403':
           description: ''
           content:
@@ -226,50 +139,7 @@ paths:
                   description: |
                     List of checked-in GMRs at departure port
                   value:
-                    - gmrId: GMRB00000GKW
-                      updatedDateTime: '2021-06-05T04:21:23.492Z'
-                      isUnaccompanied: false
-                      vehicleRegNum: PJ15 JEF
-                      checkedInCrossing:
-                        routeId: '103'
-                        localDateTimeOfArrival: 2021-06-05T09:20
-                      inspectionRequired: true
-                      reportToLocations:
-                        - inspectionTypeId: '1'
-                          locationIds:
-                            - L0029A
-                            - L0030A
-                            - L0031A
-                        - inspectionTypeId: '2'
-                          locationIds:
-                            - L0029A
-                            - L0031A
-                    - gmrId: GMRB0001IFM5
-                      updatedDateTime: '2021-06-05T04:20:02.284Z'
-                      isUnaccompanied: false
-                      vehicleRegNum: GU62 SJE
-                      checkedInCrossing:
-                        routeId: '104'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                      readyToEmbark: true
-                      inspectionRequired: false
-                    - gmrId: GMRB0001EKG2
-                      updatedDateTime: '2021-06-05T04:17:48.406Z'
-                      isUnaccompanied: true
-                      trailerRegistrationNums:
-                        - AB29 3824
-                        - SJ25 9382
-                      checkedInCrossing:
-                        routeId: '104'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRB0002MD3K
-                      updatedDateTime: '2021-06-05T04:15:35.009Z'
-                      isUnaccompanied: true
-                      containerReferenceNums:
-                        - GB 293824
-                      checkedInCrossing:
-                        routeId: '105'
-                        localDateTimeOfArrival: 2021-06-11T11:03
+                    $ref: ./examples/get-checked-in-gmrs-for-departure.json
         '400':
           description: ''
           content:
@@ -325,51 +195,7 @@ paths:
                   description: |
                     Example of GVMS reference data, including routes, ports, carriers and rule failures.
                   value:
-                    routes:
-                      - routeId: '102'
-                        routeEffectiveFrom: '2020-01-01'
-                        routeEffectiveTo: '2020-01-02'
-                        departurePortId: 7014
-                        routeDirection: UK_OUTBOUND
-                        arrivalPortId: 6085
-                        carrierId: 1
-                      - routeId: '103'
-                        routeEffectiveFrom: '2020-01-01'
-                        departurePortId: 7054
-                        routeDirection: UK_OUTBOUND
-                        arrivalPortId: 1401
-                        carrierId: 2
-                    ports:
-                      - portId: 7050
-                        portRegion: Scotland
-                        portEffectiveFrom: '2000-01-01'
-                        portDescription: Aberdeen
-                        chiefPortCode: ''
-                        cdsPortCode: ABDABDABD
-                        officeOfTransitCustomsOfficeCode: UNKNOWN?
-                        timezoneId: Europe/London
-                        portCountryCode: GB
-                      - portId: 1401
-                        portRegion: ''
-                        portEffectiveFrom: '2000-01-01'
-                        portDescription: Calais
-                        chiefPortCode: ''
-                        cdsPortCode: ''
-                        officeOfTransitCustomsOfficeCode: UNKNOWN?
-                        timezoneId: Europe/Paris
-                        portCountryCode: FR
-                    carriers:
-                      - carrierId: 1
-                        carrierName: Stena Line
-                        countryCode: SE
-                      - carrierId: 2
-                        carrierName: DFDS Seaways
-                        countryCode: DK
-                    ruleFailures:
-                      - ruleId: '001_1'
-                        ruleDescription: This type of declaration cannot be used for this direction of travel.
-                      - ruleId: '001_3'
-                        ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
+                    $ref: ./examples/get-reference-data.json
       deprecated: false
 components:
   securitySchemes:

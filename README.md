@@ -212,7 +212,12 @@ Response Body Example
   ]
 }
 ```
+As a workaround for APSR-2061 we are using minified.yaml for generating OAS in minified form but before you commit any changes to the file make sure you use this redocly command to generate an application.yaml file:
 
+```redocly bundle minified.yaml --output application.yaml```
+
+For information see the documentation here:
+https://redocly.com/docs/cli/commands/bundle
 License
 =======
 
