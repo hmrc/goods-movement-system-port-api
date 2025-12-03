@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+    "type": "array",
+    "additionalProperties": true,
+    "items": {
+      "type": "object",
+      "required": [
+        "gmrId",
+        "updatedDateTime",
+        "isUnaccompanied",
+        "checkedInCrossing"
+      ],
+      "anyOf": [
+        {
+          "title": "Vehicle Registration Number",
+          "required": [
+            "vehicleRegNum"
+          ]
+        },
+        {
+          "title": "Trailer Registration Numbers",
+          "required": [
+            "trailerRegistrationNums"
+          ]
+        },
+        {
+          "title": "Container Reference Numbers",
+          "required": [
+            "containerReferenceNums"
+          ]
+        }
+      ],
+      "properties": {
+        "gmrId": {
+          "$ref": "../common/schemas/properties.json#/definitions/gmrId"
+        },
+        "updatedDateTime": {
+          "$ref": "../common/schemas/properties.json#/definitions/updatedDateTime"
+        },
+        "isUnaccompanied": {
+          "$ref": "../common/schemas/properties.json#/definitions/isUnaccompanied"
+        },
+        "reportToLocations": {
+          "$ref": "../common/schemas/properties.json#/definitions/reportToLocations"
+        },
+        "vehicleRegNum": {
+          "$ref": "../common/schemas/properties.json#/definitions/vehicleRegNum"
+        },
+        "trailerRegistrationNums": {
+          "$ref": "../common/schemas/properties.json#/definitions/trailerRegistrationNums"
+        },
+        "containerReferenceNums": {
+          "$ref": "../common/schemas/properties.json#/definitions/containerReferenceNums"
+        },
+        "checkedInCrossing": {
+          "$ref": "../common/schemas/properties.json#/definitions/checkedInCrossing"
+        },
+        "inspectionRequired": {
+          "$ref": "../common/schemas/properties.json#/definitions/inspectionRequired"
+        },
+        "readyToEmbark": {
+          "$ref": "../common/schemas/properties.json#/definitions/readyToEmbark"
+        }
+      }
+    }
+  }
+}

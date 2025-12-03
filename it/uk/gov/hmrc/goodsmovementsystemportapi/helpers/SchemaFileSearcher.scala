@@ -33,7 +33,11 @@ object SchemaFileSearcher {
 
   def getPath(schemaName: String, apiVersion: ApiVersion): String =
     files
-      .find(f => f.getName === schemaName && f.getPath.contains(apiVersion.show))
+      .find(f =>
+        f.getName === schemaName
+          && f.getPath.contains(apiVersion.show)
+          && f.getPath.contains("/schemas")
+      )
       .map(_.getPath.replace("resources", ""))
       .getOrElse(
         throw new TestFailedException(
