@@ -23,20 +23,19 @@ get:
       content:
         application/json:
           schema:
-            $ref: "./schemas/get-controlled-gmrs-for-arrival.json"
+            $ref: "./schemas/get-controlled-gmrs-for-arrival.json#/definitions"
           examples:
             example1:
               summary: Example of a response with controlled GMRs
               description: |
                 List of controlled GMRs for arrival port
-              value:
-                $ref: './examples/get-controlled-gmrs-for-arrival.json'
+              externalValue: './examples/get-controlled-gmrs-for-arrival.json'
     '403':
       description: ''
       content:
         application/json:
           schema:
-            $ref: 'common/schemas/error-response.json'
+            $ref: 'common/schemas/error-response.json#/definitions'
           examples:
             notAuthorised:
               description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.

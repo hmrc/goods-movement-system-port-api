@@ -1,39 +1,58 @@
 {
-  "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "#/get-controlled-gmrs-arrival",
-  "type": "array",
-  "items": {
-    "$id": "#/get-controlled-gmrs-arrival/items",
-    "type": "object",
-    "additionalItems": false,
-    "required": [
-      "gmrId",
-      "isUnaccompanied",
-      "actualCrossing"
-    ],
-    "anyOf": [
-      {
-        "title": "Vehicle Registration Number",
-        "required": [ "vehicleRegNum" ]
-      },
-      {
-        "title": "Trailer Registration Numbers",
-        "required": [ "trailerRegistrationNums" ]
-      },
-      {
-        "title": "Container Reference Numbers",
-        "required": [ "containerReferenceNums" ]
+  "definitions": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gmrId",
+        "isUnaccompanied",
+        "actualCrossing"
+      ],
+      "anyOf": [
+        {
+          "title": "Vehicle Registration Number",
+          "required": [
+            "vehicleRegNum"
+          ]
+        },
+        {
+          "title": "Trailer Registration Numbers",
+          "required": [
+            "trailerRegistrationNums"
+          ]
+        },
+        {
+          "title": "Container Reference Numbers",
+          "required": [
+            "containerReferenceNums"
+          ]
+        }
+      ],
+      "properties": {
+        "gmrId": {
+          "$ref": "../common/schemas/properties.json#/definitions/gmrId"
+        },
+        "isUnaccompanied": {
+          "$ref": "../common/schemas/properties.json#/definitions/isUnaccompanied"
+        },
+        "reportToLocations": {
+          "$ref": "../common/schemas/properties.json#/definitions/reportToLocations"
+        },
+        "vehicleRegNum": {
+          "$ref": "../common/schemas/properties.json#/definitions/vehicleRegNum"
+        },
+        "trailerRegistrationNums": {
+          "$ref": "../common/schemas/properties.json#/definitions/trailerRegistrationNums"
+        },
+        "containerReferenceNums": {
+          "$ref": "../common/schemas/properties.json#/definitions/containerReferenceNums"
+        },
+        "actualCrossing": {
+          "$ref": "../common/schemas/properties.json#/definitions/actualCrossing"
+        }
       }
-    ],
-    "properties": {
-      "gmrId": { "$ref": "../common/schemas/properties.json#/definitions/gmrId" },
-      "isUnaccompanied": { "$ref": "../common/schemas/properties.json#/definitions/isUnaccompanied" },
-      "reportToLocations": { "$ref": "../common/schemas/properties.json#/definitions/reportToLocations" },
-      "vehicleRegNum": { "$ref": "../common/schemas/properties.json#/definitions/vehicleRegNum" },
-      "trailerRegistrationNums": { "$ref": "../common/schemas/properties.json#/definitions/trailerRegistrationNums" },
-      "containerReferenceNums": { "$ref": "../common/schemas/properties.json#/definitions/containerReferenceNums" },
-      "actualCrossing": { "$ref": "../common/schemas/properties.json#/definitions/actualCrossing" }
     }
   }
 }

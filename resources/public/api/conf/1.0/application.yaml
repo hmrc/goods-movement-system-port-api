@@ -34,20 +34,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get-controlled-gmrs-for-arrival'
+                $ref: '#/components/schemas/definitions'
               examples:
                 example1:
                   summary: Example of a response with controlled GMRs
                   description: |
                     List of controlled GMRs for arrival port
                   value:
-                    $ref: ./examples/get-controlled-gmrs-for-arrival.json
+                    - gmrId: GMRA0000028D
+                      isUnaccompanied: false
+                      vehicleRegNum: KL58 FEM
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                      actualCrossing:
+                        routeId: '107'
+                        localDateTimeOfArrival: 2021-06-05T09:20
+                    - gmrId: GMRA00009JR8
+                      isUnaccompanied: true
+                      trailerRegistrationNums:
+                        - FB283721
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                      actualCrossing:
+                        routeId: '107'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                    - gmrId: GMRA00009JR8
+                      isUnaccompanied: true
+                      containerReferenceNums:
+                        - GB283721
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                      actualCrossing:
+                        routeId: '107'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                    - gmrId: GMRA00009JR8
+                      isUnaccompanied: true
+                      trailerRegistrationNums:
+                        - FB283721
+                      containerReferenceNums:
+                        - GB283721
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                      actualCrossing:
+                        routeId: '19'
+                        localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response'
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 notAuthorised:
                   description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
@@ -79,20 +123,63 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get-controlled-gmrs-for-departure'
+                $ref: '#/components/schemas/get-controlled-gmrs-for-departure_definitions'
               examples:
                 example1:
                   summary: Example of a response with controlled GMRs
                   description: |
                     List of checked-in GMRs at departure port
                   value:
-                    $ref: ./examples/get-checked-in-gmrs-for-departure.json
+                    - gmrId: GMRB00000GKW
+                      updatedDateTime: '2021-06-05T04:21:23.492Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: PJ15 JEF
+                      checkedInCrossing:
+                        routeId: '103'
+                        localDateTimeOfArrival: 2021-06-05T09:20
+                      inspectionRequired: true
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                            - L0030A
+                            - L0031A
+                        - inspectionTypeId: '2'
+                          locationIds:
+                            - L0029A
+                            - L0031A
+                    - gmrId: GMRB0001IFM5
+                      updatedDateTime: '2021-06-05T04:20:02.284Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: GU62 SJE
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                      readyToEmbark: true
+                      inspectionRequired: false
+                    - gmrId: GMRB0001EKG2
+                      updatedDateTime: '2021-06-05T04:17:48.406Z'
+                      isUnaccompanied: true
+                      trailerRegistrationNums:
+                        - AB29 3824
+                        - SJ25 9382
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                    - gmrId: GMRB0002MD3K
+                      updatedDateTime: '2021-06-05T04:15:35.009Z'
+                      isUnaccompanied: true
+                      containerReferenceNums:
+                        - GB 293824
+                      checkedInCrossing:
+                        routeId: '105'
+                        localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response'
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 notAuthorised:
                   description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
@@ -132,20 +219,63 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get-checked-in-gmrs-for-departure'
+                $ref: '#/components/schemas/get-checked-in-gmrs-for-departure_definitions'
               examples:
                 example1:
                   summary: List of checked-in GMRs at departure port
                   description: |
                     List of checked-in GMRs at departure port
                   value:
-                    $ref: ./examples/get-checked-in-gmrs-for-departure.json
+                    - gmrId: GMRB00000GKW
+                      updatedDateTime: '2021-06-05T04:21:23.492Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: PJ15 JEF
+                      checkedInCrossing:
+                        routeId: '103'
+                        localDateTimeOfArrival: 2021-06-05T09:20
+                      inspectionRequired: true
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                            - L0030A
+                            - L0031A
+                        - inspectionTypeId: '2'
+                          locationIds:
+                            - L0029A
+                            - L0031A
+                    - gmrId: GMRB0001IFM5
+                      updatedDateTime: '2021-06-05T04:20:02.284Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: GU62 SJE
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                      readyToEmbark: true
+                      inspectionRequired: false
+                    - gmrId: GMRB0001EKG2
+                      updatedDateTime: '2021-06-05T04:17:48.406Z'
+                      isUnaccompanied: true
+                      trailerRegistrationNums:
+                        - AB29 3824
+                        - SJ25 9382
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                    - gmrId: GMRB0002MD3K
+                      updatedDateTime: '2021-06-05T04:15:35.009Z'
+                      isUnaccompanied: true
+                      containerReferenceNums:
+                        - GB 293824
+                      checkedInCrossing:
+                        routeId: '105'
+                        localDateTimeOfArrival: 2021-06-11T11:03
         '400':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response'
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 TOO_MANY_RESULTS:
                   $ref: '#/components/examples/tooManyResults'
@@ -154,7 +284,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response'
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 NOT_AUTHORISED:
                   $ref: '#/components/examples/notAuthorised'
@@ -188,14 +318,58 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/get-reference-data'
+                $ref: '#/components/schemas/get-reference-data_definitions'
               examples:
                 allReferenceData:
                   summary: Example of GVMS reference data
                   description: |
                     Example of GVMS reference data, including routes, ports, carriers and rule failures.
                   value:
-                    $ref: ./examples/get-reference-data.json
+                    routes:
+                      - routeId: '102'
+                        routeEffectiveFrom: '2020-01-01'
+                        routeEffectiveTo: '2020-01-02'
+                        departurePortId: 7014
+                        routeDirection: UK_OUTBOUND
+                        arrivalPortId: 6085
+                        carrierId: 1
+                      - routeId: '103'
+                        routeEffectiveFrom: '2020-01-01'
+                        departurePortId: 7054
+                        routeDirection: UK_OUTBOUND
+                        arrivalPortId: 1401
+                        carrierId: 2
+                    ports:
+                      - portId: 7050
+                        portRegion: Scotland
+                        portEffectiveFrom: '2000-01-01'
+                        portDescription: Aberdeen
+                        chiefPortCode: ''
+                        cdsPortCode: ABDABDABD
+                        officeOfTransitCustomsOfficeCode: UNKNOWN?
+                        timezoneId: Europe/London
+                        portCountryCode: GB
+                      - portId: 1401
+                        portRegion: ''
+                        portEffectiveFrom: '2000-01-01'
+                        portDescription: Calais
+                        chiefPortCode: ''
+                        cdsPortCode: ''
+                        officeOfTransitCustomsOfficeCode: UNKNOWN?
+                        timezoneId: Europe/Paris
+                        portCountryCode: FR
+                    carriers:
+                      - carrierId: 1
+                        carrierName: Stena Line
+                        countryCode: SE
+                      - carrierId: 2
+                        carrierName: DFDS Seaways
+                        countryCode: DK
+                    ruleFailures:
+                      - ruleId: '001_1'
+                        ruleDescription: This type of declaration cannot be used for this direction of travel.
+                      - ruleId: '001_3'
+                        ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
       deprecated: false
 components:
   securitySchemes:
@@ -258,102 +432,78 @@ components:
         format: date-time
   schemas:
     gmrId:
-      $id: '#/definitions/gmrId'
       type: string
       description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-      examples:
-        - GMRI000023KN
+      example: GMRI000023KN
       pattern: ^GMR[A-Z][0-9A-Z]{8}$
     isUnaccompanied:
-      $id: '#/properties/isUnaccompanied'
       type: boolean
       description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-      examples:
-        - false
+      example: false
     reportToLocations:
-      $id: '#/properties/reportToLocations'
       type: array
       description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
       minItems: 1
       items:
-        $id: '#/properties/reportToLocations/items'
         type: object
         description: Information about an inspection that is required
-        examples:
-          - inspectionTypeId: '1'
-            locationIds:
-              - '2'
-              - '5'
+        example:
+          inspectionTypeId: '1'
+          locationIds:
+            - '2'
+            - '5'
         required:
           - inspectionTypeId
           - locationIds
         properties:
           inspectionTypeId:
-            $id: '#/properties/reportToLocations/items/properties/inspectionTypeId'
             type: string
             description: An inspectionTypeId from GVMS Reference Data denoting the type of inspection that needs to be performed on the vehicle.
             pattern: ^[0-9A-Za-z\-_]{1,100}$
-            examples:
-              - '7'
+            example: '7'
           locationIds:
-            $id: '#/properties/reportToLocations/items/properties/locationIds'
             type: array
             description: A list of locationIds from GVMS Reference Data that are available to perform this type of inspection.
             items:
               type: string
               pattern: ^[0-9A-Za-z\-_]{1,100}$
-            examples:
-              - - '4'
-                - '6'
-                - '9'
+            example:
+              - '4'
+              - '6'
+              - '9'
     vehicleRegNum:
-      $id: '#/definitions/vehicleRegNum'
       type: string
       description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-      examples:
-        - AB19 DEF
+      example: AB19 DEF
       pattern: ^[A-Z0-9 -]{1,30}$
     trailerRegistrationNums:
-      $id: '#/definitions/trailerRegistrationNums'
       type: array
       minItems: 1
       maxItems: 2
       description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
       items:
-        $id: '#/properties/trailerRegistrationNums/items'
         type: string
-        examples:
-          - A1234567
-          - B2345678
+        example: A1234567
         pattern: ^[A-Z0-9 -]{1,200}$
     containerReferenceNums:
-      $id: '#/definitions/containerReferenceNums'
       type: array
       description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
       minItems: 1
       items:
-        $id: '#/properties/containerReferenceNums/items'
         type: string
-        examples:
-          - CSQU3054383
-          - CSQU3054392
+        example: CSQU3054383
         pattern: ^[A-Z0-9 -]{1,200}$
     routeId:
-      $id: '#/definitions/routeId'
       type: string
       description: The ID of the crossing route, using a routeId from the GVMS reference data
-      examples:
-        - '18273'
+      example: '18273'
       pattern: ^[A-Z0-9-]{1,200}$
     localDateTimeOfArrival:
-      $id: '#/definitions/localDateTimeOfArrival'
       type: string
       description: The planned date and time of arrival, in local time of the arrival port. Must not include seconds, time zone or UTC marker
-      examples:
-        - 2021-08-11T10:58
+      example: 2021-08-11T10:58
       pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d$
     actualCrossing:
-      $id: '#/definitions/actualCrossing'
       type: object
       description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
       required:
@@ -364,15 +514,11 @@ components:
           $ref: '#/components/schemas/routeId'
         localDateTimeOfArrival:
           $ref: '#/components/schemas/localDateTimeOfArrival'
-    get-controlled-gmrs-for-arrival:
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-      $id: '#/get-controlled-gmrs-arrival'
+    definitions:
       type: array
       items:
-        $id: '#/get-controlled-gmrs-arrival/items'
         type: object
-        additionalItems: false
+        additionalProperties: false
         required:
           - gmrId
           - isUnaccompanied
@@ -402,9 +548,7 @@ components:
             $ref: '#/components/schemas/containerReferenceNums'
           actualCrossing:
             $ref: '#/components/schemas/actualCrossing'
-    error-response:
-      $schema: http://json-schema.org/draft-07/schema#
-      $id: ./schemas/error-response
+    error-response_definitions:
       type: object
       required:
         - code
@@ -412,7 +556,6 @@ components:
         code:
           type: string
     checkedInCrossing:
-      $id: '#/definitions/checkedInCrossing'
       type: object
       description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
       required:
@@ -423,14 +566,10 @@ components:
           $ref: '#/components/schemas/routeId'
         localDateTimeOfArrival:
           $ref: '#/components/schemas/localDateTimeOfArrival'
-    get-controlled-gmrs-for-departure:
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-      $id: '#/get-controlled-gmrs-departure'
+    get-controlled-gmrs-for-departure_definitions:
       type: array
-      additionalItems: true
+      additionalProperties: true
       items:
-        $id: '#/get-controlled-gmrs-departure/items'
         type: object
         required:
           - gmrId
@@ -462,30 +601,21 @@ components:
           checkedInCrossing:
             $ref: '#/components/schemas/checkedInCrossing'
     updatedDateTime:
-      $id: '#/definitions/updatedDateTime'
       type: string
       description: The date and time that this GMR was last updated.
-      examples:
-        - '2021-08-12T15:34:02'
+      example: '2021-08-12T15:34:02'
       pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
     inspectionRequired:
-      $id: '#/definitions/inspectionRequired'
       type: boolean
       description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
     readyToEmbark:
-      $id: '#/definitions/readyToEmbark'
       type: boolean
       description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
-      examples:
-        - 'true'
-    get-checked-in-gmrs-for-departure:
-      definitions: {}
-      $schema: http://json-schema.org/draft-07/schema#
-      $id: '#/get-checked-in-gmrs-departure'
+      example: 'true'
+    get-checked-in-gmrs-for-departure_definitions:
       type: array
-      additionalItems: true
+      additionalProperties: true
       items:
-        $id: '#/get-checked-in-gmrs-departure/items'
         type: object
         required:
           - gmrId
@@ -523,8 +653,7 @@ components:
             $ref: '#/components/schemas/inspectionRequired'
           readyToEmbark:
             $ref: '#/components/schemas/readyToEmbark'
-    get-reference-data:
-      $schema: http://json-schema.org/draft-07/schema#
+    get-reference-data_definitions:
       title: referenceData v1.15
       description: reference Data for GVMS v1.15
       type: object

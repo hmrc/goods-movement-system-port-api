@@ -27,12 +27,11 @@ get:
        content:
          application/json:
            schema:
-             $ref: './schemas/get-reference-data.json'
+             $ref: './schemas/get-reference-data.json#/definitions'
            examples:
              allReferenceData:
                 summary: Example of GVMS reference data
                 description: |
                   Example of GVMS reference data, including routes, ports, carriers and rule failures.
-                value:
-                  $ref: './examples/get-reference-data.json'
+                externalValue: './examples/get-reference-data.json'
   deprecated: false

@@ -32,20 +32,19 @@ get:
       content:
         application/json:
           schema:
-            $ref: "./schemas/get-checked-in-gmrs-for-departure.json"
+            $ref: "./schemas/get-checked-in-gmrs-for-departure.json#/definitions"
           examples:
             example1:
               summary: List of checked-in GMRs at departure port
               description: |
                 List of checked-in GMRs at departure port
-              value:
-                $ref: './examples/get-checked-in-gmrs-for-departure.json'
+              externalValue: './examples/get-checked-in-gmrs-for-departure.json'
     '400':
       description: ''
       content:
         application/json:
           schema:
-            $ref: 'common/schemas/error-response.json'
+            $ref: 'common/schemas/error-response.json#/definitions'
           examples:
             TOO_MANY_RESULTS:
               $ref: './common/examples/errors.yaml#/components/examples/tooManyResults'
@@ -55,7 +54,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'common/schemas/error-response.json'
+            $ref: 'common/schemas/error-response.json#/definitions'
           examples:
             NOT_AUTHORISED:
               $ref: './common/examples/errors.yaml#/components/examples/notAuthorised'

@@ -40,7 +40,7 @@ trait SchemaContractBehaviours extends Logging {
     val schemaPath = SchemaFileSearcher.getPath(schemaName, apiVersion)
 
     val schema = factory
-      .getJsonSchema(s"resource:$schemaPath")
+      .getJsonSchema(s"resource:$schemaPath#/definitions")
 
     val results: ProcessingReport = schema
       .validate(JsonLoader.fromString(contentAsString(result)), true)
