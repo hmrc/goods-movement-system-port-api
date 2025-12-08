@@ -2,11 +2,10 @@ import com.typesafe.sbt.web.PathMapping
 import com.typesafe.sbt.web.pipeline.Pipeline
 import play.sbt.PlayImport.PlayKeys.playDefaultPort
 import sbt.Keys.evictionErrorLevel
+import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 
 import java.nio.file.Files
-import scoverage.ScoverageKeys
-import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 
 val appName = "goods-movement-system-port-api"
 
@@ -83,7 +82,7 @@ zipSchemas := { mappings: Seq[PathMapping] =>
           (file, name)
       }.toSeq
 
-      val zipFile = targetDir / "api" / "conf" / dir.getName / "gmvs-port-schemas.zip"
+      val zipFile = targetDir / "api" / "conf" / dir.getName / "gvms-port-schemas.zip"
       IO.zip(schemaFiles ++ exampleFiles ++ commonFile, zipFile, Some(0L))
       zipFile
     }

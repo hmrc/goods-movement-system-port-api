@@ -314,7 +314,7 @@ paths:
       responses:
         '200':
           description: |
-            GMVS reference data is returned in the response body
+            GVMS reference data is returned in the response body
           content:
             application/json:
               schema:
