@@ -88,7 +88,7 @@ zipSchemas := { mappings: Seq[PathMapping] =>
     }
 
   val zipMappings = zipFiles.map { file =>
-    (file, s"public/api/conf/${file.getParentFile.getName}/${file.getName}")
+    (file, s"api/conf/${file.getParentFile.getName}/${file.getName}")
   }
 
   zipMappings.toSeq ++ mappings
