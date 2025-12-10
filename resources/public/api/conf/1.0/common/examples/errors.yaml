@@ -1,0 +1,14 @@
+components:
+  examples:
+  # 400
+    tooManyResults:
+      description: |
+        The query returned over the limit of 7000 GMRs. Use the lastUpdatedFrom and lastUpdatedTo query parameters to filter the query.
+      value:
+        code: TOO_MANY_RESULTS
+  # 403
+    notAuthorised:
+      description: |
+        Your application does not have permission to access this endpoint. This may be because your application is not subscribed with the portId provided.
+      value:
+        code: NOT_AUTHORISED

@@ -111,7 +111,7 @@ class PlatformIntegrationSpec extends AnyWordSpec with GuiceOneAppPerTest with M
       val result: Future[Result] = documentationController.yaml("1.0", "application.yaml")(request)
 
       status(result)        shouldBe 200
-      contentAsString(result) should startWith("openapi: 3.0.0")
+      contentAsString(result) should startWith("openapi: 3.0.3")
     }
   }
 

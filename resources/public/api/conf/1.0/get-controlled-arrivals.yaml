@@ -1,0 +1,44 @@
+parameters:
+  - $ref: './common/schemas/parameters.yaml#/components/parameters/portId'
+  - $ref: './common/schemas/headers.yaml#/components/parameters/acceptHeader'
+  - $ref: './common/schemas/headers.yaml#/components/parameters/authorizationScopeHeader'
+get:
+  summary: Get controlled GMRs at arrival port
+  description: |
+    Retrieves summary details for each GMR that requires inspection and is arriving at the port with the `portId` provided.
+    
+    More specifically, this returns GMRs whose state is `EMBARKED`, that have `inspectionRequired` set to true, and where the `portId` for the `routeId` given in `actualCrossing` matches the `portId` provided.
+    
+    We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
+    
+    The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+
+  operationId: get-controlled-gmrs-at-arrival-port
+  security:
+    - applicationRestricted: []
+  responses:
+    '200':
+      description: |
+        The list of controlled GMRs is returned in the body.  The list may be empty.
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas/get-controlled-gmrs-for-arrival.json#/definitions"
+          examples:
+            example1:
+              summary: Example of a response with controlled GMRs
+              description: |
+                List of controlled GMRs for arrival port
+              externalValue: './examples/get-controlled-gmrs-for-arrival.json'
+    '403':
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: 'common/schemas/error-response.json#/definitions'
+          examples:
+            notAuthorised:
+              description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
+              value:
+                code: NOT_AUTHORISED
+  deprecated: false

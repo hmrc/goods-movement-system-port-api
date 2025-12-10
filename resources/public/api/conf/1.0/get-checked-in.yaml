@@ -1,0 +1,61 @@
+parameters:
+  - $ref: './common/schemas/parameters.yaml#/components/parameters/portId'
+  - $ref: './common/schemas/parameters.yaml#/components/parameters/lastUpdatedFrom'
+  - $ref: './common/schemas/parameters.yaml#/components/parameters/lastUpdatedTo'
+  - $ref: './common/schemas/headers.yaml#/components/parameters/acceptHeader'
+  - $ref: './common/schemas/headers.yaml#/components/parameters/authorizationScopeHeader'
+
+get:
+  summary: Get checked-in GMRs at departure port
+  description: |
+    Retrieves summary details for each GMR that has been checked-in to depart from the port with the `portId` provided, and has not yet embarked. The details returned include flags to indicate whether an inspection is required and whether the GMR is ready to embark.
+  
+    More specifically, this returns GMRs whose state is `CHECKED_IN` where the `portId` for the `routeId` given in `checkedInCrossing` matches the `portId` provided.
+  
+    The number of results is limited to 7000 GMRs. If this limit is exceeded a 400 Bad Request will be returned with the TOO_MANY_RESULTS error code.
+  
+    The results list can be filtered using the `lastUpdatedFrom` and `lastUpdatedTo` query parameters.
+  
+    The results are sorted by `updatedDateTime`, most recent first.
+  
+    We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
+  
+    The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+
+  operationId: get-checked-in-gmrs-at-departure-port
+  security:
+    - applicationRestricted: []
+  responses:
+    '200':
+      description: |
+        List of checked-in GMRs at departure port
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas/get-checked-in-gmrs-for-departure.json#/definitions"
+          examples:
+            example1:
+              summary: List of checked-in GMRs at departure port
+              description: |
+                List of checked-in GMRs at departure port
+              externalValue: './examples/get-checked-in-gmrs-for-departure.json'
+    '400':
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: 'common/schemas/error-response.json#/definitions'
+          examples:
+            TOO_MANY_RESULTS:
+              $ref: './common/examples/errors.yaml#/components/examples/tooManyResults'
+
+    '403':
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: 'common/schemas/error-response.json#/definitions'
+          examples:
+            NOT_AUTHORISED:
+              $ref: './common/examples/errors.yaml#/components/examples/notAuthorised'
+  deprecated: false

@@ -5,6 +5,8 @@ import sbt.Keys.evictionErrorLevel
 import scoverage.ScoverageKeys
 import uk.gov.hmrc.DefaultBuildSettings.integrationTestSettings
 
+import java.nio.file.Files
+
 val appName = "goods-movement-system-port-api"
 
 lazy val microservice = Project(appName, file("."))
@@ -43,21 +45,53 @@ lazy val microservice = Project(appName, file("."))
 
 evictionErrorLevel := Level.Warn
 
+enablePlugins(SbtWeb)
 // Task to create a ZIP file containing all json schemas for each version, under the version directory
-val zipSchemas = taskKey[Pipeline.Stage]("Zips up all JSON schemas")
+lazy val zipSchemas = taskKey[Pipeline.Stage]("Zips up all JSON schemas")
 zipSchemas := { mappings: Seq[PathMapping] =>
-  val targetDir = WebKeys.webTarget.value / "zip"
-  val zipFiles: Iterable[java.io.File] =
-    (baseDirectory.value / "resources" / "public" / "api" / "conf").listFiles
-      .filter(_.isDirectory)
-      .map { dir =>
-        val schemaPaths  = Path.allSubpaths(dir / "schemas")
-        val examplePaths = Path.allSubpaths(dir / "examples")
-        val zipFile      = targetDir / "api" / "conf" / dir.getName / "gmvs-port-schemas.zip"
-        IO.zip(schemaPaths ++ examplePaths, zipFile)
 
-        zipFile
-      }
-  zipFiles.pair(Path.relativeTo(targetDir)) ++ mappings
+  val targetDir = WebKeys.webTarget.value / "zip"
+  val resDir = baseDirectory.value / "resources" / "public" / "api" / "conf"
+
+  val zipFiles = resDir
+    .listFiles()
+    .filter(_.isDirectory)
+    .map { dir =>
+      val schemaPaths  = Path.allSubpaths(dir / "schemas")
+      val examplePaths = Path.allSubpaths(dir / "examples")
+      val propertiesFile = (dir / "common" / "schemas" / "properties.json")
+      val commonFile =
+        if (propertiesFile.exists())
+          Seq((propertiesFile, "gmr-types-schema.json"))
+        else Seq.empty
+
+      val schemaFiles = schemaPaths.collect {
+        case (file, _) =>
+          val content = IO.read(file)
+          val updatedContent = content.replace("../common/schemas/properties.json", "./gmr-types-schema.json")
+          val tempFile = Files.createTempFile("schema-", ".json").toFile
+          IO.write(tempFile, updatedContent)
+
+          val name = file.getName.stripSuffix(".json") + "_schema.json"
+          (tempFile, name)
+      }.toSeq
+
+      val exampleFiles = examplePaths.collect {
+        case (file, _) =>
+          val name = file.getName.stripSuffix(".json") + "_example.json"
+          (file, name)
+      }.toSeq
+
+      val zipFile = targetDir / "api" / "conf" / dir.getName / "gvms-port-schemas.zip"
+      IO.zip(schemaFiles ++ exampleFiles ++ commonFile, zipFile, Some(0L))
+      zipFile
+    }
+
+  val zipMappings = zipFiles.map { file =>
+    (file, s"api/conf/${file.getParentFile.getName}/${file.getName}")
+  }
+
+  zipMappings.toSeq ++ mappings
+
 }
 pipelineStages := Seq(zipSchemas)

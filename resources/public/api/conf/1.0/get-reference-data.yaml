@@ -1,0 +1,37 @@
+parameters:
+  - $ref: './common/schemas/headers.yaml#/components/parameters/acceptHeader'
+get:
+  summary: Get reference data
+  description: |
+    This endpoint gets details of all reference data used by GVMS.
+    
+    Reference data includes lists of:
+    * Carriers operating on GVMS routes
+    * Ports operating GVMS routes 
+    * GVMS routes (combining a carrier and a pair of ports)
+    * Validation rule failure codes and descriptions
+    
+    The reference data is returned as a single JSON document containing all required data lists.
+    
+    New carriers, routes, ports and locations will be added with effective from and to dates, so your software will have an advance view of upcoming changes.  It should not offer up routes that are not yet in effect or that have expired.
+    
+    GVMS reference data is updated periodically. If you are a GVMS API subscriber, you will receive notifications about upcoming updates. If you receive a notification about an update, your application software must refresh the reference data by calling the GET reference-data endpoint.
+
+  operationId: get-reference-data
+  security:
+    - {}
+  responses:
+    '200':
+       description: |
+         GVMS reference data is returned in the response body
+       content:
+         application/json:
+           schema:
+             $ref: './schemas/get-reference-data.json#/definitions'
+           examples:
+             allReferenceData:
+                summary: Example of GVMS reference data
+                description: |
+                  Example of GVMS reference data, including routes, ports, carriers and rule failures.
+                externalValue: './examples/get-reference-data.json'
+  deprecated: false

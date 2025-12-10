@@ -1,107 +1,45 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   title: Goods Vehicle Movements Port
   contact: {}
   version: '1.0'
 servers:
-  - url: https://api.service.hmrc.gov.uk/
-    variables: {}
+  - url: https://test-api.service.hmrc.gov.uk
+    description: Sandbox
+  - url: https://api.service.hmrc.gov.uk
+    description: Production
 paths:
   /customs/goods-movement-system-port/{portId}/arrivals/controlled:
+    parameters:
+      - $ref: '#/components/parameters/portId'
+      - $ref: '#/components/parameters/acceptHeader'
+      - $ref: '#/components/parameters/authorizationScopeHeader'
     get:
       summary: Get controlled GMRs at arrival port
-      description: "Retrieves summary details for each GMR that requires inspection and is arriving at the port with the `portId` provided.\n\nMore specifically, this returns GMRs whose state is `EMBARKED`, that have `inspectionRequired` set to true, and \nwhere the `portId` for the `routeId` given in `actualCrossing` matches the `portId` provided.\n\nWe recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.\n\nThe calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.\n"
-      operationId: GetcontrolledGMRsatarrivalport
-      parameters:
-        - name: portId
-          in: path
-          description: The ID of a port or border location, from the GVMS reference data
-          required: true
-          style: simple
-          schema:
-            type: string
-            example: '1401'
-        - name: Accept
-          in: header
-          description: Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
-          schema:
-            type: string
-            example: application/vnd.hmrc.1.0+json
-          required: true
-          style: simple
-        - name: Authorization
-          in: header
-          description: An OAuth 2.0 Bearer Token.
-          schema:
-            type: string
-            example: Bearer 59fc92c1cdf0b8ef1f138a702effdbd2
-          required: true
-          style: simple
+      description: |
+        Retrieves summary details for each GMR that requires inspection and is arriving at the port with the `portId` provided.
+
+        More specifically, this returns GMRs whose state is `EMBARKED`, that have `inspectionRequired` set to true, and where the `portId` for the `routeId` given in `actualCrossing` matches the `portId` provided.
+
+        We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
+
+        The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+      operationId: get-controlled-gmrs-at-arrival-port
       security:
         - applicationRestricted: []
       responses:
         '200':
-          description: The list of controlled GMRs is returned in the body.  The list may be empty.
-          headers: {}
+          description: |
+            The list of controlled GMRs is returned in the body.  The list may be empty.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  anyOf:
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortArrivalsControlledresponse'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortArrivalsControlledresponse1'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortArrivalsControlledresponse2'
-                description: ''
-                example:
-                  - gmrId: GMRA0000028D
-                    isUnaccompanied: false
-                    vehicleRegNum: KL58 FEM
-                    reportToLocations:
-                      - inspectionTypeId: '1'
-                        locationIds:
-                          - L0029A
-                    actualCrossing:
-                      routeId: '107'
-                      localDateTimeOfArrival: 2021-06-05T09:20
-                  - gmrId: GMRA00009JR8
-                    isUnaccompanied: true
-                    trailerRegistrationNums:
-                      - FB283721
-                    reportToLocations:
-                      - inspectionTypeId: '1'
-                        locationIds:
-                          - L0029A
-                    actualCrossing:
-                      routeId: '107'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                  - gmrId: GMRA00009JR8
-                    isUnaccompanied: true
-                    containerReferenceNums:
-                      - GB283721
-                    reportToLocations:
-                      - inspectionTypeId: '1'
-                        locationIds:
-                          - L0029A
-                    actualCrossing:
-                      routeId: '107'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                  - gmrId: GMRA00009JR8
-                    isUnaccompanied: true
-                    trailerRegistrationNums:
-                      - FB283721
-                    containerReferenceNums:
-                      - GB283721
-                    reportToLocations:
-                      - inspectionTypeId: '1'
-                        locationIds:
-                          - L0029A
-                    actualCrossing:
-                      routeId: '19'
-                      localDateTimeOfArrival: 2021-06-11T11:03
+                $ref: '#/components/schemas/definitions'
               examples:
-                example-1:
-                  description: List of controlled GMRs for arrival port
+                example1:
+                  summary: Example of a response with controlled GMRs
+                  description: |
+                    List of controlled GMRs for arrival port
                   value:
                     - gmrId: GMRA0000028D
                       isUnaccompanied: false
@@ -150,14 +88,10 @@ paths:
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
-          headers: {}
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/errorResponse'
-                  - example:
-                      code: NOT_AUTHORISED
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 notAuthorised:
                   description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
@@ -165,265 +99,39 @@ paths:
                     code: NOT_AUTHORISED
       deprecated: false
   /customs/goods-movement-system-port/{portId}/departures/controlled:
+    parameters:
+      - $ref: '#/components/parameters/portId'
+      - $ref: '#/components/parameters/acceptHeader'
+      - $ref: '#/components/parameters/authorizationScopeHeader'
     get:
       summary: Get controlled GMRs at departure port
-      description: "Retrieves summary details for each GMR that requires inspection and is checked-in to depart from the port with the `portId` provided.\n\nMore specifically, this returns GMRs whose state is `CHECKED_IN`, that have `inspectionRequired` set to true, and \nwhere the `portId` for the `routeId` given in `checkedInCrossing` matches the `portId` provided.\n\nWe recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.\n\nThe calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.\n"
-      operationId: GetcontrolledGMRsatdepartureport
-      parameters:
-        - name: portId
-          in: path
-          description: The ID of a port or border location, from the GVMS reference data
-          required: true
-          style: simple
-          schema:
-            type: string
-            example: '1401'
-        - name: Content-Type
-          in: header
-          description: Specifies the format of the request body, which must be JSON.
-          required: true
-          style: simple
-          schema:
-            type: string
-            example: application/json
-        - name: Accept
-          in: header
-          description: Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
-          schema:
-            type: string
-            example: application/vnd.hmrc.1.0+json
-          required: true
-          style: simple
-        - name: Authorization
-          in: header
-          description: An OAuth 2.0 Bearer Token.
-          schema:
-            type: string
-            example: Bearer 59fc92c1cdf0b8ef1f138a702effdbd2
-          required: true
-          style: simple
+      description: |
+        Retrieves summary details for each GMR that requires inspection and is checked-in to depart from the port with the `portId` provided.
+
+        More specifically, this returns GMRs whose state is `CHECKED_IN`, that have `inspectionRequired` set to true, and where the `portId` for the `routeId` given in `checkedInCrossing` matches the `portId` provided.
+
+        We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
+
+        The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+      operationId: get-controlled-gmrs-at-departure-port
       security:
         - applicationRestricted: []
       responses:
         '200':
-          description: The list of controlled GMRs is returned in the body.  The list may be empty.
-          headers: {}
+          description: |
+            The list of controlled GMRs is returned in the body.  The list may be empty.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  anyOf:
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesControlledresponse'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesControlledresponse1'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesControlledresponse2'
-                description: ''
-                example:
-                  - gmrId: GMRB00000GKW
-                    isUnaccompanied: false
-                    vehicleRegNum: PJ15 JEF
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-05T09:20
-                  - gmrId: GMRB0001IFM5
-                    isUnaccompanied: true
-                    vehicleRegNum: GU62 SJE
-                    trailerRegistrationNums:
-                      - AB29 3824
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                  - gmrId: GMRB0001IFM5
-                    isUnaccompanied: true
-                    vehicleRegNum: GU62 SJE
-                    containerReferenceNums:
-                      - GB2 93824
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                  - gmrId: GMRB0001IFM5
-                    isUnaccompanied: true
-                    vehicleRegNum: GU62 SJE
-                    trailerRegistrationNums:
-                      - AB 293824
-                    containerReferenceNums:
-                      - GB 293824
-                    checkedInCrossing:
-                      routeId: '104'
-                      localDateTimeOfArrival: 2021-06-11T11:03
+                $ref: '#/components/schemas/get-controlled-gmrs-for-departure_definitions'
               examples:
-                example-1:
-                  description: List of controlled GMRs for departure port
+                example1:
+                  summary: Example of a response with controlled GMRs
+                  description: |
+                    List of checked-in GMRs at departure port
                   value:
                     - gmrId: GMRB00000GKW
-                      isUnaccompanied: false
-                      vehicleRegNum: PJ15 JEF
-                      checkedInCrossing:
-                        routeId: '103'
-                        localDateTimeOfArrival: 2021-06-05T09:20
-                    - gmrId: GMRB0001IFM5
-                      isUnaccompanied: true
-                      vehicleRegNum: GU62 SJE
-                      trailerRegistrationNums:
-                        - AB29 3824
-                      checkedInCrossing:
-                        routeId: '103'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRB0001IFM5
-                      isUnaccompanied: true
-                      vehicleRegNum: GU62 SJE
-                      containerReferenceNums:
-                        - GB2 93824
-                      checkedInCrossing:
-                        routeId: '103'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-                    - gmrId: GMRB0001IFM5
-                      isUnaccompanied: true
-                      vehicleRegNum: GU62 SJE
-                      trailerRegistrationNums:
-                        - AB 293824
-                      containerReferenceNums:
-                        - GB 293824
-                      checkedInCrossing:
-                        routeId: '104'
-                        localDateTimeOfArrival: 2021-06-11T11:03
-        '403':
-          description: ''
-          headers: {}
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/errorResponse'
-                  - example:
-                      code: NOT_AUTHORISED
-              examples:
-                notAuthorised:
-                  description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
-                  value:
-                    code: NOT_AUTHORISED
-      deprecated: false
-  /customs/goods-movement-system-port/{portId}/departures:
-    get:
-      summary: Get checked-in GMRs at departure port
-      description: "Retrieves summary details for each GMR that has been checked-in to depart from the port with the `portId` provided, and has not yet embarked.  The details returned include flags to indicate whether an inspection is required and whether the GMR is ready to embark.\n\nMore specifically, this returns GMRs whose state is `CHECKED_IN` where the `portId` for the `routeId` given in `checkedInCrossing` matches the `portId` provided.\n\nThe number of results is limited to 7000 GMRs.  If this limit is exceeded a `400 Bad Request` will be returned with the `TOO_MANY_RESULTS` error code.  \n\nThe results list can be filtered using the `lastUpdatedFrom` and `lastUpdatedTo` query parameters. \n\nThe results are sorted by `updatedDateTime`, most recent first.\n\nWe recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.\n\nThe calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.\n"
-      operationId: Getchecked-inGMRsatdepartureport
-      parameters:
-        - name: portId
-          in: path
-          description: The ID of a port or border location, from the GVMS reference data
-          required: true
-          style: simple
-          schema:
-            type: string
-            example: '1401'
-        - name: lastUpdatedFrom
-          in: query
-          description: 'Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or after this date/time.  Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T04:20:02.284Z'
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
-        - name: lastUpdatedTo
-          in: query
-          description: 'Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or before this date/time. Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T05:20:02.284Z'
-          style: form
-          explode: true
-          schema:
-            type: string
-            format: date-time
-        - name: Content-Type
-          in: header
-          description: Specifies the format of the request body, which must be JSON.
-          required: true
-          style: simple
-          schema:
-            type: string
-            example: application/json
-        - name: Accept
-          in: header
-          description: Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
-          schema:
-            type: string
-            example: application/vnd.hmrc.1.0+json
-          required: true
-          style: simple
-        - name: Authorization
-          in: header
-          description: An OAuth 2.0 Bearer Token.
-          schema:
-            type: string
-            example: Bearer 59fc92c1cdf0b8ef1f138a702effdbd2
-          required: true
-          style: simple
-      security:
-        - applicationRestricted: []
-      responses:
-        '200':
-          description: The list of GMRs is returned in the body.  The list may be empty.
-          headers: {}
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  anyOf:
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesresponse'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesresponse1'
-                    - $ref: '#/components/schemas/CustomsGoodsMovementSystemPortDeparturesresponse2'
-                description: ''
-                example:
-                  - gmrId: GMRB00000GKW
-                    updatedDateTime: 2021-06-05T04:21:23.492Z
-                    isUnaccompanied: false
-                    vehicleRegNum: PJ15 JEF
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-05T09:20
-                    inspectionRequired: true
-                    reportToLocations:
-                      - inspectionTypeId: '1'
-                        locationIds:
-                          - L0029A
-                          - L0030A
-                          - L0031A
-                      - inspectionTypeId: '2'
-                        locationIds:
-                          - L0029A
-                          - L0031A
-                  - gmrId: GMRB0001IFM5
-                    updatedDateTime: 2021-06-05T04:20:02.284Z
-                    isUnaccompanied: false
-                    vehicleRegNum: GU62 SJE
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                    readyToEmbark: true
-                    inspectionRequired: false
-                  - gmrId: GMRB0001EKG2
-                    updatedDateTime: 2021-06-05T04:17:48.406Z
-                    isUnaccompanied: true
-                    trailerRegistrationNums:
-                      - AB29 3824
-                      - SJ25 9382
-                    checkedInCrossing:
-                      routeId: '103'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-                  - gmrId: GMRB0002MD3K
-                    updatedDateTime: 2021-06-05T04:15:35.009Z
-                    isUnaccompanied: true
-                    containerReferenceNums:
-                      - GB 293824
-                    checkedInCrossing:
-                      routeId: '104'
-                      localDateTimeOfArrival: 2021-06-11T11:03
-              examples:
-                example-1:
-                  description: List of checked-in GMRs at departure port
-                  value:
-                    - gmrId: GMRB00000GKW
-                      updatedDateTime: 2021-06-05T04:21:23.492Z
+                      updatedDateTime: '2021-06-05T04:21:23.492Z'
                       isUnaccompanied: false
                       vehicleRegNum: PJ15 JEF
                       checkedInCrossing:
@@ -441,146 +149,192 @@ paths:
                             - L0029A
                             - L0031A
                     - gmrId: GMRB0001IFM5
-                      updatedDateTime: 2021-06-05T04:20:02.284Z
+                      updatedDateTime: '2021-06-05T04:20:02.284Z'
                       isUnaccompanied: false
                       vehicleRegNum: GU62 SJE
                       checkedInCrossing:
-                        routeId: '103'
+                        routeId: '104'
                         localDateTimeOfArrival: 2021-06-11T11:03
                       readyToEmbark: true
                       inspectionRequired: false
                     - gmrId: GMRB0001EKG2
-                      updatedDateTime: 2021-06-05T04:17:48.406Z
+                      updatedDateTime: '2021-06-05T04:17:48.406Z'
                       isUnaccompanied: true
                       trailerRegistrationNums:
                         - AB29 3824
                         - SJ25 9382
                       checkedInCrossing:
-                        routeId: '103'
+                        routeId: '104'
                         localDateTimeOfArrival: 2021-06-11T11:03
                     - gmrId: GMRB0002MD3K
-                      updatedDateTime: 2021-06-05T04:15:35.009Z
+                      updatedDateTime: '2021-06-05T04:15:35.009Z'
                       isUnaccompanied: true
                       containerReferenceNums:
                         - GB 293824
                       checkedInCrossing:
-                        routeId: '104'
+                        routeId: '105'
                         localDateTimeOfArrival: 2021-06-11T11:03
         '403':
           description: ''
-          headers: {}
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/errorResponse'
-                  - example:
-                      code: NOT_AUTHORISED
+                $ref: '#/components/schemas/error-response_definitions'
               examples:
                 notAuthorised:
                   description: Your application does not have permission to access this endpoint. This may be because your application is not subcribed with the portId provided.
                   value:
                     code: NOT_AUTHORISED
-        '400':
-          description: ''
-          headers: {}
+      deprecated: false
+  /customs/goods-movement-system-port/{portId}/departures:
+    parameters:
+      - $ref: '#/components/parameters/portId'
+      - $ref: '#/components/parameters/lastUpdatedFrom'
+      - $ref: '#/components/parameters/lastUpdatedTo'
+      - $ref: '#/components/parameters/acceptHeader'
+      - $ref: '#/components/parameters/authorizationScopeHeader'
+    get:
+      summary: Get checked-in GMRs at departure port
+      description: |
+        Retrieves summary details for each GMR that has been checked-in to depart from the port with the `portId` provided, and has not yet embarked. The details returned include flags to indicate whether an inspection is required and whether the GMR is ready to embark.
+
+        More specifically, this returns GMRs whose state is `CHECKED_IN` where the `portId` for the `routeId` given in `checkedInCrossing` matches the `portId` provided.
+
+        The number of results is limited to 7000 GMRs. If this limit is exceeded a 400 Bad Request will be returned with the TOO_MANY_RESULTS error code.
+
+        The results list can be filtered using the `lastUpdatedFrom` and `lastUpdatedTo` query parameters.
+
+        The results are sorted by `updatedDateTime`, most recent first.
+
+        We recommend the calling application calls this endpoint no more than once per minute per port to stay within API rate limits.
+
+        The calling application must be subscribed with the `portId` provided else a `403 Forbidden` will be returned.
+      operationId: get-checked-in-gmrs-at-departure-port
+      security:
+        - applicationRestricted: []
+      responses:
+        '200':
+          description: |
+            List of checked-in GMRs at departure port
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/errorResponse'
-                  - example:
-                      code: TOO_MANY_RESULTS
+                $ref: '#/components/schemas/get-checked-in-gmrs-for-departure_definitions'
               examples:
-                tooManyResults:
-                  description: The query returned over the limit of 7000 GMRs.  Use the lastUpdatedFrom and lastUpdatedTo query parameters to filter the query.
+                example1:
+                  summary: List of checked-in GMRs at departure port
+                  description: |
+                    List of checked-in GMRs at departure port
                   value:
-                    code: TOO_MANY_RESULTS
+                    - gmrId: GMRB00000GKW
+                      updatedDateTime: '2021-06-05T04:21:23.492Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: PJ15 JEF
+                      checkedInCrossing:
+                        routeId: '103'
+                        localDateTimeOfArrival: 2021-06-05T09:20
+                      inspectionRequired: true
+                      reportToLocations:
+                        - inspectionTypeId: '1'
+                          locationIds:
+                            - L0029A
+                            - L0030A
+                            - L0031A
+                        - inspectionTypeId: '2'
+                          locationIds:
+                            - L0029A
+                            - L0031A
+                    - gmrId: GMRB0001IFM5
+                      updatedDateTime: '2021-06-05T04:20:02.284Z'
+                      isUnaccompanied: false
+                      vehicleRegNum: GU62 SJE
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                      readyToEmbark: true
+                      inspectionRequired: false
+                    - gmrId: GMRB0001EKG2
+                      updatedDateTime: '2021-06-05T04:17:48.406Z'
+                      isUnaccompanied: true
+                      trailerRegistrationNums:
+                        - AB29 3824
+                        - SJ25 9382
+                      checkedInCrossing:
+                        routeId: '104'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+                    - gmrId: GMRB0002MD3K
+                      updatedDateTime: '2021-06-05T04:15:35.009Z'
+                      isUnaccompanied: true
+                      containerReferenceNums:
+                        - GB 293824
+                      checkedInCrossing:
+                        routeId: '105'
+                        localDateTimeOfArrival: 2021-06-11T11:03
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response_definitions'
+              examples:
+                TOO_MANY_RESULTS:
+                  $ref: '#/components/examples/tooManyResults'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response_definitions'
+              examples:
+                NOT_AUTHORISED:
+                  $ref: '#/components/examples/notAuthorised'
       deprecated: false
   /customs/goods-movement-system-port/reference-data:
+    parameters:
+      - $ref: '#/components/parameters/acceptHeader'
     get:
       summary: Get reference data
-      description: "\nThis endpoint gets details of all reference data used by GVMS.\n\nReference data includes lists of:\n\n* Carriers operating on GVMS routes\n* Ports operating GVMS routes \n* GVMS routes (combining a carrier and a pair of ports)\n* Validation rule failure codes and descriptions\n\nThe reference data is returned as a single JSON document containing all\nrequired data lists.\n\nNew carriers, routes, ports and locations will be added with effective from\nand to dates, so your software will have an advance view of upcoming \nchanges.  It should not offer up routes that are not yet in effect or \nthat have expired.\n\nGVMS reference data is updated periodically. If you are a GVMS API subscriber, you will receive notifications about upcoming updates. If you receive a notification about an update, your application software must refresh the reference data by calling the GET reference-data endpoint.\n"
-      operationId: Getreferencedata
-      parameters:
-        - name: Accept
-          in: header
-          description: Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
-          schema:
-            type: string
-            example: application/vnd.hmrc.1.0+json
-          required: true
-          style: simple
+      description: |
+        This endpoint gets details of all reference data used by GVMS.
+
+        Reference data includes lists of:
+        * Carriers operating on GVMS routes
+        * Ports operating GVMS routes 
+        * GVMS routes (combining a carrier and a pair of ports)
+        * Validation rule failure codes and descriptions
+
+        The reference data is returned as a single JSON document containing all required data lists.
+
+        New carriers, routes, ports and locations will be added with effective from and to dates, so your software will have an advance view of upcoming changes.  It should not offer up routes that are not yet in effect or that have expired.
+
+        GVMS reference data is updated periodically. If you are a GVMS API subscriber, you will receive notifications about upcoming updates. If you receive a notification about an update, your application software must refresh the reference data by calling the GET reference-data endpoint.
+      operationId: get-reference-data
       security:
         - {}
       responses:
         '200':
-          description: GMVS reference data is returned in the response body
-          headers: {}
+          description: |
+            GVMS reference data is returned in the response body
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/referenceDatav1.15'
-                  - example:
-                      routes:
-                        - routeId: '102'
-                          routeEffectiveFrom: 2020-01-01
-                          routeEffectiveTo: 2020-01-02
-                          departurePortId: 7014
-                          routeDirection: UK_OUTBOUND
-                          arrivalPortId: 6085
-                          carrierId: 1
-                        - routeId: '103'
-                          routeEffectiveFrom: 2020-01-01
-                          departurePortId: 7054
-                          routeDirection: UK_OUTBOUND
-                          arrivalPortId: 1401
-                          carrierId: 2
-                      ports:
-                        - portId: 7050
-                          portRegion: Scotland
-                          portEffectiveFrom: 2000-01-01
-                          portDescription: Aberdeen
-                          chiefPortCode: ''
-                          cdsPortCode: ABDABDABD
-                          officeOfTransitCustomsOfficeCode: UNKNOWN?
-                          timezoneId: Europe/London
-                          portCountryCode: GB
-                        - portId: 1401
-                          portRegion: ''
-                          portEffectiveFrom: 2000-01-01
-                          portDescription: Calais
-                          chiefPortCode: ''
-                          cdsPortCode: ''
-                          officeOfTransitCustomsOfficeCode: UNKNOWN?
-                          timezoneId: Europe/Paris
-                          portCountryCode: FR
-                      carriers:
-                        - carrierId: 1
-                          carrierName: Stena Line
-                          countryCode: SE
-                        - carrierId: 2
-                          carrierName: DFDS Seaways
-                          countryCode: DK
-                      ruleFailures:
-                        - ruleId: '001_1'
-                          ruleDescription: This type of declaration cannot be used for this direction of travel
-                        - ruleId: '001_3'
-                          ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
+                $ref: '#/components/schemas/get-reference-data_definitions'
               examples:
-                example-1:
+                allReferenceData:
+                  summary: Example of GVMS reference data
+                  description: |
+                    Example of GVMS reference data, including routes, ports, carriers and rule failures.
                   value:
                     routes:
                       - routeId: '102'
-                        routeEffectiveFrom: 2020-01-01
-                        routeEffectiveTo: 2020-01-02
+                        routeEffectiveFrom: '2020-01-01'
+                        routeEffectiveTo: '2020-01-02'
                         departurePortId: 7014
                         routeDirection: UK_OUTBOUND
                         arrivalPortId: 6085
                         carrierId: 1
                       - routeId: '103'
-                        routeEffectiveFrom: 2020-01-01
+                        routeEffectiveFrom: '2020-01-01'
                         departurePortId: 7054
                         routeDirection: UK_OUTBOUND
                         arrivalPortId: 1401
@@ -588,7 +342,7 @@ paths:
                     ports:
                       - portId: 7050
                         portRegion: Scotland
-                        portEffectiveFrom: 2000-01-01
+                        portEffectiveFrom: '2000-01-01'
                         portDescription: Aberdeen
                         chiefPortCode: ''
                         cdsPortCode: ABDABDABD
@@ -597,7 +351,7 @@ paths:
                         portCountryCode: GB
                       - portId: 1401
                         portRegion: ''
-                        portEffectiveFrom: 2000-01-01
+                        portEffectiveFrom: '2000-01-01'
                         portDescription: Calais
                         chiefPortCode: ''
                         cdsPortCode: ''
@@ -613,9 +367,9 @@ paths:
                         countryCode: DK
                     ruleFailures:
                       - ruleId: '001_1'
-                        ruleDescription: This type of declaration cannot be used for this direction of travel
+                        ruleDescription: This type of declaration cannot be used for this direction of travel.
                       - ruleId: '001_3'
-                        ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again
+                        ruleDescription: This type of declaration cannot be used in this GMR based on the Haulier type you selected. Check and try again.
       deprecated: false
 components:
   securitySchemes:
@@ -628,913 +382,509 @@ components:
         clientCredentials:
           tokenUrl: https://api.service.hmrc.gov.uk/oauth/token
           scopes: {}
+  parameters:
+    portId:
+      name: portId
+      in: path
+      required: true
+      example: 1401
+      schema:
+        type: string
+        description: |
+          The ID of a port or border location, from the GVMS reference data
+    acceptHeader:
+      name: Accept
+      in: header
+      description: |
+        Specifies the response format and the [version](/api-documentation/docs/reference-guide#versioning) of the API to be used.
+      schema:
+        type: string
+        example: application/vnd.hmrc.1.0+json
+      required: true
+    authorizationScopeHeader:
+      name: Authorization
+      in: header
+      description: |
+        An OAuth 2.0 Bearer Token.
+      schema:
+        type: string
+        example: Bearer bb7fed3fe10dd235a2ccda3d50fb
+      required: true
+    lastUpdatedFrom:
+      name: lastUpdatedFrom
+      in: query
+      description: |
+        Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or after this date/time.  Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T04:20:02.284Z
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time
+    lastUpdatedTo:
+      name: lastUpdatedTo
+      in: query
+      description: |
+        Optionally include to filter results by last updated date/time.  All GMRs returned will have been updated on or before this date/time. Updates include when a GMR changes state, is ready to embark or is flagged for inspection.  This is a datetime value conformant to RFC3339, for example: 2021-06-05T05:20:02.284Z
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date-time
   schemas:
-    errorResponse:
-      title: errorResponse
+    gmrId:
+      type: string
+      description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
+      example: GMRI000023KN
+      pattern: ^GMR[A-Z][0-9A-Z]{8}$
+    isUnaccompanied:
+      type: boolean
+      description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
+      example: false
+    reportToLocations:
+      type: array
+      description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
+      minItems: 1
+      items:
+        type: object
+        description: Information about an inspection that is required
+        example:
+          inspectionTypeId: '1'
+          locationIds:
+            - '2'
+            - '5'
+        required:
+          - inspectionTypeId
+          - locationIds
+        properties:
+          inspectionTypeId:
+            type: string
+            description: An inspectionTypeId from GVMS Reference Data denoting the type of inspection that needs to be performed on the vehicle.
+            pattern: ^[0-9A-Za-z\-_]{1,100}$
+            example: '7'
+          locationIds:
+            type: array
+            description: A list of locationIds from GVMS Reference Data that are available to perform this type of inspection.
+            items:
+              type: string
+              pattern: ^[0-9A-Za-z\-_]{1,100}$
+            example:
+              - '4'
+              - '6'
+              - '9'
+    vehicleRegNum:
+      type: string
+      description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
+      example: AB19 DEF
+      pattern: ^[A-Z0-9 -]{1,30}$
+    trailerRegistrationNums:
+      type: array
+      minItems: 1
+      maxItems: 2
+      description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
+      items:
+        type: string
+        example: A1234567
+        pattern: ^[A-Z0-9 -]{1,200}$
+    containerReferenceNums:
+      type: array
+      description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
+      minItems: 1
+      items:
+        type: string
+        example: CSQU3054383
+        pattern: ^[A-Z0-9 -]{1,200}$
+    routeId:
+      type: string
+      description: The ID of the crossing route, using a routeId from the GVMS reference data
+      example: '18273'
+      pattern: ^[A-Z0-9-]{1,200}$
+    localDateTimeOfArrival:
+      type: string
+      description: The planned date and time of arrival, in local time of the arrival port. Must not include seconds, time zone or UTC marker
+      example: 2021-08-11T10:58
+      pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d$
+    actualCrossing:
+      type: object
+      description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
+      required:
+        - routeId
+        - localDateTimeOfArrival
+      properties:
+        routeId:
+          $ref: '#/components/schemas/routeId'
+        localDateTimeOfArrival:
+          $ref: '#/components/schemas/localDateTimeOfArrival'
+    definitions:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - gmrId
+          - isUnaccompanied
+          - actualCrossing
+        anyOf:
+          - title: Vehicle Registration Number
+            required:
+              - vehicleRegNum
+          - title: Trailer Registration Numbers
+            required:
+              - trailerRegistrationNums
+          - title: Container Reference Numbers
+            required:
+              - containerReferenceNums
+        properties:
+          gmrId:
+            $ref: '#/components/schemas/gmrId'
+          isUnaccompanied:
+            $ref: '#/components/schemas/isUnaccompanied'
+          reportToLocations:
+            $ref: '#/components/schemas/reportToLocations'
+          vehicleRegNum:
+            $ref: '#/components/schemas/vehicleRegNum'
+          trailerRegistrationNums:
+            $ref: '#/components/schemas/trailerRegistrationNums'
+          containerReferenceNums:
+            $ref: '#/components/schemas/containerReferenceNums'
+          actualCrossing:
+            $ref: '#/components/schemas/actualCrossing'
+    error-response_definitions:
+      type: object
       required:
         - code
-      type: object
       properties:
         code:
           type: string
-    propertiesreportToLocationsitems:
-      title: propertiesreportToLocationsitems
-      required:
-        - inspectionTypeId
-        - locationIds
-      type: object
-      properties:
-        inspectionTypeId:
-          pattern: ^[0-9A-Za-z\-_]{1,100}$
-          type: string
-          description: An inspectionTypeId from GVMS Reference Data denoting the type of inspection that needs to be performed on the vehicle.
-        locationIds:
-          type: array
-          pattern: ^[0-9A-Za-z\-_]{1,100}$
-          items:
-            type: string
-          description: A list of locationIds from GVMS Reference Data that are available to perform this type of inspection.
-      description: Information about an inspection that is required
-    actualCrossing:
-      title: actualCrossing
-      required:
-        - routeId
-        - localDateTimeOfArrival
-      type: object
-      properties:
-        routeId:
-          pattern: ^[A-Z0-9-]{1,200}$
-          type: string
-          description: The ID of the crossing route, using a routeId from the GVMS reference data
-        localDateTimeOfArrival:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d$
-          type: string
-          description: The planned date and time of arrival, in local time of the arrival port. Must not include seconds, time zone or UTC marker
-      description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
-    Address:
-      title: Address
-      required:
-        - lines
-        - postcode
-      type: object
-      properties:
-        lines:
-          maxItems: 4
-          minItems: 1
-          type: array
-          items:
-            type: string
-          description: The building name or number, and street name where the inspection facility is located.
-        town:
-          type: string
-          description: The town where the inspection facility is located.
-        postcode:
-          type: string
-          description: The postcode where the inspection facility is located.
-      description: The address where the inspection facility is located.
-    Carrier:
-      title: Carrier
-      required:
-        - carrierId
-        - carrierName
-      type: object
-      properties:
-        carrierId:
-          type: integer
-          description: The id of the carrier
-          format: int32
-        carrierName:
-          maxLength: 255
-          minLength: 1
-          type: string
-          description: The name of the carrier
-        countryCode:
-          pattern: ^[A-Z]{2}$
-          type: string
-          description: The country code where the carrier is registered
     checkedInCrossing:
-      title: checkedInCrossing
+      type: object
+      description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
       required:
         - routeId
         - localDateTimeOfArrival
-      type: object
       properties:
         routeId:
-          pattern: ^[A-Z0-9-]{1,200}$
-          type: string
-          description: The ID of the crossing route, using a routeId from the GVMS reference data
+          $ref: '#/components/schemas/routeId'
         localDateTimeOfArrival:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d$
-          type: string
-          description: The planned date and time of arrival, in local time of the arrival port. Must not include seconds, time zone or UTC marker
-      description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-    CustomsGoodsMovementSystemPortArrivalsControlledresponse:
-      title: CustomsGoodsMovementSystemPortArrivalsControlledresponse
-      required:
-        - vehicleRegNum
-        - gmrId
-        - isUnaccompanied
-        - actualCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        actualCrossing:
-          allOf:
-            - $ref: '#/components/schemas/actualCrossing'
-            - description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
-    CustomsGoodsMovementSystemPortArrivalsControlledresponse1:
-      title: CustomsGoodsMovementSystemPortArrivalsControlledresponse1
-      required:
-        - trailerRegistrationNums
-        - gmrId
-        - isUnaccompanied
-        - actualCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        actualCrossing:
-          allOf:
-            - $ref: '#/components/schemas/actualCrossing'
-            - description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
-    CustomsGoodsMovementSystemPortArrivalsControlledresponse2:
-      title: CustomsGoodsMovementSystemPortArrivalsControlledresponse2
-      required:
-        - containerReferenceNums
-        - gmrId
-        - isUnaccompanied
-        - actualCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        actualCrossing:
-          allOf:
-            - $ref: '#/components/schemas/actualCrossing'
-            - description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
-    CustomsGoodsMovementSystemPortArrivalsControlledresponse3:
-      title: CustomsGoodsMovementSystemPortArrivalsControlledresponse3
-      required:
-        - gmrId
-        - isUnaccompanied
-        - actualCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        actualCrossing:
-          allOf:
-            - $ref: '#/components/schemas/actualCrossing'
-            - description: Details of the crossing that the goods movement has been embarked on. These details will only be present in the Goods Movement Record after the vehicle has embarked on a crossing.
-    CustomsGoodsMovementSystemPortDeparturesControlledresponse:
-      title: CustomsGoodsMovementSystemPortDeparturesControlledresponse
-      required:
-        - vehicleRegNum
-        - gmrId
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-    CustomsGoodsMovementSystemPortDeparturesControlledresponse1:
-      title: CustomsGoodsMovementSystemPortDeparturesControlledresponse1
-      required:
-        - trailerRegistrationNums
-        - gmrId
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-    CustomsGoodsMovementSystemPortDeparturesControlledresponse2:
-      title: CustomsGoodsMovementSystemPortDeparturesControlledresponse2
-      required:
-        - containerReferenceNums
-        - gmrId
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-    CustomsGoodsMovementSystemPortDeparturesControlledresponse3:
-      title: CustomsGoodsMovementSystemPortDeparturesControlledresponse3
-      required:
-        - gmrId
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-    CustomsGoodsMovementSystemPortDeparturesresponse:
-      title: CustomsGoodsMovementSystemPortDeparturesresponse
-      required:
-        - vehicleRegNum
-        - gmrId
-        - updatedDateTime
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        updatedDateTime:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
-          type: string
-          description: The date and time that this GMR was last updated.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-        inspectionRequired:
-          type: boolean
-          description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
-        readyToEmbark:
-          type: boolean
-          description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
-    CustomsGoodsMovementSystemPortDeparturesresponse1:
-      title: CustomsGoodsMovementSystemPortDeparturesresponse1
-      required:
-        - trailerRegistrationNums
-        - gmrId
-        - updatedDateTime
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        updatedDateTime:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
-          type: string
-          description: The date and time that this GMR was last updated.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-        inspectionRequired:
-          type: boolean
-          description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
-        readyToEmbark:
-          type: boolean
-          description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
-    CustomsGoodsMovementSystemPortDeparturesresponse2:
-      title: CustomsGoodsMovementSystemPortDeparturesresponse2
-      required:
-        - containerReferenceNums
-        - gmrId
-        - isUnaccompanied
-        - actualCrossing
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        updatedDateTime:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
-          type: string
-          description: The date and time that this GMR was last updated.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-        inspectionRequired:
-          type: boolean
-          description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
-        readyToEmbark:
-          type: boolean
-          description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
-    CustomsGoodsMovementSystemPortDeparturesresponse3:
-      title: CustomsGoodsMovementSystemPortDeparturesresponse3
-      required:
-        - gmrId
-        - updatedDateTime
-        - isUnaccompanied
-        - checkedInCrossing
-      type: object
-      properties:
-        gmrId:
-          pattern: ^GMR[A-Z][0-9A-Z]{8}$
-          type: string
-          description: The Goods Movement Record (GMR) ID for this GMR.  Do not include when POSTing a GMR - GVMS will assign an ID.
-        updatedDateTime:
-          pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
-          type: string
-          description: The date and time that this GMR was last updated.
-        isUnaccompanied:
-          type: boolean
-          description: Set to true if the vehicle will not be accompanying the trailer(s) during the crossing
-        reportToLocations:
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/propertiesreportToLocationsitems'
-          description: A list of one or more inspection types, from GVMS Reference Data, that the vehicle must have carried out, in the order specified.  This means that where there are multiple entries here, the vehicle must report for the first inspection type listed before each subsequent listed inspection.  Each entry includes a list of available locations for the inspection type.
-        vehicleRegNum:
-          pattern: ^[A-Z0-9 -]{1,30}$
-          type: string
-          description: Vehicle registration number of the vehicle that will arrive at port.  If isUnaccompanied is set to false then vehicleRegNum must be provided.
-        trailerRegistrationNums:
-          maxItems: 2
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles carrying trailers, the trailer registration number of each trailer. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        containerReferenceNums:
-          minItems: 1
-          type: array
-          pattern: ^[A-Z0-9 -]{1,200}$
-          items:
-            type: string
-          description: For vehicles arriving with containers that will be detached and loaded, the container reference number of each container in the movement. If isUnaccompanied is set to true then trailerRegistrationNums or containerReferenceNums must be provided.
-        checkedInCrossing:
-          allOf:
-            - $ref: '#/components/schemas/checkedInCrossing'
-            - description: Details of the crossing that the vehicle has been checked-in to. These details will only be present in the Goods Movement Record after the vehicle has checked in.
-        inspectionRequired:
-          type: boolean
-          description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
-        readyToEmbark:
-          type: boolean
-          description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
-    InspectionType:
-      title: InspectionType
-      required:
-        - inspectionTypeId
-        - description
-      type: object
-      properties:
-        inspectionTypeId:
-          type: string
-          description: The id of the type of inspection that needs to be performed on the vehicle.
-        description:
-          type: string
-          description: The category of the type of inspection that needs to be performed on the vehicle e.g. CUSTOMS, DEFRA or TRANSIT.
-    Location:
-      title: Location
-      required:
-        - locationId
-        - locationDescription
-        - address
-        - locationType
-        - supportedDirections
-        - locationEffectiveFrom
-        - supportedInspectionTypeIds
-        - requiredInspectionLocations
-      type: object
-      properties:
-        locationId:
-          type: string
-          description: The id of the inspection facility.
-        locationDescription:
-          type: string
-          description: The name of the inspection facility location.
-        address:
-          allOf:
-            - $ref: '#/components/schemas/Address'
-            - description: The address where the inspection facility is located.
-        locationType:
-          allOf:
-            - $ref: '#/components/schemas/LocationType'
-            - description: The type of inspection facility; either Inland Border Facility (IBF), Border Control Post (BCP) or a facility that carries out all inspection types (ALL).
-        supportedDirections:
-          maxItems: 4
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedDirection'
-          description: The directions of travel supported by the location.
-        locationEffectiveFrom:
-          type: string
-          description: The date the inspection facility location starts being used.
-          format: date
-        locationEffectiveTo:
-          type: string
-          description: The date the inspection facility location stops being used.
-          format: date
-        supportedInspectionTypeIds:
-          minItems: 1
-          type: array
-          items:
-            type: string
-          description: The list of inspectionTypeIds for the types of inspections carried out.
-        requiredInspectionLocations:
-          minItems: 1
-          type: array
-          items:
-            type: integer
-            format: int32
-          description: The list of portIds that the inspection facility supports.
-    LocationType:
-      title: LocationType
-      enum:
-        - IBF
-        - BCP
-        - ALL
+          $ref: '#/components/schemas/localDateTimeOfArrival'
+    get-controlled-gmrs-for-departure_definitions:
+      type: array
+      additionalProperties: true
+      items:
+        type: object
+        required:
+          - gmrId
+          - isUnaccompanied
+          - checkedInCrossing
+        anyOf:
+          - title: Vehicle Registration Number
+            required:
+              - vehicleRegNum
+          - title: Trailer Registration Numbers
+            required:
+              - trailerRegistrationNums
+          - title: Container Reference Numbers
+            required:
+              - containerReferenceNums
+        properties:
+          gmrId:
+            $ref: '#/components/schemas/gmrId'
+          isUnaccompanied:
+            $ref: '#/components/schemas/isUnaccompanied'
+          reportToLocations:
+            $ref: '#/components/schemas/reportToLocations'
+          vehicleRegNum:
+            $ref: '#/components/schemas/vehicleRegNum'
+          trailerRegistrationNums:
+            $ref: '#/components/schemas/trailerRegistrationNums'
+          containerReferenceNums:
+            $ref: '#/components/schemas/containerReferenceNums'
+          checkedInCrossing:
+            $ref: '#/components/schemas/checkedInCrossing'
+    updatedDateTime:
       type: string
-      description: The type of inspection facility; either Inland Border Facility (IBF), Border Control Post (BCP) or a facility that carries out all inspection types (ALL).
-    Port:
-      title: Port
-      required:
-        - portId
-        - portEffectiveFrom
-        - portDescription
-        - officeOfTransitCustomsOfficeCode
-        - portCountryCode
-      type: object
-      properties:
-        portId:
-          type: integer
-          description: The id of the port
-          format: int32
-        portRegion:
-          type: string
-          description: The region the port is grouped into for CTC
-        portEffectiveFrom:
-          type: string
-          description: The date the port came into effect
-          format: date
-        portDescription:
-          maxLength: 255
-          minLength: 3
-          type: string
-          description: 'Description of the port eg: the ports name'
-        timezoneId:
-          maxLength: 50
-          type: string
-          description: The UTC Identifier
-        chiefPortCode:
-          type: string
-          description: The port code specific to CHIEF
-        cdsPortCode:
-          type: string
-          description: The port code specific to CDS
-        officeOfTransitCustomsOfficeCode:
-          maxLength: 8
-          minLength: 8
-          type: string
-          description: Customs office code for CTC
-        portEffectiveTo:
-          type: string
-          description: The date the port stopped being used
-          format: date
-        portCountryCode:
-          pattern: ^[A-Z]{2}$
-          type: string
-          description: The Country code of the associated Port
-        isOperatingArrivedExportsProcess:
-          type: boolean
-          description: If true, indicates that this port is operating the arrived exports process and as such requires all customs export declarations to be pre-arrived prior to check-in.  If omitted or false, indicates that this port is operating the standard exports process.
-    referenceDatav1.15:
-      title: referenceDatav1.15
+      description: The date and time that this GMR was last updated.
+      example: '2021-08-12T15:34:02'
+      pattern: ^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d.\d{3}Z$
+    inspectionRequired:
+      type: boolean
+      description: If set to true, indicates that the vehicle requires a customs inspection.  If set to false, indicates that the vehicle does not require a customs inspection.  If not set, indicates the customs inspection decision has not yet been made.
+    readyToEmbark:
+      type: boolean
+      description: If present and set to true, checks have been completed on this GMR and it is considered by HMRC to be ready for embarkation.  Export GMRs that require permission to embark from HMRC should not be permitted to embark until this flag is set to true.
+      example: 'true'
+    get-checked-in-gmrs-for-departure_definitions:
+      type: array
+      additionalProperties: true
+      items:
+        type: object
+        required:
+          - gmrId
+          - updatedDateTime
+          - isUnaccompanied
+          - checkedInCrossing
+        anyOf:
+          - title: Vehicle Registration Number
+            required:
+              - vehicleRegNum
+          - title: Trailer Registration Numbers
+            required:
+              - trailerRegistrationNums
+          - title: Container Reference Numbers
+            required:
+              - containerReferenceNums
+        properties:
+          gmrId:
+            $ref: '#/components/schemas/gmrId'
+          updatedDateTime:
+            $ref: '#/components/schemas/updatedDateTime'
+          isUnaccompanied:
+            $ref: '#/components/schemas/isUnaccompanied'
+          reportToLocations:
+            $ref: '#/components/schemas/reportToLocations'
+          vehicleRegNum:
+            $ref: '#/components/schemas/vehicleRegNum'
+          trailerRegistrationNums:
+            $ref: '#/components/schemas/trailerRegistrationNums'
+          containerReferenceNums:
+            $ref: '#/components/schemas/containerReferenceNums'
+          checkedInCrossing:
+            $ref: '#/components/schemas/checkedInCrossing'
+          inspectionRequired:
+            $ref: '#/components/schemas/inspectionRequired'
+          readyToEmbark:
+            $ref: '#/components/schemas/readyToEmbark'
+    get-reference-data_definitions:
+      title: referenceData v1.15
+      description: reference Data for GVMS v1.15
       type: object
       properties:
         routes:
+          description: The routes covered by GVMS
           type: array
           items:
-            $ref: '#/components/schemas/Route'
-          description: The routes covered by GVMS
+            type: object
+            properties:
+              routeId:
+                description: The route identifier
+                type: string
+              routeDirection:
+                description: The direction of the route
+                type: string
+                enum:
+                  - UK_INBOUND
+                  - UK_OUTBOUND
+                  - GB_TO_NI
+                  - NI_TO_GB
+              routeEffectiveFrom:
+                description: Date the route came into effect
+                type: string
+                format: date
+              departurePortId:
+                description: The id of the departure port
+                type: integer
+              arrivalPortId:
+                description: The id of the arrival port
+                type: integer
+              carrierId:
+                description: the id of the carrier operating that route
+                type: integer
+              routeEffectiveTo:
+                description: The date the route stopped being used
+                type: string
+                format: date
+            required:
+              - routeId
+              - routeDirection
+              - routeEffectiveFrom
+              - departurePortId
+              - arrivalPortId
+              - carrierId
         ports:
           type: array
           items:
-            $ref: '#/components/schemas/Port'
-          description: ''
+            type: object
+            properties:
+              portId:
+                description: The id of the port
+                type: integer
+              portRegion:
+                description: The region the port is grouped into for CTC
+                type: string
+              portEffectiveFrom:
+                description: The date the port came into effect
+                type: string
+                format: date
+              portDescription:
+                description: 'Description of the port eg: the port''s name'
+                type: string
+                minLength: 3
+                maxLength: 255
+              timezoneId:
+                description: The UTC Identifier
+                type: string
+                maxLength: 50
+              chiefPortCode:
+                description: The port code specific to CHIEF
+                type: string
+              cdsPortCode:
+                description: The port code specific to CDS
+                type: string
+              officeOfTransitCustomsOfficeCode:
+                description: Customs office code for CTC
+                type: string
+                minLength: 8
+                maxLength: 8
+              portEffectiveTo:
+                description: The date the port stopped being used
+                type: string
+                format: date
+              portCountryCode:
+                description: The Country code of the associated Port
+                type: string
+                pattern: ^[A-Z]{2}$
+              isOperatingArrivedExportsProcess:
+                description: If true, indicates that this port is operating the arrived exports process and as such requires all customs export declarations to be pre-arrived prior to check-in.  If omitted or false, indicates that this port is operating the standard exports process.
+                type: boolean
+            required:
+              - portId
+              - portEffectiveFrom
+              - portDescription
+              - officeOfTransitCustomsOfficeCode
+              - portCountryCode
         carriers:
           type: array
           items:
-            $ref: '#/components/schemas/Carrier'
-          description: ''
+            type: object
+            properties:
+              carrierId:
+                description: The id of the carrier
+                type: integer
+              carrierName:
+                description: The name of the carrier
+                type: string
+                minLength: 1
+                maxLength: 255
+              countryCode:
+                description: The country code where the carrier is registered
+                type: string
+                pattern: ^[A-Z]{2}$
+            required:
+              - carrierId
+              - carrierName
         locations:
           type: array
           items:
-            $ref: '#/components/schemas/Location'
-          description: ''
+            type: object
+            properties:
+              locationId:
+                description: The id of the inspection facility.
+                type: string
+              locationDescription:
+                description: The name of the inspection facility location.
+                type: string
+              address:
+                description: The address where the inspection facility is located.
+                type: object
+                properties:
+                  lines:
+                    description: The building name or number, and street name where the inspection facility is located.
+                    type: array
+                    minItems: 1
+                    maxItems: 4
+                    items:
+                      type: string
+                  town:
+                    description: The town where the inspection facility is located.
+                    type: string
+                  postcode:
+                    description: The postcode where the inspection facility is located.
+                    type: string
+                required:
+                  - lines
+                  - postcode
+              locationType:
+                description: The type of inspection facility; either Inland Border Facility (IBF), Border Control Post (BCP) or a facility that carries out all inspection types (ALL).
+                type: string
+                enum:
+                  - IBF
+                  - BCP
+                  - ALL
+              supportedDirections:
+                description: The directions of travel supported by the location.
+                type: array
+                minItems: 1
+                maxItems: 4
+                items:
+                  type: string
+                  enum:
+                    - UK_INBOUND
+                    - UK_OUTBOUND
+                    - GB_TO_NI
+                    - NI_TO_GB
+              locationEffectiveFrom:
+                description: The date the inspection facility location starts being used.
+                type: string
+                format: date
+              locationEffectiveTo:
+                description: The date the inspection facility location stops being used.
+                type: string
+                format: date
+              supportedInspectionTypeIds:
+                description: The list of inspectionTypeIds for the types of inspections carried out.
+                type: array
+                minItems: 1
+                items:
+                  type: string
+              requiredInspectionLocations:
+                description: The list of portIds that the inspection facility supports.
+                type: array
+                minItems: 1
+                items:
+                  type: integer
+            required:
+              - locationId
+              - locationDescription
+              - address
+              - locationType
+              - locationEffectiveFrom
+              - supportedDirections
+              - supportedInspectionTypeIds
+              - requiredInspectionLocations
         inspectionTypes:
           type: array
           items:
-            $ref: '#/components/schemas/InspectionType'
-          description: ''
+            type: object
+            properties:
+              inspectionTypeId:
+                description: The id of the type of inspection that needs to be performed on the vehicle.
+                type: string
+              description:
+                description: The category of the type of inspection that needs to be performed on the vehicle e.g. CUSTOMS, DEFRA or TRANSIT.
+                type: string
+            required:
+              - inspectionTypeId
+              - description
         ruleFailures:
+          description: The list of business and other possible rule failures within a GMR
           type: array
           items:
-            $ref: '#/components/schemas/RuleFailure'
-          description: The list of business and other possible rule failures within a GMR
-      description: reference Data for GVMS v1.15
-    Route:
-      title: Route
-      required:
-        - routeId
-        - routeDirection
-        - routeEffectiveFrom
-        - departurePortId
-        - arrivalPortId
-        - carrierId
-      type: object
-      properties:
-        routeId:
-          type: string
-          description: The route identifier
-        routeDirection:
-          allOf:
-            - $ref: '#/components/schemas/RouteDirection'
-            - description: The direction of the route
-        routeEffectiveFrom:
-          type: string
-          description: Date the route came into effect
-          format: date
-        departurePortId:
-          type: integer
-          description: The id of the departure port
-          format: int32
-        arrivalPortId:
-          type: integer
-          description: The id of the arrival port
-          format: int32
-        carrierId:
-          type: integer
-          description: the id of the carrier operating that route
-          format: int32
-        routeEffectiveTo:
-          type: string
-          description: The date the route stopped being used
-          format: date
-    RouteDirection:
-      title: RouteDirection
-      enum:
-        - UK_INBOUND
-        - UK_OUTBOUND
-        - GB_TO_NI
-        - NI_TO_GB
-      type: string
-      description: The direction of the route
-    RuleFailure:
-      title: RuleFailure
-      required:
-        - ruleId
-        - ruleDescription
-      type: object
-      properties:
-        ruleId:
-          type: string
-        ruleDescription:
-          type: string
-    SupportedDirection:
-      title: SupportedDirection
-      enum:
-        - UK_INBOUND
-        - UK_OUTBOUND
-        - GB_TO_NI
-        - NI_TO_GB
-      type: string
+            type: object
+            properties:
+              ruleId:
+                type: string
+              ruleDescription:
+                type: string
+            required:
+              - ruleId
+              - ruleDescription
+  examples:
+    tooManyResults:
+      description: |
+        The query returned over the limit of 7000 GMRs. Use the lastUpdatedFrom and lastUpdatedTo query parameters to filter the query.
+      value:
+        code: TOO_MANY_RESULTS
+    notAuthorised:
+      description: |
+        Your application does not have permission to access this endpoint. This may be because your application is not subscribed with the portId provided.
+      value:
+        code: NOT_AUTHORISED

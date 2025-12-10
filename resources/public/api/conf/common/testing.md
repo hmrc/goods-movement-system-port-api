@@ -92,7 +92,7 @@ To simulate `inspectionRequired`, use the default stubbed test mode instead.
 You can download JSON schemas and examples for request and response payloads for all endpoints in this API.
 
 <p class="govuk-body-l" style="font-size: 24px;">
-  <a href="/api-documentation/docs/api/download/goods-movement-system-port-api/1.0/gmvs-port-schemas.zip" class="govuk-link">Goods Vehicle Movements Port API JSON schemas and examples</a>
+  <a href="/api-documentation/docs/api/download/goods-movement-system-port-api/1.0/gvms-port-schemas.zip" class="govuk-link">Goods Vehicle Movements Port API JSON schemas and examples</a>
 </p>
 
 <p class="govuk-body-s" style="font-size: 16px;margin-bottom: 15px;">ZIP, 9KB</p>
