@@ -22,6 +22,7 @@ import play.api.test.FutureAwaits
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
 import uk.gov.hmrc.http.StringContextOps
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData._
 
 import scala.concurrent.Future
 
@@ -37,11 +38,11 @@ class GmsReferenceDataConnectorSpec extends BaseSpec with FutureAwaits {
         when(mockHttpClient.get(mEq(url"http://localhost:0000/goods-movement-system-reference-data/reference-data"))(any()))
           .thenReturn(mockRequestBuilder)
         when(mockRequestBuilder.execute(using any(), any()))
-          .thenReturn(Future.successful(gmsReferenceDataSummary))
+          .thenReturn(Future.successful(referenceData))
 
         val result: GvmsReferenceData = await(connector.getReferenceData(hc))
 
-        result shouldBe gmsReferenceDataSummary
+        result shouldBe referenceData
 
         verify(mockHttpClient).get(mEq(url"http://localhost:0000/goods-movement-system-reference-data/reference-data"))(any())
         verify(mockRequestBuilder).execute(using any(), any())

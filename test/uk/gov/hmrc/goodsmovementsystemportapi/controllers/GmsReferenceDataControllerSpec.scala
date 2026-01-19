@@ -21,6 +21,7 @@ import org.mockito.Mockito._
 import play.api.mvc.Result
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.ControllerBaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData._
 
 import scala.concurrent.Future
 
@@ -35,12 +36,12 @@ class GmsReferenceDataControllerSpec extends ControllerBaseSpec {
       "return 200 OK" in new Setup {
 
         when(mockGmsReferenceDataService.getReferenceData(any()))
-          .thenReturn(Future.successful(gmsReferenceDataSummary))
+          .thenReturn(Future.successful(referenceData))
 
         val result: Future[Result] = controller.getReferenceData(fakeRequest)
 
         status(result)                              shouldBe OK
-        contentAsJson(result).as[GvmsReferenceData] shouldBe gmsReferenceDataSummary
+        contentAsJson(result).as[GvmsReferenceData] shouldBe referenceData
 
         verify(mockGmsReferenceDataService).getReferenceData(any())
       }

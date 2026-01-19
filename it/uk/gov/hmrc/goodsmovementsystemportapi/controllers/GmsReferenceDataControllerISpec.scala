@@ -20,6 +20,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.{urlEqualTo, _}
 import play.api.libs.json.Json
 import uk.gov.hmrc.goodsmovementsystemportapi.controllers.behaviours.{AuthorisedBehaviours, HeaderValidationBehaviours, SchemaContractBehaviours}
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseISpec
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData._
 
 class GmsReferenceDataControllerISpec extends BaseISpec with AuthorisedBehaviours with HeaderValidationBehaviours with SchemaContractBehaviours {
 
@@ -29,10 +30,10 @@ class GmsReferenceDataControllerISpec extends BaseISpec with AuthorisedBehaviour
 
     "the Reference data exists" should {
       "return 200 OK " in {
-        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummary)))
+        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(referenceData)))
 
         val result   = callRoute(fakeRequest(routes.GmsReferenceDataController.getReferenceData))
-        val expected = Json.toJson(gmsReferenceDataSummary)
+        val expected = Json.toJson(referenceData)
         status(result)        shouldBe OK
         contentAsJson(result) shouldBe expected
 
