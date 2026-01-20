@@ -25,7 +25,6 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{DefaultAwaitTimeout, FakeRequest}
-import uk.gov.hmrc.goodsmovementsystemportapi.FakeObjects
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext
@@ -38,8 +37,7 @@ trait BaseSpec
     with Configs
     with AllMocks
     with DefaultAwaitTimeout
-    with Matchers
-    with FakeObjects {
+    with Matchers {
 
   implicit lazy val ec:           ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
   implicit lazy val hc:           HeaderCarrier    = HeaderCarrier()

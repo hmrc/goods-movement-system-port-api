@@ -30,7 +30,7 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, ResultExtractors, RouteInvokers, Writeables}
 import play.api.{Application, Mode}
-import uk.gov.hmrc.goodsmovementsystemportapi.{FakeObjects, ResultAssertions}
+import uk.gov.hmrc.goodsmovementsystemportapi.ResultAssertions
 
 import scala.concurrent.ExecutionContext.global
 import scala.concurrent.{ExecutionContext, Future}
@@ -52,8 +52,7 @@ abstract class BaseISpec
     with WireMockSupport
     with WireMockConfig
     with Results
-    with Status
-    with FakeObjects {
+    with Status {
 
   implicit lazy val system:       ActorSystem      = ActorSystem()
   implicit lazy val materializer: Materializer     = Materializer(system)

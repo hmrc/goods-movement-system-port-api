@@ -27,6 +27,7 @@ import uk.gov.hmrc.goodsmovementsystemportapi.errorhandlers.{ErrorResponse, GetC
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.ControllerBaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledDeparturesGmrReducedResponse, GetPortDepartureExpandedGmrResponse}
 import uk.gov.hmrc.http.HttpResponse
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData._
 
 import scala.concurrent.Future
 

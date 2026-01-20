@@ -24,6 +24,8 @@ import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseISpec
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.stubs.AuthStubs
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledDeparturesGmrReducedResponse, GetPortDepartureExpandedGmrResponse}
 import uk.gov.hmrc.goodsmovementsystemportapi.schemas.Version_1_0
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData._
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData._
 
 import scala.concurrent.Future
 
@@ -39,7 +41,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
       stubGet(s"/goods-movement-system/$portId/arrivals/controlled", Json.stringify(Json.toJson(arrivalsGmrResponse)))
 
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(referenceDataSummaryFromJson)))
 
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
@@ -105,7 +107,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
       AuthStubs.userIsAuthenticated
 
       stubGet(s"/goods-movement-system/$portId/departures/controlled", Json.stringify(Json.toJson(departuresGmrResponse)))
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(referenceDataSummaryFromJson)))
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
         s"""
@@ -170,7 +172,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
       AuthStubs.userIsAuthenticated
 
       stubGet(s"/goods-movement-system/$portId/departures", Json.stringify(Json.toJson(departuresExtendedGmrResponse)))
-      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
+      stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(referenceDataSummaryFromJson)))
       stubGet(
         s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
         s"""
@@ -231,7 +233,7 @@ class PortsControllerISpec extends BaseISpec with SchemaContractBehaviours with 
 
         stubGet(s"/goods-movement-system/$portId/departures", Json.stringify(Json.obj("code" -> "TOO_MANY_RESULTS")))
 
-        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(gmsReferenceDataSummaryFromJson)))
+        stubGet(s"/goods-movement-system-reference-data/reference-data", Json.stringify(Json.toJson(referenceDataSummaryFromJson)))
         stubGet(
           s"/field/application/clientId-abc/context/customs%2Fgoods-movement-system-port/version/1.0",
           s"""

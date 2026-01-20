@@ -22,6 +22,7 @@ import play.api.test.FutureAwaits
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.SubscriptionFieldsResponse
 import uk.gov.hmrc.http.StringContextOps
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData.*
 
 import scala.concurrent.Future
 

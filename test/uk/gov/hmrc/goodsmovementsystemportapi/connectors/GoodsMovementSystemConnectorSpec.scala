@@ -23,6 +23,7 @@ import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.GetControlledArrivalsGmrResponse
 import uk.gov.hmrc.http.StringContextOps
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData._
 
 import scala.concurrent.Future
 
