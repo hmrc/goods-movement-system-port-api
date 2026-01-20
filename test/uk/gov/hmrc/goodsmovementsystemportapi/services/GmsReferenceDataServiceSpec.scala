@@ -20,6 +20,7 @@ import org.mockito.Mockito._
 import play.api.test.Helpers.await
 import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData._
 
 import scala.concurrent.Future
 
@@ -34,11 +35,11 @@ class GmsReferenceDataServiceSpec extends BaseSpec {
       "return the 200(OK)" in new Setup {
 
         when(mockGmsReferenceDataConnector.getReferenceData)
-          .thenReturn(Future.successful(gmsReferenceDataSummary))
+          .thenReturn(Future.successful(referenceData))
 
         val result: GvmsReferenceData = await(service.getReferenceData)
 
-        result shouldBe gmsReferenceDataSummary
+        result shouldBe referenceData
 
         verify(mockGmsReferenceDataConnector).getReferenceData
       }

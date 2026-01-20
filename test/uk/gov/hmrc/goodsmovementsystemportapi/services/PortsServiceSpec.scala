@@ -28,6 +28,8 @@ import uk.gov.hmrc.goodsmovementsystemportapi.helpers.BaseSpec
 import uk.gov.hmrc.goodsmovementsystemportapi.models.SubscriptionFieldsResponse
 import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{GetControlledArrivalsGmrReducedResponse, GetControlledArrivalsGmrResponse, GetControlledDeparturesGmrReducedResponse, GetControlledDeparturesGmrResponse, GetPortDepartureExpandedGmrResponse}
 import uk.gov.hmrc.goodsmovementsystemportapi.models.referencedata.GvmsReferenceData
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.ReferenceData.referenceDataSummaryFromJson
+import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData._
 
 import java.time.Instant
 import scala.concurrent.Future
@@ -38,7 +40,10 @@ class PortsServiceSpec extends BaseSpec with EitherValues {
     val mockGoodsMovementSystemConnector: GoodsMovementSystemConnector = mock[GoodsMovementSystemConnector]
     val service =
       new PortsService(mockGoodsMovementSystemConnector, mockApiSubscriptionFieldsService, mockGmsReferenceDataService, mockAppConfig, showPending)
-    val record: GvmsReferenceData = gmsReferenceDataSummaryFromJson
+    val record: GvmsReferenceData = referenceDataSummaryFromJson
+
+    val fakeLastUpdatedFromDate: Instant = Instant.parse("2027-01-01T00:00:00Z")
+    val fakeLastUpdatedToDate:   Instant = Instant.parse("2028-01-01T00:00:00Z")
   }
 
   "getDepartures" when {
