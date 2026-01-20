@@ -22,19 +22,18 @@ import uk.gov.hmrc.goodsmovementsystemportapi.models.goodsmovementrecord.{Crossi
 import java.time.Instant
 import uk.gov.hmrc.goodsmovementsystemportapi.models.testdata.TestData.*
 
-
 object ResponseFactories {
 
   def fakeArrivalsGmrResponse(
-                               gmrId: String = "GMRA00003I3M",
-                               isUnaccompanied: Boolean = false,
-                               inspectionRequired: Option[Boolean] = None,
-                               reportToLocations: Option[List[ReportLocations]] = None,
-                               vehicleRegNum: Option[String] = None,
-                               trailerRegistrationNums: Option[List[String]] = None,
-                               containerReferenceNums: Option[List[String]] = None,
-                               actualCrossing: Crossing = crossing
-                             ): List[GetControlledArrivalsGmrResponse] = List(
+    gmrId:                   String = "GMRA00003I3M",
+    isUnaccompanied:         Boolean = false,
+    inspectionRequired:      Option[Boolean] = None,
+    reportToLocations:       Option[List[ReportLocations]] = None,
+    vehicleRegNum:           Option[String] = None,
+    trailerRegistrationNums: Option[List[String]] = None,
+    containerReferenceNums:  Option[List[String]] = None,
+    actualCrossing:          Crossing = crossing
+  ): List[GetControlledArrivalsGmrResponse] = List(
     GetControlledArrivalsGmrResponse(
       gmrId = gmrId,
       isUnaccompanied = isUnaccompanied,
@@ -46,17 +45,17 @@ object ResponseFactories {
       actualCrossing = actualCrossing
     )
   )
-  
+
   def fakeDeparaturesGmrResponse(
-                             gmrId: String = "GMRD00003I3M",
-                             isUnaccompanied: Boolean = true,
-                             inspectionRequired: Option[Boolean] = None,
-                             reportToLocations: Option[List[ReportLocations]] = None,
-                             vehicleRegNum: Option[String] = None,
-                             trailerRegistrationNums: Option[List[String]] = None,
-                             containerReferenceNums: Option[List[String]] = None,
-                             checkedInCrossing: Crossing = crossing
-                           ): List[GetControlledDeparturesGmrResponse] = List(
+    gmrId:                   String = "GMRD00003I3M",
+    isUnaccompanied:         Boolean = true,
+    inspectionRequired:      Option[Boolean] = None,
+    reportToLocations:       Option[List[ReportLocations]] = None,
+    vehicleRegNum:           Option[String] = None,
+    trailerRegistrationNums: Option[List[String]] = None,
+    containerReferenceNums:  Option[List[String]] = None,
+    checkedInCrossing:       Crossing = crossing
+  ): List[GetControlledDeparturesGmrResponse] = List(
     GetControlledDeparturesGmrResponse(
       gmrId = gmrId,
       isUnaccompanied = isUnaccompanied,
@@ -70,17 +69,17 @@ object ResponseFactories {
   )
 
   def fakeDeparturesExtendedGmrResponse(
-                                     gmrId: String = "GMRD00003I3M",
-                                     isUnaccompanied: Boolean = true,
-                                     updatedDateTime: Instant = Instant.parse("2021-07-03T16:33:51.000z"),
-                                     inspectionRequired: Option[Boolean] = None,
-                                     reportToLocations: Option[List[ReportLocations]] = None,
-                                     vehicleRegNum: Option[String] = None,
-                                     trailerRegistrationNums: Option[List[String]] = None,
-                                     containerReferenceNums: Option[List[String]] = None,
-                                     checkedInCrossing: Crossing = crossing,
-                                     readyToEmbark: Option[Boolean] = None
-                                   ): List[GetPortDepartureExpandedGmrResponse] = List(
+    gmrId:                   String = "GMRD00003I3M",
+    isUnaccompanied:         Boolean = true,
+    updatedDateTime:         Instant = Instant.parse("2021-07-03T16:33:51.000z"),
+    inspectionRequired:      Option[Boolean] = None,
+    reportToLocations:       Option[List[ReportLocations]] = None,
+    vehicleRegNum:           Option[String] = None,
+    trailerRegistrationNums: Option[List[String]] = None,
+    containerReferenceNums:  Option[List[String]] = None,
+    checkedInCrossing:       Crossing = crossing,
+    readyToEmbark:           Option[Boolean] = None
+  ): List[GetPortDepartureExpandedGmrResponse] = List(
     GetPortDepartureExpandedGmrResponse(
       gmrId = gmrId,
       isUnaccompanied = isUnaccompanied,
@@ -96,12 +95,12 @@ object ResponseFactories {
   )
 
   def fakeSubscriptionFieldsResponse(
-                                  clientId: String = "clientId",
-                                  apiContext: String = "apiContext",
-                                  apiVersion: String = "1.0",
-                                  fieldsId: String = "12345",
-                                  fields: Map[String, String] = Map("portId" -> "portId")
-                                ): SubscriptionFieldsResponse =
+    clientId:   String = "clientId",
+    apiContext: String = "apiContext",
+    apiVersion: String = "1.0",
+    fieldsId:   String = "12345",
+    fields:     Map[String, String] = Map("portId" -> "portId")
+  ): SubscriptionFieldsResponse =
     SubscriptionFieldsResponse(
       clientId = clientId,
       apiContext = apiContext,
@@ -109,6 +108,5 @@ object ResponseFactories {
       fieldsId = fieldsId,
       fields = fields
     )
-
 
 }
