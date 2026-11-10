@@ -13,9 +13,7 @@
         "version": "1.0",
         "status": "@status",
         "endpointsEnabled": @endpointsEnabled,
-        "access": {
-          "type": "PRIVATE"
-                  },
+        "access": "INTERNAL",
         "fieldDefinitions": [
           {
             "name": "portId",
